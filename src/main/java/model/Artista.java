@@ -10,5 +10,12 @@ package model;
  * @author Alberto343
  */
 public class Artista {
+   public String nombre;
+
+    public Artista() {
+    }
+   
+    
+    
     
 }
