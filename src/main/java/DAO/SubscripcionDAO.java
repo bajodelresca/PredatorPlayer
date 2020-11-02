@@ -54,6 +54,13 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
 
     public SubscripcionDAO() {
         super();
+          try {
+            conn = ConnectionUtils.connect(SubscripcionController.currentConnection);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public SubscripcionDAO(Subscripcion sb) {
