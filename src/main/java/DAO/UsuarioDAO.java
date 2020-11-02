@@ -6,33 +6,40 @@
 package DAO;
 
 import java.util.List;
-import model.Artista;
+import model.Usuario;
 
 /**
  *
  * @author Alberto343
  */
-public class ArtistaDAO implements DAO<Artista>{
+public class UsuarioDAO extends Usuario implements DAO<Usuario>{
 
     @Override
-    public void insert(Artista a) {
+    public void insert(Usuario a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void edit(Artista a) {
+    public void edit(Usuario a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void remove(Artista a) {
+    public void remove(Usuario a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Artista> getAll() {
+    public List<Usuario> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     
+    /**
+     * Metodo que devuelve una lista por id pasado
+     * @param id identificador de cada Lista
+     * @return Devuelve una Lista
+     */
+    public Usuario getByID(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

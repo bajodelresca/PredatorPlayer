@@ -6,33 +6,32 @@
 package DAO;
 
 import java.util.List;
-import model.Artista;
+import model.Comenta;
 
 /**
  *
  * @author Alberto343
  */
-public class ArtistaDAO implements DAO<Artista>{
+public class ComentaDAO implements DAO<Comenta>{
 
     @Override
-    public void insert(Artista a) {
+    public void insert(Comenta a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void edit(Artista a) {
+    public void edit(Comenta a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void remove(Artista a) {
+    public void remove(Comenta a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<Artista> getAll() {
+    public List<Comenta> getAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
     
 }

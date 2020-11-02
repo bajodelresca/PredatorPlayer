@@ -11,16 +11,16 @@ import java.util.Objects;
  *
  * @author espin
  */
-public class Subscripción {
+public class Subscripcion {
     private Lista Lista;
     private Usuario Usuario;
 
-    public Subscripción(Lista Lista, Usuario Usuario) {
+    public Subscripcion(Lista Lista, Usuario Usuario) {
         this.Lista = Lista;
         this.Usuario = Usuario;
     }
 
-    public Subscripción() {
+    public Subscripcion() {
         this(null,null);
     }
     
@@ -54,8 +54,8 @@ public class Subscripción {
             if(this==obj){
                 igual=true;
             }else{
-                if(obj instanceof Subscripción){
-                    Subscripción n=(Subscripción) obj;
+                if(obj instanceof Subscripcion){
+                    Subscripcion n=(Subscripcion) obj;
                    if (this.Lista == n.getLista() && this.Usuario == n.getUsuario()) {
                         igual = true;
                     }
