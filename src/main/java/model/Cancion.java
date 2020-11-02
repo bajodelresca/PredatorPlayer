@@ -24,7 +24,7 @@ public class Cancion {
         this.Album = Album;
     }
 
-    public Cancion(int ID, String Nombre, int Duración) {
+    public Cancion(int ID, String Nombre, int Duración, Genero Genero) {
         this.ID = ID;
         this.Nombre = Nombre;
         this.Duración = Duración;

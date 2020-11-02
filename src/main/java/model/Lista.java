@@ -22,12 +22,7 @@ public class Lista {
         this.creador = creador;
     }
 
-    public Lista(int ID, String Nombre, String Descripcion) {
-        this.ID = ID;
-        this.Nombre = Nombre;
-        this.Descripcion = Descripcion;
-    }
-
+    
     public Lista() {
         this(-1,"","",null);
     }

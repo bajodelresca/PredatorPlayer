@@ -26,11 +26,7 @@ public class Comenta {
         this.Instante = Instante;
     }
 
-    public Comenta(int ID, String Mensaje, Timestamp Instante) {
-        this.ID = ID;
-        this.Mensaje = Mensaje;
-        this.Instante = Instante;
-    }
+   
 
     public Comenta() {
         this(-1,null,null,"",null);

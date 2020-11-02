@@ -24,10 +24,7 @@ public class Reproduce {
         this.Instante = Instante;
     }
 
-    public Reproduce(int ID, Timestamp Instante) {
-        this.ID = ID;
-        this.Instante = Instante;
-    }
+   
 
     public Reproduce() {
         this (-1,null,null,null);
