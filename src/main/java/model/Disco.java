@@ -37,6 +37,10 @@ public class Disco {
         this.fecha = fecha;
     }
 
+    public Disco() {
+        this (-1,"",null,null,null,null);
+    }
+    
     public int getID() {
         return ID;
     }
@@ -93,20 +97,20 @@ public class Disco {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+        boolean igual=false;
+        if(obj!=null){
+            if(this==obj){
+                igual=true;
+            }else{
+                if(obj instanceof Disco){
+                    Disco n=(Disco) obj;
+                   if (this.ID == n.getID()) {
+                        igual = true;
+                    }
+                }
+            }
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Disco other = (Disco) obj;
-        if (this.ID != other.ID) {
-            return false;
-        }
-        return true;
+        return igual;
     }
 
     @Override

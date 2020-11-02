@@ -28,6 +28,10 @@ public class Lista {
         this.Descripcion = Descripcion;
     }
 
+    public Lista() {
+        this(-1,"","",null);
+    }
+    
     public int getID() {
         return ID;
     }
@@ -68,20 +72,20 @@ public class Lista {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+        boolean igual=false;
+        if(obj!=null){
+            if(this==obj){
+                igual=true;
+            }else{
+                if(obj instanceof Lista){
+                    Lista n=(Lista) obj;
+                   if (this.ID == n.getID()) {
+                        igual = true;
+                    }
+                }
+            }
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Lista other = (Lista) obj;
-        if (this.ID != other.ID) {
-            return false;
-        }
-        return true;
+        return igual;
     }
 
     @Override

@@ -29,6 +29,11 @@ public class Reproduce {
         this.Instante = Instante;
     }
 
+    public Reproduce() {
+        this (-1,null,null,null);
+    }
+    
+
     public int getID() {
         return ID;
     }
@@ -69,20 +74,20 @@ public class Reproduce {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+        boolean igual=false;
+        if(obj!=null){
+            if(this==obj){
+                igual=true;
+            }else{
+                if(obj instanceof Reproduce){
+                    Reproduce n=(Reproduce) obj;
+                   if (this.ID == n.getID()) {
+                        igual = true;
+                    }
+                }
+            }
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Reproduce other = (Reproduce) obj;
-        if (this.ID != other.ID) {
-            return false;
-        }
-        return true;
+        return igual;
     }
 
     @Override

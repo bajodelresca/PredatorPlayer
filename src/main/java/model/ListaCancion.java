@@ -24,6 +24,11 @@ public class ListaCancion {
         this.Cancion = Cancion;
     }
 
+    public ListaCancion() {
+        this (null,null);
+    }
+    
+
     public Lista getLista() {
         return Lista;
     }
@@ -48,23 +53,20 @@ public class ListaCancion {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+       boolean igual=false;
+        if(obj!=null){
+            if(this==obj){
+                igual=true;
+            }else{
+                if(obj instanceof ListaCancion){
+                    ListaCancion n=(ListaCancion) obj;
+                   if (this.Lista == n.getLista() && this.Cancion == n.getCancion() ) {
+                        igual = true;
+                    }
+                }
+            }
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final ListaCancion other = (ListaCancion) obj;
-        if (!Objects.equals(this.Lista, other.Lista)) {
-            return false;
-        }
-        if (!Objects.equals(this.Cancion, other.Cancion)) {
-            return false;
-        }
-        return true;
+        return igual;
     }
 
     @Override

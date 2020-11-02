@@ -46,20 +46,20 @@ public class Genero {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+        boolean igual=false;
+        if(obj!=null){
+            if(this==obj){
+                igual=true;
+            }else{
+                if(obj instanceof Genero){
+                    Genero n=(Genero) obj;
+                   if (this.ID == n.getID()) {
+                        igual = true;
+                    }
+                }
+            }
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Genero other = (Genero) obj;
-        if (this.ID != other.ID) {
-            return false;
-        }
-        return true;
+        return igual;
     }
 
     @Override

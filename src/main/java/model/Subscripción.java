@@ -20,6 +20,11 @@ public class Subscripción {
         this.Usuario = Usuario;
     }
 
+    public Subscripción() {
+        this(null,null);
+    }
+    
+
     public Lista getLista() {
         return Lista;
     }
@@ -44,23 +49,20 @@ public class Subscripción {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+        boolean igual=false;
+        if(obj!=null){
+            if(this==obj){
+                igual=true;
+            }else{
+                if(obj instanceof Subscripción){
+                    Subscripción n=(Subscripción) obj;
+                   if (this.Lista == n.getLista() && this.Usuario == n.getUsuario()) {
+                        igual = true;
+                    }
+                }
+            }
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Subscripción other = (Subscripción) obj;
-        if (!Objects.equals(this.Lista, other.Lista)) {
-            return false;
-        }
-        if (!Objects.equals(this.Usuario, other.Usuario)) {
-            return false;
-        }
-        return true;
+        return igual;
     }
 
     @Override

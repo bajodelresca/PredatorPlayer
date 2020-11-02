@@ -30,6 +30,11 @@ public class Cancion {
         this.Duración = Duración;
     }
 
+    public Cancion() {
+        this (-1,"",-1,null,null);
+    }
+    
+
     public int getID() {
         return ID;
     }
@@ -78,20 +83,20 @@ public class Cancion {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+       boolean igual=false;
+        if(obj!=null){
+            if(this==obj){
+                igual=true;
+            }else{
+                if(obj instanceof Cancion){
+                    Cancion n=(Cancion) obj;
+                   if (this.ID == n.getID()) {
+                        igual = true;
+                    }
+                }
+            }
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Cancion other = (Cancion) obj;
-        if (this.ID != other.ID) {
-            return false;
-        }
-        return true;
+        return igual;
     }
 
     @Override
