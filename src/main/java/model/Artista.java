@@ -34,6 +34,10 @@ public class Artista {
         this.foto = foto;
     }
 
+    public Artista() {
+        this(-1,"","",null,null);
+    }
+
     public int getID() {
         return ID;
     }
@@ -82,20 +86,20 @@ public class Artista {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+         boolean igual=false;
+        if(obj!=null){
+            if(this==obj){
+                igual=true;
+            }else{
+                if(obj instanceof Artista){
+                    Artista n=(Artista) obj;
+                   if (this.ID == n.getID()) {
+                        igual = true;
+                    }
+                }
+            }
         }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Artista other = (Artista) obj;
-        if (this.ID != other.ID) {
-            return false;
-        }
-        return true;
+        return igual;
     }
 
     @Override
