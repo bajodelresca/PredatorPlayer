@@ -1,0 +1,120 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model;
+
+import java.sql.Blob;
+import java.util.Date;
+import java.util.List;
+
+/**
+ *
+ * @author espin
+ */
+public class Disco {
+    private int ID;
+    private String Nombre;
+    private Blob foto;
+    private Date fecha;
+    private Artista creador;
+    private List<Cancion> canciones;
+
+    public Disco(int ID, String Nombre, Blob foto, Date fecha, Artista creador, List<Cancion> canciones) {
+        this.ID = ID;
+        this.Nombre = Nombre;
+        this.foto = foto;
+        this.fecha = fecha;
+        this.creador = creador;
+        this.canciones = canciones;
+    }
+
+    public Disco(int ID, String Nombre, Blob foto, Date fecha) {
+        this.ID = ID;
+        this.Nombre = Nombre;
+        this.foto = foto;
+        this.fecha = fecha;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+
+    public void setNombre(String Nombre) {
+        this.Nombre = Nombre;
+    }
+
+    public Blob getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Blob foto) {
+        this.foto = foto;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Artista getCreador() {
+        return creador;
+    }
+
+    public void setCreador(Artista creador) {
+        this.creador = creador;
+    }
+
+    public List<Cancion> getCanciones() {
+        return canciones;
+    }
+
+    public void setCanciones(List<Cancion> canciones) {
+        this.canciones = canciones;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Disco other = (Disco) obj;
+        if (this.ID != other.ID) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Disco{" + "ID=" + ID + ", Nombre=" + Nombre + ", foto=" + foto + ", fecha=" + fecha + ", creador=" + creador + ", canciones=" + canciones + '}';
+    }
+
+    
+    
+    
+}
