@@ -12,26 +12,24 @@ package model;
 public class Cancion {
     private int ID;
     private String Nombre;
-    private int Duración;
-    private Genero Genero;
+    private int Duracion;
+    private int Genero;
     private Disco Album;
 
-    public Cancion(int ID, String Nombre, int Duración, Genero Genero, Disco Album) {
+    public Cancion(int ID, String Nombre, int Duracion, Disco Album) {
         this.ID = ID;
         this.Nombre = Nombre;
-        this.Duración = Duración;
-        this.Genero = Genero;
+        this.Duracion = Duracion;
         this.Album = Album;
     }
 
-    public Cancion(int ID, String Nombre, int Duración, Genero Genero) {
-        this.ID = ID;
-        this.Nombre = Nombre;
-        this.Duración = Duración;
-    }
+    
+    
+
+    
 
     public Cancion() {
-        this (-1,"",-1,null,null);
+        this (-1,"",-1,null);
     }
     
 
@@ -51,21 +49,25 @@ public class Cancion {
         this.Nombre = Nombre;
     }
 
-    public int getDuración() {
-        return Duración;
+    public int getDuracion() {
+        return Duracion;
     }
 
-    public void setDuración(int Duración) {
-        this.Duración = Duración;
+    public void setDuracion(int Duracion) {
+        this.Duracion = Duracion;
     }
 
-    public Genero getGenero() {
+    public int getGenero() {
         return Genero;
     }
 
-    public void setGenero(Genero Genero) {
+    public void setGenero(int Genero) {
         this.Genero = Genero;
     }
+
+    
+
+    
 
     public Disco getAlbum() {
         return Album;
@@ -101,8 +103,10 @@ public class Cancion {
 
     @Override
     public String toString() {
-        return "Cancion{" + "ID=" + ID + ", Nombre=" + Nombre + ", Duraci\u00f3n=" + Duración + ", Genero=" + Genero + ", Album=" + Album + '}';
+        return "Cancion{" + "ID=" + ID + ", Nombre=" + Nombre + ", Duracion=" + Duracion + ", Genero=" + Genero + ", Album=" + Album + '}';
     }
+
+    
     
     
 }

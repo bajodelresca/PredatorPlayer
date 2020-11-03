@@ -6,6 +6,7 @@
 package model;
 
 import java.sql.Blob;
+import java.util.List;
 
 /**
  *
@@ -16,6 +17,15 @@ public class Usuario {
     private String Nombre;
     private String Correo;
     private Blob Foto;
+    private List<Lista> listasubscrito;
+
+    public Usuario(int ID, String Nombre, String Correo, Blob Foto, List<Lista> listasubscrito) {
+        this.ID = ID;
+        this.Nombre = Nombre;
+        this.Correo = Correo;
+        this.Foto = Foto;
+        this.listasubscrito = listasubscrito;
+    }
 
     public Usuario(int ID, String Nombre, String Correo, Blob Foto) {
         this.ID = ID;
@@ -24,8 +34,16 @@ public class Usuario {
         this.Foto = Foto;
     }
 
-    public Usuario() {
-        this(-1,"","",null);
+    public Usuario(){
+        this(-1,"","",null,null);
+    }
+
+    public List<Lista> getListasubscrito() {
+        return listasubscrito;
+    }
+
+    public void setListasubscrito(List<Lista> listasubscrito) {
+        this.listasubscrito = listasubscrito;
     }
     
 
@@ -87,8 +105,10 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "ID=" + ID + ", Nombre=" + Nombre + ", Correo=" + Correo + ", Foto=" + Foto + '}';
+        return "Usuario{" + "ID=" + ID + ", Nombre=" + Nombre + ", Correo=" + Correo + ", Foto=" + Foto + ", listasubscrito=" + listasubscrito + '}';
     }
+
+    
     
     
 }

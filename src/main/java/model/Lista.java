@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.List;
+
 /**
  *
  * @author espin
@@ -14,6 +16,17 @@ public class Lista {
     private String Nombre;
     private String Descripcion;
     private Usuario creador;
+    private List<Usuario> subscriptores;
+    private List<Cancion> listareproduccion;
+
+    public Lista(int ID, String Nombre, String Descripcion, Usuario creador, List<Usuario> subscriptores, List<Cancion> listareproduccion) {
+        this.ID = ID;
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+        this.creador = creador;
+        this.subscriptores = subscriptores;
+        this.listareproduccion = listareproduccion;
+    }
 
     public Lista(int ID, String Nombre, String Descripcion, Usuario creador) {
         this.ID = ID;
@@ -21,11 +34,32 @@ public class Lista {
         this.Descripcion = Descripcion;
         this.creador = creador;
     }
+    
+    public Lista(){
+        this(-1,"","",null,null,null);
+    }
+
+    public List<Usuario> getSubscriptores() {
+        return subscriptores;
+    }
+
+    public void setSubscriptores(List<Usuario> subscriptores) {
+        this.subscriptores = subscriptores;
+    }
+
+    public List<Cancion> getListareproduccion() {
+        return listareproduccion;
+    }
+
+    public void setListareproduccion(List<Cancion> listareproduccion) {
+        this.listareproduccion = listareproduccion;
+    }
+    
 
     
-    public Lista() {
-        this(-1,"","",null);
-    }
+
+    
+    
     
     public int getID() {
         return ID;
@@ -85,8 +119,10 @@ public class Lista {
 
     @Override
     public String toString() {
-        return "Lista{" + "ID=" + ID + ", Nombre=" + Nombre + ", Descripcion=" + Descripcion + ", creador=" + creador + '}';
+        return "Lista{" + "ID=" + ID + ", Nombre=" + Nombre + ", Descripcion=" + Descripcion + ", creador=" + creador + ", subscriptores=" + subscriptores + ", listareproduccion=" + listareproduccion + '}';
     }
+
+    
     
     
     
