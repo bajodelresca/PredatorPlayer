@@ -27,7 +27,11 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
 
     enum queries {
         INSERT("INSERT INTO subscripcion (IDLista,IDUsuario) VALUES (NULL,NULL)"),
-        GETALL("SELECT * FROM subscripcion");
+        DELETE("DELETE FROM subscripcion WHERE IDLista=? AND IDUsuario=?"),
+        GETALL("SELECT * FROM subscripcion"),
+       // GETUSERSUBS("SELECT * FROM subscripcion WHERE IDUsuario=?"),
+       // GETLISTSUBS("SELECT * FROM subscripcion WHERE IDLista=?")
+        ;
 
         private String q;
 
@@ -76,7 +80,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
 
     @Override
     public void insert(Subscripcion a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   
     }
 
     @Override
