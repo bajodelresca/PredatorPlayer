@@ -7,8 +7,6 @@ package DAO;
 
 import Utils.ConnectionUtils;
 import controller.AppController;
-import controller.CancionController;
-import controller.SubscripcionController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,10 +25,12 @@ import model.Disco;
 public class CancionDAO extends Cancion implements DAO<Cancion> {
 
     enum queries {
-        //INSERT("INSERT INTO subscripcion (IDLista,IDUsuario) VALUES (NULL,NULL)"),
+        INSERT("INSERT INTO cancion (ID, Nombre, Duracion, IDGenero, IDDisco) VALUES (?,?,?,NULL,?)"),
+        UPDATE("UPDATE cancion SET Nombre=?,Duracion=?,IDGenero=?,IDDisco=? WHERE ID=?"),
         // DELETE("DELETE FROM subscripcion WHERE IDLista=? AND IDUsuario=?"),
-        GETALL("SELECT * FROM cancion");
-
+        GETBYID("SELECT ID,Nombre,Duracion,IDDisco FROM cancion Where ID=?"),
+        GETALL("SELECT  ID,Nombre,Duracion,IDDisco FROM cancion");
+        
         private String q;
 
         queries(String q) {
@@ -78,8 +78,26 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 
     @Override
     public void insert(Cancion a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        PreparedStatement stat=null;
+        try{
+          //  if(this.getID()>0)
+        stat=conn.prepareStatement(queries.GETALL.getQ());
+        stat.setInt(1, a.getID());
+        stat.setString(2,a.getNombre());
+        stat.setInt(3, a.getDuracion());
+        stat.setInt(5, a.getAlbum().getID());
+        }catch (SQLException ex) {
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    
 
     @Override
     public void edit(Cancion a) {
@@ -92,14 +110,21 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
     }
 
     /**
-     * Metodo que convierte un ResultSet en Subscripcion
+     * Metodo que convierte un ResultSet en Cancion
      *
      * @param rs Recibe un ResultSet
      * @return Devuelve una Subscripcion
      * @throws SQLException lanza una SQLException
      */
     private Cancion convert(ResultSet rs) throws SQLException {
-        Cancion c=new Cancion();
+        DiscoDAO dDAO=new DiscoDAO();
+        int id=rs.getInt("ID");
+        String nombre=rs.getString("Nombre");
+        int duracion=rs.getInt("Duracion");
+      //  int idGenero=rs.getInt("IDGenero");
+        int idDisco=rs.getInt("IDDisco");
+        Disco album=dDAO.getByID(idDisco);
+        Cancion c=new Cancion(id, nombre, duracion,album);
         return c;
     }
 
@@ -115,24 +140,59 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
                 listS.add(convert(rs));
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (rs != null) {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (stat != null) {
                 try {
                     stat.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         return listS;
     }
-
+     /**
+     * Metodo que devuelve una Cancion por id pasado
+     * @param id identificador de cada Cancion
+     * @return Devuelve una Cancion
+     */
+    public Cancion getByID(int id) {
+         PreparedStatement stat = null;
+        ResultSet rs = null;
+        Cancion c = new Cancion();
+        try {
+            stat = conn.prepareStatement(queries.GETBYID.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            if (rs.next()) {
+                c=convert(rs);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return c;
+    }
 }

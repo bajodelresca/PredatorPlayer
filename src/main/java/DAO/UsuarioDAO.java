@@ -35,9 +35,9 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario>{
     }
     
     /**
-     * Metodo que devuelve una lista por id pasado
-     * @param id identificador de cada Lista
-     * @return Devuelve una Lista
+     * Metodo que devuelve un usuario por id pasado
+     * @param id identificador de cada usuario
+     * @return Devuelve un usuario
      */
     public Usuario getByID(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

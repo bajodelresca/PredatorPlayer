@@ -6,31 +6,41 @@
 package DAO;
 
 import java.util.List;
+import model.Disco;
 
 /**
  *
  * @author espin
  */
-public class DiscoDAO implements DAO {
+public class DiscoDAO extends Disco implements DAO<Disco> {
+
 
     @Override
-    public void insert(Object a) {
+    public void insert(Disco a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void edit(Object a) {
+    public void edit(Disco a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void remove(Object a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List getAll() {
+    public void remove(Disco a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    @Override
+    public List<Disco> getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     * Metodo que devuelve un Disco por id pasado
+     * @param id identificador de cada Disco
+     * @return Devuelve un Disco
+     */
+    public Disco getByID(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

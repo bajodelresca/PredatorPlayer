@@ -100,11 +100,11 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
      * @throws SQLException lanza una SQLException
      */
     private Subscripcion convert(ResultSet rs) throws SQLException {
-        ListaDAO lDAO = new ListaDAO();
-        UsuarioDAO uDAO = new UsuarioDAO();
+        ListaDAO lDAO=new ListaDAO();
+        UsuarioDAO uDAO=new UsuarioDAO();
         int IDLista = rs.getInt("IDLista");
         int IDUsuario = rs.getInt("IDUsuario");
-        Lista l = lDAO.getByID(IDLista);
+        Lista l =  lDAO.getByID(IDLista);
         Usuario u = uDAO.getByID(IDUsuario);
         Subscripcion sb = new Subscripcion(l, u);
         return sb;
