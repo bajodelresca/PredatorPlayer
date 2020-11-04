@@ -12,5 +12,4 @@ import model.Connection;
  * @author Alberto343
  */
 public class CancionController {
-     public static Connection currentConnection;
-}
+   }

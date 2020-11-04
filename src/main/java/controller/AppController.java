@@ -5,10 +5,12 @@
  */
 package controller;
 
+import model.Connection;
+
 /**
  *
  * @author Alberto343
  */
 public class AppController {
-    
+     public static Connection currentConnection;
 }

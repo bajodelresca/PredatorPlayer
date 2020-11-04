@@ -12,5 +12,5 @@ import model.Connection;
  * @author Alberto343
  */
 public class ComentaController {
-      public static Connection currentConnection;
+     
 }

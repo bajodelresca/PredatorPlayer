@@ -12,5 +12,5 @@ import model.Connection;
  * @author Alberto343
  */
 public class ReproduceController {
-     public static Connection currentConnection;
+     
 }

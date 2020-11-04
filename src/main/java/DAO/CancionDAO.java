@@ -6,10 +6,14 @@
 package DAO;
 
 import Utils.ConnectionUtils;
+import controller.AppController;
 import controller.CancionController;
 import controller.SubscripcionController;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +28,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 
     enum queries {
         //INSERT("INSERT INTO subscripcion (IDLista,IDUsuario) VALUES (NULL,NULL)"),
-       // DELETE("DELETE FROM subscripcion WHERE IDLista=? AND IDUsuario=?"),
+        // DELETE("DELETE FROM subscripcion WHERE IDLista=? AND IDUsuario=?"),
         GETALL("SELECT * FROM cancion");
 
         private String q;
@@ -42,7 +46,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
     public CancionDAO(int ID, String Nombre, int Duracion, Disco Album) {
         super(ID, Nombre, Duracion, Album);
         try {
-            conn = ConnectionUtils.connect(CancionController.currentConnection);
+            conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -52,25 +56,26 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 
     public CancionDAO() {
         super();
-          try {
-            conn = ConnectionUtils.connect(CancionController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    public CancionDAO(Cancion c) {
-        super(c.getID(),c.getNombre(),c.getDuracion(),c.getAlbum());
         try {
-            conn = ConnectionUtils.connect(SubscripcionController.currentConnection);
+            conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
+    public CancionDAO(Cancion c) {
+        super(c.getID(), c.getNombre(), c.getDuracion(), c.getAlbum());
+        try {
+            conn = ConnectionUtils.connect(AppController.currentConnection);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public void insert(Cancion a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -86,9 +91,48 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * Metodo que convierte un ResultSet en Subscripcion
+     *
+     * @param rs Recibe un ResultSet
+     * @return Devuelve una Subscripcion
+     * @throws SQLException lanza una SQLException
+     */
+    private Cancion convert(ResultSet rs) throws SQLException {
+        Cancion c=new Cancion();
+        return c;
+    }
+
     @Override
     public List<Cancion> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Cancion> listS = new ArrayList<>();
+        try {
+            stat = conn.prepareStatement(queries.GETALL.getQ());
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                listS.add(convert(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return listS;
     }
 
 }

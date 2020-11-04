@@ -6,6 +6,7 @@
 package DAO;
 
 import Utils.ConnectionUtils;
+import controller.AppController;
 import controller.SubscripcionController;
 import java.sql.SQLException;
 import java.util.List;
@@ -48,7 +49,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     public SubscripcionDAO(model.Lista Lista, model.Usuario Usuario) {
         super(Lista, Usuario);
         try {
-            conn = ConnectionUtils.connect(SubscripcionController.currentConnection);
+            conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -59,7 +60,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     public SubscripcionDAO() {
         super();
           try {
-            conn = ConnectionUtils.connect(SubscripcionController.currentConnection);
+            conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -70,7 +71,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     public SubscripcionDAO(Subscripcion sb) {
         super(sb.getLista(), sb.getUsuario());
         try {
-            conn = ConnectionUtils.connect(SubscripcionController.currentConnection);
+            conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
