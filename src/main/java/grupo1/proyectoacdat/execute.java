@@ -5,12 +5,20 @@
  */
 package grupo1.proyectoacdat;
 
+import DAO.CancionDAO;
+import java.util.List;
+import model.Cancion;
+
 /**
  *
  * @author Alberto343
  */
 public class execute {
     public static void main(String[] args) {
-        System.out.println("grupo1.proyectoacdat.execute.main()");
+      /*  CancionDAO cdao=new CancionDAO();
+        List<Cancion> lista=cdao.getAll();
+        for (Cancion cancion : lista) {
+            System.out.println(cancion);
+        }*/
     }
 }
