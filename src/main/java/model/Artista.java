@@ -16,10 +16,10 @@ public class Artista {
    private int ID;
    private String nombre;
    private String nacionalidad;
-   private Blob foto;
+   private String foto;
    private List<Disco> repertorio;
 
-    public Artista(int ID, String nombre, String nacionalidad, Blob foto, List<Disco> repertorio) {
+    public Artista(int ID, String nombre, String nacionalidad, String foto, List<Disco> repertorio) {
         this.ID = ID;
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
@@ -27,7 +27,7 @@ public class Artista {
         this.repertorio = repertorio;
     }
 
-    public Artista(int ID, String nombre, String nacionalidad, Blob foto) {
+    public Artista(int ID, String nombre, String nacionalidad, String foto) {
         this.ID = ID;
         this.nombre = nombre;
         this.nacionalidad = nacionalidad;
@@ -62,11 +62,11 @@ public class Artista {
         this.nacionalidad = nacionalidad;
     }
 
-    public Blob getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(Blob foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

@@ -16,10 +16,10 @@ public class Usuario {
     private int ID;
     private String Nombre;
     private String Correo;
-    private Blob Foto;
+    private String Foto;
     private List<Lista> listasubscrito;
 
-    public Usuario(int ID, String Nombre, String Correo, Blob Foto, List<Lista> listasubscrito) {
+    public Usuario(int ID, String Nombre, String Correo, String Foto, List<Lista> listasubscrito) {
         this.ID = ID;
         this.Nombre = Nombre;
         this.Correo = Correo;
@@ -27,7 +27,7 @@ public class Usuario {
         this.listasubscrito = listasubscrito;
     }
 
-    public Usuario(int ID, String Nombre, String Correo, Blob Foto) {
+    public Usuario(int ID, String Nombre, String Correo, String Foto) {
         this.ID = ID;
         this.Nombre = Nombre;
         this.Correo = Correo;
@@ -71,11 +71,11 @@ public class Usuario {
         this.Correo = Correo;
     }
 
-    public Blob getFoto() {
+    public String getFoto() {
         return Foto;
     }
 
-    public void setFoto(Blob Foto) {
+    public void setFoto(String Foto) {
         this.Foto = Foto;
     }
 

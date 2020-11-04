@@ -16,12 +16,12 @@ import java.util.List;
 public class Disco {
     private int ID;
     private String Nombre;
-    private Blob foto;
+    private String foto;
     private Date fecha;
     private Artista creador;
     private List<Cancion> canciones;
 
-    public Disco(int ID, String Nombre, Blob foto, Date fecha, Artista creador, List<Cancion> canciones) {
+    public Disco(int ID, String Nombre, String foto, Date fecha, Artista creador, List<Cancion> canciones) {
         this.ID = ID;
         this.Nombre = Nombre;
         this.foto = foto;
@@ -30,7 +30,7 @@ public class Disco {
         this.canciones = canciones;
     }
 
-    public Disco(int ID, String Nombre, Blob foto, Date fecha) {
+    public Disco(int ID, String Nombre, String foto, Date fecha) {
         this.ID = ID;
         this.Nombre = Nombre;
         this.foto = foto;
@@ -57,11 +57,11 @@ public class Disco {
         this.Nombre = Nombre;
     }
 
-    public Blob getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(Blob foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
