@@ -41,4 +41,6 @@ public interface DAO<T> {
      * Devuelve una lista de objetos 
      */
     List<T> getAll();
+    
+    
 }

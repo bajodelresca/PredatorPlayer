@@ -12,12 +12,12 @@ import java.util.List;
  * @author espin
  */
 public class Lista {
-    private int ID;
-    private String Nombre;
-    private String Descripcion;
-    private Usuario creador;
-    private List<Usuario> subscriptores;
-    private List<Cancion> listareproduccion;
+    protected int ID;
+    protected String Nombre;
+    protected String Descripcion;
+    protected Usuario creador;
+    protected List<Usuario> subscriptores;
+    protected List<Cancion> listareproduccion;
 
     public Lista(int ID, String Nombre, String Descripcion, Usuario creador, List<Usuario> subscriptores, List<Cancion> listareproduccion) {
         this.ID = ID;

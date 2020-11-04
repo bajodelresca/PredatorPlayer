@@ -20,10 +20,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 public class Connection {
     
-    private String host;
-    private String db;
-    private String user;
-    private String password;
+    protected String host;
+    protected String db;
+    protected String user;
+    protected String password;
 
     public Connection() {
         this("", "", "", "");

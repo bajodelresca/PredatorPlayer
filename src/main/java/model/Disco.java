@@ -14,12 +14,12 @@ import java.util.List;
  * @author espin
  */
 public class Disco {
-    private int ID;
-    private String Nombre;
-    private String foto;
-    private Date fecha;
-    private Artista creador;
-    private List<Cancion> canciones;
+    protected int ID;
+    protected String Nombre;
+    protected String foto;
+    protected Date fecha;
+    protected Artista creador;
+    protected List<Cancion> canciones;
 
     public Disco(int ID, String Nombre, String foto, Date fecha, Artista creador, List<Cancion> canciones) {
         this.ID = ID;

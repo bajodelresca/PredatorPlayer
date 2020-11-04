@@ -10,11 +10,11 @@ package model;
  * @author espin
  */
 public class Cancion {
-    private int ID;
-    private String Nombre;
-    private int Duracion;
-    private int Genero;
-    private Disco Album;
+    protected int ID;
+    protected String Nombre;
+    protected int Duracion;
+    protected int Genero;
+    protected Disco Album;
 
     public Cancion(int ID, String Nombre, int Duracion, Disco Album) {
         this.ID = ID;

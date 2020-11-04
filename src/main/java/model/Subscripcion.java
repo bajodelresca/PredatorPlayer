@@ -12,8 +12,8 @@ import java.util.Objects;
  * @author espin
  */
 public class Subscripcion {
-    private Lista Lista;
-    private Usuario Usuario;
+    protected Lista Lista;
+    protected Usuario Usuario;
 
     public Subscripcion(Lista Lista, Usuario Usuario) {
         this.Lista = Lista;

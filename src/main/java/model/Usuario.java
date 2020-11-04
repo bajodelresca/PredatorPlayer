@@ -13,11 +13,11 @@ import java.util.List;
  * @author espin
  */
 public class Usuario {
-    private int ID;
-    private String Nombre;
-    private String Correo;
-    private String Foto;
-    private List<Lista> listasubscrito;
+    protected int ID;
+    protected String Nombre;
+    protected String Correo;
+    protected String Foto;
+    protected List<Lista> listasubscrito;
 
     public Usuario(int ID, String Nombre, String Correo, String Foto, List<Lista> listasubscrito) {
         this.ID = ID;

@@ -13,11 +13,11 @@ import java.util.List;
  * @author Alberto343
  */
 public class Artista {
-   private int ID;
-   private String nombre;
-   private String nacionalidad;
-   private String foto;
-   private List<Disco> repertorio;
+   protected int ID;
+   protected String nombre;
+   protected String nacionalidad;
+   protected String foto;
+   protected List<Disco> repertorio;
 
     public Artista(int ID, String nombre, String nacionalidad, String foto, List<Disco> repertorio) {
         this.ID = ID;
