@@ -49,9 +49,9 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         try {
             conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -60,9 +60,9 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         try {
             conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -71,9 +71,9 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         try {
             conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
