@@ -196,6 +196,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
         ResultSet rs = null;
         Usuario c = new Usuario();
         try {
+             conn = ConnectionUtils.getConnection();
             stat = conn.prepareStatement(queries.GETBYID.getQ());
             stat.setInt(1, id);
             rs = stat.executeQuery();

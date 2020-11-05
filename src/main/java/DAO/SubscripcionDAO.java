@@ -29,9 +29,10 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     enum queries {
         INSERT("INSERT INTO subscripcion (IDLista,IDUsuario) VALUES (NULL,NULL)"),
         DELETE("DELETE FROM subscripcion WHERE IDLista=? AND IDUsuario=?"),
-        GETALL("SELECT * FROM subscripcion"),
-       // GETUSERSUBS("SELECT * FROM subscripcion WHERE IDUsuario=?"),
-       // GETLISTSUBS("SELECT * FROM subscripcion WHERE IDLista=?")
+        UPDATE("UPDATE subscripcion SET IDLista=?,IDUsuario=?"),
+        GETALL("SELECT * FROM subscripcion")
+        // GETUSERSUBS("SELECT * FROM subscripcion WHERE IDUsuario=?"),
+        // GETLISTSUBS("SELECT * FROM subscripcion WHERE IDLista=?")
         ;
 
         private String q;
@@ -59,7 +60,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
 
     public SubscripcionDAO() {
         super();
-          try {
+        try {
             conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,30 +82,72 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
 
     @Override
     public void insert(Subscripcion a) {
-   
+        try {
+            java.sql.Connection csql = ConnectionUtils.getConnection();
+            if (this.Lista.getID() > 0 && this.Usuario.getID() > 0) {
+                edit(a);
+            } else {
+                PreparedStatement stat = csql.prepareStatement(queries.INSERT.getQ());
+                stat.setInt(1, a.getLista().getID());
+                stat.setInt(2, a.getUsuario().getID());
+                stat.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void edit(Subscripcion a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            java.sql.Connection csql = ConnectionUtils.getConnection();
+            PreparedStatement stat = csql.prepareStatement(queries.UPDATE.getQ());
+            stat.setInt(1, a.getLista().getID());
+            stat.setInt(2, a.getUsuario().getID());
+            stat.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void remove(Subscripcion a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   PreparedStatement ps=null;
+        try{
+            java.sql.Connection conn = ConnectionUtils.getConnection();
+            ps=conn.prepareStatement(queries.DELETE.getQ());
+            ps.setInt(1,a.getLista().getID());
+            ps.setInt(2,a.getUsuario().getID());
+           
+            if(ps.executeUpdate()==0) {
+                throw new SQLException("No se Ha insertado correctamente");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            if(ps !=null){
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }    }
+
     /**
      * Metodo que convierte un ResultSet en Subscripcion
+     *
      * @param rs Recibe un ResultSet
      * @return Devuelve una Subscripcion
      * @throws SQLException lanza una SQLException
      */
     private Subscripcion convert(ResultSet rs) throws SQLException {
-        ListaDAO lDAO=new ListaDAO();
-        UsuarioDAO uDAO=new UsuarioDAO();
+        ListaDAO lDAO = new ListaDAO();
+        UsuarioDAO uDAO = new UsuarioDAO();
         int IDLista = rs.getInt("IDLista");
         int IDUsuario = rs.getInt("IDUsuario");
-        Lista l =  lDAO.getByID(IDLista);
+        Lista l = lDAO.getByID(IDLista);
         Usuario u = uDAO.getByID(IDUsuario);
         Subscripcion sb = new Subscripcion(l, u);
         return sb;
@@ -116,6 +159,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
         ResultSet rs = null;
         List<Subscripcion> listS = new ArrayList<>();
         try {
+            conn = ConnectionUtils.getConnection();
             stat = conn.prepareStatement(queries.GETALL.getQ());
             rs = stat.executeQuery();
             while (rs.next()) {

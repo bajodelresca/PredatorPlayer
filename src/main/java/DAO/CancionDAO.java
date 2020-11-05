@@ -208,6 +208,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         ResultSet rs = null;
         Cancion c = new Cancion();
         try {
+            conn = ConnectionUtils.getConnection();
             stat = conn.prepareStatement(queries.GETBYID.getQ());
             stat.setInt(1, id);
             rs = stat.executeQuery();

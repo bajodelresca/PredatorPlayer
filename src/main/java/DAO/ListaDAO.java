@@ -200,6 +200,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         ResultSet rs = null;
         Lista c = new Lista();
         try {
+             conn = ConnectionUtils.getConnection();
             stat = conn.prepareStatement(queries.GETBYID.getQ());
             stat.setInt(1, id);
             rs = stat.executeQuery();

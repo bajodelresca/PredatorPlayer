@@ -6,8 +6,11 @@
 package grupo1.proyectoacdat;
 
 import DAO.CancionDAO;
+import View.GUI;
+import controller.AppController;
 import java.util.List;
 import model.Cancion;
+import model.Subscripcion;
 
 /**
  *
@@ -20,5 +23,11 @@ public class execute {
         for (Cancion cancion : lista) {
             System.out.println(cancion);
         }*/
+     /* AppController a=AppController.getInstance();
+     List<Subscripcion>list=  a.getAllSubs();
+        for (Subscripcion subscripcion : list) {
+            System.out.println(subscripcion);
+        }*/
+     GUI.principal();
     }
 }
