@@ -29,7 +29,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         INSERT("INSERT INTO Lista (ID,Nombre,Descripcion,IDUsuario) VALUES(NULL,?,?,?)"),
         UPDATE("UPDATE Lista SET Nombre = ?, Descripcion = ?, IDUsuario = ? WHERE ID = ?"),
         DELETE("DELETE FROM Lista WHERE ID=?"),
-        GETBYID("SELECT * FROM Lista WHERE ID="),
+        GETBYID("SELECT * FROM Lista WHERE ID=?"),
         GETALL("SELECT * FROM Lista");
 
         private String q;
@@ -83,11 +83,11 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     public void insert(Lista a) {
         int result = -1;
         try {
-            java.sql.Connection csql = ConnectionUtils.getConnection();
+            conn = ConnectionUtils.getConnection();
             if (this.ID > 0) {
                 edit(a);
             } else {
-                PreparedStatement stat = csql.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
                 stat.setString(1, a.getNombre());
                 stat.setString(2, a.getDescripcion());
                 stat.setInt(3, a.getCreador().getID());

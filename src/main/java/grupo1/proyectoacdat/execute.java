@@ -23,11 +23,11 @@ public class execute {
         for (Cancion cancion : lista) {
             System.out.println(cancion);
         }*/
-     /* AppController a=AppController.getInstance();
+     AppController a=AppController.getInstance();
      List<Subscripcion>list=  a.getAllSubs();
         for (Subscripcion subscripcion : list) {
             System.out.println(subscripcion);
-        }*/
-     GUI.principal();
+        }
+    // GUI.principal();
     }
 }

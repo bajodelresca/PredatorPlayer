@@ -83,11 +83,11 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     @Override
     public void insert(Subscripcion a) {
         try {
-            java.sql.Connection csql = ConnectionUtils.getConnection();
+            conn= ConnectionUtils.getConnection();
             if (this.Lista.getID() > 0 && this.Usuario.getID() > 0) {
                 edit(a);
             } else {
-                PreparedStatement stat = csql.prepareStatement(queries.INSERT.getQ());
+                PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ());
                 stat.setInt(1, a.getLista().getID());
                 stat.setInt(2, a.getUsuario().getID());
                 stat.executeUpdate();
@@ -100,8 +100,8 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     @Override
     public void edit(Subscripcion a) {
         try {
-            java.sql.Connection csql = ConnectionUtils.getConnection();
-            PreparedStatement stat = csql.prepareStatement(queries.UPDATE.getQ());
+            conn = ConnectionUtils.getConnection();
+            PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
             stat.setInt(1, a.getLista().getID());
             stat.setInt(2, a.getUsuario().getID());
             stat.executeUpdate();
@@ -115,7 +115,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     public void remove(Subscripcion a) {
    PreparedStatement ps=null;
         try{
-            java.sql.Connection conn = ConnectionUtils.getConnection();
+            conn = ConnectionUtils.getConnection();
             ps=conn.prepareStatement(queries.DELETE.getQ());
             ps.setInt(1,a.getLista().getID());
             ps.setInt(2,a.getUsuario().getID());

@@ -81,11 +81,11 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
     public void insert(Cancion a) {
         int result=-1;
         try {
-            java.sql.Connection csql = ConnectionUtils.getConnection();
+            conn = ConnectionUtils.getConnection();
             if (this.ID > 0) {
                 edit(a);
             } else {
-                PreparedStatement stat = csql.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
                 stat.setString(1, a.getNombre());
                 stat.setInt(2, a.getDuracion());
                 stat.setInt(3, a.getGenero());
@@ -107,8 +107,8 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
     @Override
     public void edit(Cancion a) {
     try {
-            java.sql.Connection csql = ConnectionUtils.getConnection();
-                PreparedStatement stat = csql.prepareStatement(queries.UPDATE.getQ());
+            conn = ConnectionUtils.getConnection();
+                PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
                 stat.setString(1, a.getNombre());
                 stat.setInt(2, a.getDuracion());
                 stat.setInt(3, a.getGenero());
@@ -126,7 +126,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
     public void remove(Cancion a) {
             PreparedStatement ps=null;
         try{
-            java.sql.Connection conn = ConnectionUtils.getConnection();
+            conn = ConnectionUtils.getConnection();
             ps=conn.prepareStatement(queries.DELETE.getQ());
             ps.setInt(1,a.getID());
            
@@ -171,6 +171,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         ResultSet rs = null;
         List<Cancion> listS = new ArrayList<>();
         try {
+            conn = ConnectionUtils.getConnection();
             stat = conn.prepareStatement(queries.GETALL.getQ());
             rs = stat.executeQuery();
             while (rs.next()) {
