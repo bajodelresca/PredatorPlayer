@@ -153,7 +153,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
      * @return Devuelve una Subscripcion
      * @throws SQLException lanza una SQLException
      */
-    private Cancion convert(ResultSet rs) throws SQLException {
+    protected Cancion convert(ResultSet rs) throws SQLException {
         DiscoDAO dDAO = new DiscoDAO();
         int id = rs.getInt("ID");
         String nombre = rs.getString("Nombre");

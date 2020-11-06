@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Cancion;
 import model.Lista;
 import model.Usuario;
 
@@ -30,7 +31,8 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         UPDATE("UPDATE Lista SET Nombre = ?, Descripcion = ?, IDUsuario = ? WHERE ID = ?"),
         DELETE("DELETE FROM Lista WHERE ID=?"),
         GETBYID("SELECT * FROM Lista WHERE ID=?"),
-        GETALL("SELECT * FROM Lista");
+        GETALL("SELECT * FROM Lista"),
+        GETCANCIONBYID("SELECT * FROM listacancion WHERE IDLista=?");
 
         private String q;
 
@@ -227,5 +229,40 @@ public class ListaDAO extends Lista implements DAO<Lista> {
             }
         }
         return c;
+    }
+    public List<Cancion> getCancionesdeLista(int id) {
+        CancionDAO a=new CancionDAO();
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Cancion> listC = new ArrayList<>();
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETCANCIONBYID.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                listC.add(a.convert(rs));
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return listC;
     }
 }
