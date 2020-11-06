@@ -109,8 +109,8 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     @Override
     public void edit(Lista a) {
         try {
-            java.sql.Connection csql = ConnectionUtils.getConnection();
-            PreparedStatement stat = csql.prepareStatement(queries.UPDATE.getQ());
+            conn = ConnectionUtils.getConnection();
+            PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
             stat.setString(1, a.getNombre());
             stat.setString(2, a.getDescripcion());
             stat.setInt(3, a.getCreador().getID());
@@ -126,7 +126,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     public void remove(Lista a) {
         PreparedStatement ps = null;
         try {
-            java.sql.Connection conn = ConnectionUtils.getConnection();
+            conn = ConnectionUtils.getConnection();
             ps = conn.prepareStatement(queries.DELETE.getQ());
             ps.setInt(1, a.getID());
 
@@ -163,6 +163,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         ResultSet rs = null;
         List<Lista> listS = new ArrayList<>();
         try {
+            conn = ConnectionUtils.getConnection();
             stat = conn.prepareStatement(queries.GETALL.getQ());
             rs = stat.executeQuery();
             while (rs.next()) {
