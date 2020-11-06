@@ -53,7 +53,9 @@ public class Utilities {
         P("2)Listar Disco");
         P("3)Listar Artista");
         P("4)Listar lista de Reproduccion");
-        P("5)Volver al menú anterior");
+        P("5)Listar subscriptores por Id de la lista");
+        P("6)Listar listas a las que esta subscrito el usuario por Id");
+        P("7)Volver al menú anterior");
         P("-------------------------------------");
         p("> ");
 

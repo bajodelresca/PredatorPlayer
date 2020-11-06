@@ -30,9 +30,8 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
         INSERT("INSERT INTO subscripcion (IDLista,IDUsuario) VALUES (NULL,NULL)"),
         DELETE("DELETE FROM subscripcion WHERE IDLista=? AND IDUsuario=?"),
         UPDATE("UPDATE subscripcion SET IDLista=?,IDUsuario=?"),
-        GETALL("SELECT * FROM subscripcion")
-        // GETUSERSUBS("SELECT * FROM subscripcion WHERE IDUsuario=?"),
-        // GETLISTSUBS("SELECT * FROM subscripcion WHERE IDLista=?")
+        GETALL("SELECT * FROM subscripcion"),
+        GETUSERSUBS("SELECT * FROM subscripcion WHERE IDLista=?")
         ;
 
         private String q;
@@ -83,7 +82,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     @Override
     public void insert(Subscripcion a) {
         try {
-            conn= ConnectionUtils.getConnection();
+            conn = ConnectionUtils.getConnection();
             if (this.Lista.getID() > 0 && this.Usuario.getID() > 0) {
                 edit(a);
             } else {
@@ -113,27 +112,28 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
 
     @Override
     public void remove(Subscripcion a) {
-   PreparedStatement ps=null;
-        try{
+        PreparedStatement ps = null;
+        try {
             conn = ConnectionUtils.getConnection();
-            ps=conn.prepareStatement(queries.DELETE.getQ());
-            ps.setInt(1,a.getLista().getID());
-            ps.setInt(2,a.getUsuario().getID());
-           
-            if(ps.executeUpdate()==0) {
+            ps = conn.prepareStatement(queries.DELETE.getQ());
+            ps.setInt(1, a.getLista().getID());
+            ps.setInt(2, a.getUsuario().getID());
+
+            if (ps.executeUpdate() == 0) {
                 throw new SQLException("No se Ha insertado correctamente");
             }
         } catch (SQLException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            if(ps !=null){
+        } finally {
+            if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
                     Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-        }    }
+        }
+    }
 
     /**
      * Metodo que convierte un ResultSet en Subscripcion
@@ -185,5 +185,50 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
         }
         return listS;
     }
-
+     private Usuario convertUser(ResultSet rs) throws SQLException {
+        ListaDAO lDAO=new ListaDAO();
+        int IDLista = rs.getInt("IDLista");
+        Lista l = lDAO.getByID(IDLista);
+       
+         for (Usuario object : l.getSubscriptores()) {
+             
+         }
+         //Arreglar
+        Usuario u = new Usuario();
+        return u;
+    }
+    public  List<Usuario> getSubscriberFromList(int id) {
+         PreparedStatement stat = null;
+        ResultSet rs = null;
+      
+        List<Usuario> listS = new ArrayList<>();
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETUSERSUBS.getQ());
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                listS.add(convertUser(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        return listS;
+    }
+   
 }
