@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  *
- * @author espin
+ * @author Jorge SB
  */
 public class Disco {
     protected int ID;
@@ -30,11 +30,12 @@ public class Disco {
         this.canciones = canciones;
     }
 
-    public Disco(int ID, String Nombre, String foto, Date fecha) {
+    public Disco(int ID, String Nombre, String foto, Date fecha, Artista creador) {
         this.ID = ID;
         this.Nombre = Nombre;
         this.foto = foto;
         this.fecha = fecha;
+        this.creador = creador;
     }
 
     public Disco() {

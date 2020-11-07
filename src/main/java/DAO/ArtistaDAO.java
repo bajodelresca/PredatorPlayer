@@ -98,7 +98,6 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         } catch (SQLException ex) {
             Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override
@@ -182,6 +181,39 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         }
         return listA;
     }
-
+    
+    public Artista getByID(int id) {
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        Artista a = new Artista();
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETBYID.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            if (rs.next()) {
+                a = convert(rs);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return a;
+    }
+    
     // Aún por terminar
 }
