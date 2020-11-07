@@ -24,7 +24,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
         UPDATE("UPDATE disco SET Nombre=?,Nacionalidad=?,Foto=?,Fecha=?,IDArtista=? WHERE ID=?"),
         DELETE("DELETE FROM disco WHERE ID=?"),
         GETBYID("SELECT * FROM Disco WHERE ID=?"),
-        GETALL("SELECT * FROM Disco"),
+        GETALL("SELECT * FROM Disco");
 
         private String q;
 
@@ -64,7 +64,8 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
     
     @Override
     public List<Disco> getAll() {
-        
+        List<Disco> listD=new ArrayList<>();
+        return listD;
     }
     
     /**
