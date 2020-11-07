@@ -5,12 +5,7 @@
  */
 package grupo1.proyectoacdat;
 
-import DAO.CancionDAO;
 import View.GUI;
-import controller.AppController;
-import java.util.List;
-import model.Cancion;
-import model.Subscripcion;
 
 /**
  *
@@ -20,9 +15,9 @@ public class execute {
 
     public static void main(String[] args) {
 
-        /* AppController a=AppController.getInstance();
-     List<Subscripcion>list=  a.getAllSubs();
-        for (Subscripcion subscripcion : list) {
+     /* AppController a=AppController.getInstance();
+     List<Lista>list=  a.getListFromSubscriber(2);
+        for (Lista subscripcion : list) {
             System.out.println(subscripcion);
         }*/
         GUI.principal();

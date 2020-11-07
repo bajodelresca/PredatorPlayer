@@ -145,7 +145,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
     }
 
     protected Usuario convert(ResultSet rs) throws SQLException {
-        DiscoDAO dDAO = new DiscoDAO();
+      //  DiscoDAO dDAO = new DiscoDAO();
         int id = rs.getInt("ID");
         String nombre = rs.getString("Nombre");
         String correo = rs.getString("Correo");

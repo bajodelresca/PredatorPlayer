@@ -148,7 +148,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         }
     }
 
-    private Lista convert(ResultSet rs) throws SQLException {
+    protected Lista convert(ResultSet rs) throws SQLException {
         UsuarioDAO UDAO = new UsuarioDAO();
         int id = rs.getInt("ID");
         String nombre = rs.getString("Nombre");

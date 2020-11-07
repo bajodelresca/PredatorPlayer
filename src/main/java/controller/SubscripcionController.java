@@ -7,7 +7,9 @@ package controller;
 
 import DAO.SubscripcionDAO;
 import java.util.List;
+import model.Lista;
 import model.Subscripcion;
+import model.Usuario;
 
 /**
  *
@@ -40,5 +42,14 @@ public class SubscripcionController {
     public void removeSubs(Subscripcion a) {
         SubscripcionDAO cDAO = new SubscripcionDAO();
         cDAO.remove(a);
+    }
+    
+    public List<Usuario> getSubscriberFromList(int id) {
+        SubscripcionDAO cDAO = new SubscripcionDAO();
+        return cDAO.getSubscriberFromList(id);
+    } 
+    public  List<Lista> getListFromSubscriber(int id){
+      SubscripcionDAO cDAO = new SubscripcionDAO();
+        return cDAO.getListFromSubscriber(id);
     }
 }

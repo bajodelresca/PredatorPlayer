@@ -31,7 +31,8 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
         DELETE("DELETE FROM subscripcion WHERE IDLista=? AND IDUsuario=?"),
         UPDATE("UPDATE subscripcion SET IDLista=?,IDUsuario=?"),
         GETALL("SELECT * FROM subscripcion"),
-        GETUSERSUBS("SELECT * FROM subscripcion WHERE IDLista=?")
+        GETUSERSUBSBYID("SELECT ID, Correo, Nombre, Foto FROM usuario as u INNER JOIN subscripcion as sub on sub.IDUsuario=u.ID WHERE sub.IDLista=?"),
+        GETLISTSUBSBYID("SELECT l.ID, l.Nombre, l.Descripcion, l.IDUsuario FROM lista as l INNER JOIN subscripcion as sub on sub.IDLista=l.ID WHERE sub.IDUsuario=?")
         ;
 
         private String q;
@@ -185,29 +186,19 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
         }
         return listS;
     }
-     private Usuario convertUser(ResultSet rs) throws SQLException {
-        ListaDAO lDAO=new ListaDAO();
-        int IDLista = rs.getInt("IDLista");
-        Lista l = lDAO.getByID(IDLista);
-       
-         for (Usuario object : l.getSubscriptores()) {
-             
-         }
-         //Arreglar
-        Usuario u = new Usuario();
-        return u;
-    }
+     
     public  List<Usuario> getSubscriberFromList(int id) {
          PreparedStatement stat = null;
         ResultSet rs = null;
-      
+        UsuarioDAO uDAO=new UsuarioDAO();
         List<Usuario> listS = new ArrayList<>();
         try {
             conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETUSERSUBS.getQ());
+            stat = conn.prepareStatement(queries.GETUSERSUBSBYID.getQ());
+            stat.setInt(1, id);
             rs = stat.executeQuery();
             while (rs.next()) {
-                listS.add(convertUser(rs));
+                listS.add(uDAO.convert(rs)) ;
             }
         } catch (SQLException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -231,4 +222,38 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
         return listS;
     }
    
+    public  List<Lista> getListFromSubscriber(int id) {
+         PreparedStatement stat = null;
+        ResultSet rs = null;
+        ListaDAO lDAO=new ListaDAO();
+        List<Lista> listS = new ArrayList<>();
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETLISTSUBSBYID.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                listS.add(lDAO.convert(rs)) ;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        return listS;
+    }
 }
