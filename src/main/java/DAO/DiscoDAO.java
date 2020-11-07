@@ -1,38 +1,70 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
+import Utils.ConnectionUtils;
+import controller.AppController;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Disco;
 
 /**
  *
- * @author espin
+ * @author Jorge SB
  */
 public class DiscoDAO extends Disco implements DAO<Disco> {
+    
+    enum queries {
+        INSERT("INSERT INTO disco (ID, Nombre, Nacionalidad, Foto, Fecha, IDArtista) VALUES (?,?,?,?)"),
+        UPDATE("UPDATE disco SET Nombre=?,Nacionalidad=?,Foto=?,Fecha=?,IDArtista=? WHERE ID=?"),
+        DELETE("DELETE FROM disco WHERE ID=?"),
+        GETBYID("SELECT * FROM Disco WHERE ID=?"),
+        GETALL("SELECT * FROM Disco"),
 
+        private String q;
 
+        queries(String q) {
+            this.q = q;
+        }
+
+        public String getQ() {
+            return this.q;
+        }
+    }
+    Connection conn;
+    
+    
+    
+    
+    
+    
+    
+
+//______________________________________________________________________________CRUD
+    
     @Override
     public void insert(Disco a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void edit(Disco a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void remove(Disco a) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     @Override
     public List<Disco> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     /**
