@@ -20,7 +20,7 @@ import model.Artista;
 public class ArtistaDAO extends Artista implements DAO<Artista> {
 
     enum queries {
-        INSERT("INSERT INTO artista (ID, Nombre, Nacionalidad, Foto) VALUES (?,?,?,?)"),
+        INSERT("INSERT INTO artista (ID, Nombre, Nacionalidad, Foto) VALUES (NULL,?,?,?)"),
         UPDATE("UPDATE artista SET Nombre=?,Nacionalidad=?,Foto=? WHERE ID=?"),
         DELETE("DELETE FROM artista WHERE ID=?"),
         GETBYID("SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID=?"),
@@ -82,7 +82,6 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
                 edit(a);
             } else {
                 PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
-
                 stat.setString(1, a.getNombre());
                 stat.setString(2, a.getNacionalidad());
                 stat.setString(3, a.getFoto());

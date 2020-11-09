@@ -22,8 +22,8 @@ import model.Disco;
 public class DiscoDAO extends Disco implements DAO<Disco> {
 
     enum queries {
-        INSERT("INSERT INTO disco (ID, Nombre, Nacionalidad, Foto, Fecha, IDArtista) VALUES (?,?,?,?)"),
-        UPDATE("UPDATE disco SET Nombre=?,Nacionalidad=?,Foto=?,Fecha=?,IDArtista=? WHERE ID=?"),
+        INSERT("INSERT INTO disco (ID, Nombre, Nacionalidad, Foto, fechap, IDArtista) VALUES (?,?,?,?)"),
+        UPDATE("UPDATE disco SET Nombre=?,Nacionalidad=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
         DELETE("DELETE FROM disco WHERE ID=?"),
         GETBYID("SELECT * FROM Disco WHERE ID=?"),
         GETALL("SELECT * FROM Disco");
@@ -148,7 +148,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
         int id = rs.getInt("ID");
         String nombre = rs.getString("Nombre");
         String foto = rs.getString("Foto");
-        Date fecha = rs.getDate("Fecha");
+        Date fecha = rs.getDate("fechap");
         int idArtista = rs.getInt("IDArtista");
         Artista crea = ADAO.getByID(idArtista);
         Disco a = new Disco(id, nombre, foto, fecha, crea);

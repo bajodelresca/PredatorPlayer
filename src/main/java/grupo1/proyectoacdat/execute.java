@@ -5,7 +5,14 @@
  */
 package grupo1.proyectoacdat;
 
+import DAO.ArtistaDAO;
+import DAO.CancionDAO;
+import DAO.ListaDAO;
 import View.GUI;
+import java.util.List;
+import model.Artista;
+import model.Cancion;
+import model.Disco;
 
 /**
  *
@@ -14,12 +21,27 @@ import View.GUI;
 public class execute {
 
     public static void main(String[] args) {
-
-     /* AppController a=AppController.getInstance();
-     List<Lista>list=  a.getListFromSubscriber(2);
-        for (Lista subscripcion : list) {
+        
+        ArtistaDAO a=new ArtistaDAO();
+        Artista art=new Artista();
+         
+           art.setNombre("Juan");
+           art.setNacionalidad("Argentino");
+           art.setFoto("FOTO3");
+             a.insert(art);
+        for (Artista subscripcion : a.getAll()) {
+            System.out.println(subscripcion);
+        }
+         
+       /* CancionDAO cDAO = new CancionDAO();
+        Cancion c = new Cancion();
+        c.setNombre("CANCIONPRUEBA");
+        c.setDuracion(300);
+        c.setGenero(0);
+        cDAO.insert(c);
+        for (Cancion subscripcion : cDAO.getAll()) {
             System.out.println(subscripcion);
         }*/
-        GUI.principal();
+        //   GUI.principal();
     }
 }
