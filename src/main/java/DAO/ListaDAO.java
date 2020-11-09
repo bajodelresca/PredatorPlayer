@@ -32,7 +32,8 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         DELETE("DELETE FROM Lista WHERE ID=?"),
         GETBYID("SELECT * FROM Lista WHERE ID=?"),
         GETALL("SELECT * FROM Lista"),
-        GETCANCIONBYID("SELECT * FROM listacancion WHERE IDLista=?");
+        GETCANCIONBYID("SELECT * FROM listacancion WHERE IDLista=?"),
+        GETCANCLISTBYID("SELECT ID, Nombre, Duracion, IDGenero, IDDisco FROM cancion as c INNER JOIN listacancion as list on list.IDCancion=c.ID WHERE list.IDCancion=?");
 
         private String q;
 
@@ -51,9 +52,9 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         try {
             conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -75,9 +76,9 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         try {
             conn = ConnectionUtils.connect(AppController.currentConnection);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -230,21 +231,19 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         }
         return c;
     }
-    public List<Cancion> getCancionesdeLista(int id) {
-        CancionDAO a=new CancionDAO();
-        PreparedStatement stat = null;
+    public  List<Cancion> getCancionFromList(int id) {
+         PreparedStatement stat = null;
         ResultSet rs = null;
-        List<Cancion> listC = new ArrayList<>();
+        CancionDAO lDAO=new CancionDAO();
+        List<Cancion> listS = new ArrayList<>();
         try {
             conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETCANCIONBYID.getQ());
+            stat = conn.prepareStatement(queries.GETCANCLISTBYID.getQ());
             stat.setInt(1, id);
             rs = stat.executeQuery();
             while (rs.next()) {
-                listC.add(a.convert(rs));
+                listS.add(lDAO.convert(rs)) ;
             }
-            
-            
         } catch (SQLException ex) {
             Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -263,6 +262,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
                 }
             }
         }
-        return listC;
+        
+        return listS;
     }
 }
