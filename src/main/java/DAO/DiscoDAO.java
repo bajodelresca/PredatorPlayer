@@ -151,7 +151,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
         Date fecha = rs.getDate("Fecha");
         int idArtista = rs.getInt("IDArtista");
         Artista crea = ADAO.getByID(idArtista);
-        Artista a = new Artista(id, nombre, foto, fecha, crea);
+        Disco a = new Disco(id, nombre, foto, fecha, crea);
         return a;
     }
 
