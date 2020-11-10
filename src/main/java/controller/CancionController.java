@@ -32,17 +32,38 @@ public class CancionController {
         return cDAO.getByID(id);
     }
 
-    public void insertSongs(Cancion a) {
-        CancionDAO cDAO = new CancionDAO();
-        cDAO.insert(a);
+    public boolean insertSongs(Cancion a) {
+        boolean result = false;
+        if (a != null) {
+            CancionDAO cDAO = new CancionDAO();
+            cDAO.insert(a);
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
     }
 
-    public void editSongs(Cancion a) {
-        CancionDAO cDAO = new CancionDAO();
-        cDAO.edit(a);
+    public boolean editSongs(Cancion a) {
+        boolean result = false;
+        if (a != null) {
+            CancionDAO cDAO = new CancionDAO();
+            cDAO.edit(a);
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
     }
-    public void removeSongs(Cancion a) {
-        CancionDAO cDAO = new CancionDAO();
-        cDAO.remove(a);
+
+    public boolean removeSongs(Cancion a) {
+        boolean result = false;
+        if (a != null) {
+            CancionDAO cDAO = new CancionDAO();
+            cDAO.remove(a);
+        } else {
+            result = false;
+        }
+        return result;
     }
 }

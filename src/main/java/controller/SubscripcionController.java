@@ -29,27 +29,49 @@ public class SubscripcionController {
         return cDAO.getAll();
     }
 
-    public void insertSubs(Subscripcion a) {
-        SubscripcionDAO cDAO = new SubscripcionDAO();
-        cDAO.insert(a);
+    public boolean insertSubs(Subscripcion a) {
+        boolean result = false;
+        if (a != null) {
+            SubscripcionDAO cDAO = new SubscripcionDAO();
+            cDAO.insert(a);
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
     }
 
-    public void editSubs(Subscripcion a) {
-        SubscripcionDAO cDAO = new SubscripcionDAO();
-        cDAO.edit(a);
+    public boolean editSubs(Subscripcion a) {
+        boolean result = false;
+        if (a != null) {
+            SubscripcionDAO cDAO = new SubscripcionDAO();
+            cDAO.edit(a);
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
     }
 
-    public void removeSubs(Subscripcion a) {
-        SubscripcionDAO cDAO = new SubscripcionDAO();
-        cDAO.remove(a);
+    public boolean removeSubs(Subscripcion a) {
+        boolean result = false;
+        if (a != null) {
+            SubscripcionDAO cDAO = new SubscripcionDAO();
+            cDAO.remove(a);
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
     }
-    
+
     public List<Usuario> getSubscriberFromList(int id) {
         SubscripcionDAO cDAO = new SubscripcionDAO();
         return cDAO.getSubscriberFromList(id);
-    } 
-    public  List<Lista> getListFromSubscriber(int id){
-      SubscripcionDAO cDAO = new SubscripcionDAO();
+    }
+
+    public List<Lista> getListFromSubscriber(int id) {
+        SubscripcionDAO cDAO = new SubscripcionDAO();
         return cDAO.getListFromSubscriber(id);
     }
 }
