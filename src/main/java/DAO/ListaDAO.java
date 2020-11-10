@@ -266,4 +266,27 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 
         return listS;
     }
+
+    public int save(Lista a, Cancion c) {
+        int result = -1;
+        try {
+            PreparedStatement stat = null;
+            ResultSet rs = null;
+            conn = ConnectionUtils.getConnection();
+
+            conn.prepareStatement(queries.INSERTLISTACANCION.getQ());
+            stat.setInt(1, a.getID());
+
+            stat.setInt(2, c.getID());
+
+            result = stat.executeUpdate();
+            
+            a.setCancionListareproduccion(c);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return result;
+    }
 }
