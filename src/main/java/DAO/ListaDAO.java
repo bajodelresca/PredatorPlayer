@@ -267,7 +267,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         return listS;
     }
 
-    public int save(Lista a, Cancion c) {
+    public int insertListCanc(Lista a, Cancion c) {
         int result = -1;
         try {
             PreparedStatement stat = null;
