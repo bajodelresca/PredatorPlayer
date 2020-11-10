@@ -56,5 +56,13 @@ public class GUI {
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
         }
     }
+    
+    private static void ControladorMenuListar(int op2) {}
+    
+    private static void ControladorMenuInsertar(int op2) {}
+    
+    private static void ControladorMenuEditar(int op2) {}
+    
+    private static void ControladorMenuEliminar(int op2) {}
 
 }
