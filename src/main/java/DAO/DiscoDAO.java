@@ -22,7 +22,7 @@ import model.Disco;
 public class DiscoDAO extends Disco implements DAO<Disco> {
 
     enum queries {
-        INSERT("INSERT INTO disco (ID, Nombre, Nacionalidad, Foto, fechap, IDArtista) VALUES (?,?,?,?)"),
+        INSERT("INSERT INTO disco (ID, Nombre, Nacionalidad, Foto, fechap, IDArtista) VALUES (NULL,?,?,?)"),
         UPDATE("UPDATE disco SET Nombre=?,Nacionalidad=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
         DELETE("DELETE FROM disco WHERE ID=?"),
         GETBYID("SELECT * FROM Disco WHERE ID=?"),
