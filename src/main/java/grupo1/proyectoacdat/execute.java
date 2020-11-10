@@ -7,6 +7,7 @@ package grupo1.proyectoacdat;
 
 import DAO.ArtistaDAO;
 import DAO.CancionDAO;
+import DAO.DiscoDAO;
 import DAO.ListaDAO;
 import View.GUI;
 import java.util.List;
@@ -21,15 +22,15 @@ import model.Disco;
 public class execute {
 
     public static void main(String[] args) {
-        
-        ArtistaDAO a=new ArtistaDAO();
-        Artista art=new Artista();
-         
-           art.setNombre("Juan");
-           art.setNacionalidad("Argentino");
-           art.setFoto("FOTO3");
-             a.insert(art);
-        for (Artista subscripcion : a.getAll()) {
+        CancionDAO cDAO=new CancionDAO();
+        DiscoDAO a=new DiscoDAO();
+        Cancion c1=cDAO.getByID(5);
+        Cancion c2=cDAO.getByID(3);
+        cDAO.remove(c1);
+        cDAO.remove(c2);
+      Disco d=a.getByID(2);
+        a.remove(d);
+        for (Disco subscripcion : a.getAll()) {
             System.out.println(subscripcion);
         }
          

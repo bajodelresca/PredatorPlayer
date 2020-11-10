@@ -28,6 +28,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 
     enum queries {
         INSERT("INSERT INTO Lista (ID,Nombre,Descripcion,IDUsuario) VALUES(NULL,?,?,?)"),
+        INSERTLISTACANCION("INSERT INTO listacancion (IDLista,IDCancion) VALUES(?,?)"),
         UPDATE("UPDATE Lista SET Nombre = ?, Descripcion = ?, IDUsuario = ? WHERE ID = ?"),
         DELETE("DELETE FROM Lista WHERE ID=?"),
         GETBYID("SELECT * FROM Lista WHERE ID=?"),

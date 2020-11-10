@@ -29,6 +29,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         INSERT("INSERT INTO cancion (ID, Nombre, Duracion, IDGenero, IDDisco) VALUES (NULL,?,?,NULL,?)"),
         UPDATE("UPDATE cancion SET Nombre=?,Duracion=?,IDGenero=?,IDDisco=? WHERE ID=?"),
         DELETE("DELETE FROM cancion WHERE ID=?"),
+        DELETEALL("DELETE FROM cancion INNER JOIN WHERE ID=?"),
         GETBYID("SELECT ID,Nombre,Duracion,IDDisco FROM cancion Where ID=?"),
         GETALL("SELECT  ID,Nombre,Duracion,IDDisco FROM cancion");
 

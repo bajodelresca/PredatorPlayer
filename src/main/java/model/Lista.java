@@ -55,12 +55,14 @@ public class Lista {
         this.listareproduccion = listareproduccion;
     }
     
+    /**
+     * Introduce una cancion al la lista
+     * @param c recibe una cancion
+     */
+    public void setCancionListareproduccion(Cancion c) {
+        this.listareproduccion.add(c);
+    }
 
-    
-
-    
-    
-    
     public int getID() {
         return ID;
     }

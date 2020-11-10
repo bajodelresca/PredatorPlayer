@@ -26,8 +26,8 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         DELETE("DELETE FROM artista WHERE ID=?"),
         GETBYID("SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID=?"),
         GETALL("SELECT ID,Nombre,Nacionalidad,Foto FROM artista"),
-        GETDISCOLISTBYID("SELECT ID, Nombre, Foto, fechap, IDArtista FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?");
-
+        GETDISCOLISTBYID("SELECT d.ID, d.Nombre, d.Foto, d.fechap, d.IDArtista FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?");
+        
         private String q;
 
         queries(String q) {

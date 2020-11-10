@@ -1,6 +1,5 @@
 package model;
 
-import java.sql.Blob;
 import java.util.List;
 
 /**

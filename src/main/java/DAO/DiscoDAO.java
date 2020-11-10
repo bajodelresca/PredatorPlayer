@@ -23,12 +23,12 @@ import model.Disco;
 public class DiscoDAO extends Disco implements DAO<Disco> {
 
     enum queries {
-        INSERT("INSERT INTO disco (ID, Nombre, Nacionalidad, Foto, fechap, IDArtista) VALUES (NULL,?,?,?)"),
-        UPDATE("UPDATE disco SET Nombre=?,Nacionalidad=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
+        INSERT("INSERT INTO disco (ID, Nombre, Foto, fechap, IDArtista) VALUES (NULL,?,?,?)"),
+        UPDATE("UPDATE disco SET Nombre=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
         DELETE("DELETE FROM disco WHERE ID=?"),
         GETBYID("SELECT * FROM Disco WHERE ID=?"),
         GETALL("SELECT * FROM Disco"),
-        GETCANCLISTBYID("SELECT ID, Nombre, Duracion, IDGenero, IDDisco FROM cancion as c INNER JOIN disco as d on d.ID=c.IDDisco WHERE d.ID=?");
+        GETCANCLISTBYID("SELECT c.ID, c.Nombre, c.Duracion, c.IDGenero, c.IDDisco FROM cancion as c INNER JOIN disco as d on d.ID=c.IDDisco WHERE d.ID=?");
 
         private String q;
 
@@ -110,7 +110,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
             PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
             stat.setString(1, a.getNombre());
             stat.setString(2, a.getFoto());
-            stat.setDate(3, (java.sql.Date) new Date(a.getFecha().getTime()));
+            stat.setDate(3, (java.sql.Date) a.getFecha());
             stat.setInt(4, a.getCreador().getID());
             stat.setInt(5, a.getID());
             stat.executeUpdate();
