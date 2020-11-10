@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Artista;
+import model.Cancion;
 import model.Disco;
 
 /**
@@ -26,7 +27,8 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
         UPDATE("UPDATE disco SET Nombre=?,Nacionalidad=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
         DELETE("DELETE FROM disco WHERE ID=?"),
         GETBYID("SELECT * FROM Disco WHERE ID=?"),
-        GETALL("SELECT * FROM Disco");
+        GETALL("SELECT * FROM Disco"),
+        GETCANCLISTBYID("SELECT ID, Nombre, Duracion, IDGenero, IDDisco FROM cancion as c INNER JOIN disco as d on d.ID=c.IDDisco WHERE d.ID=?");
 
         private String q;
 
@@ -74,7 +76,6 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
     }
 
 //______________________________________________________________________________CRUD
-    
     @Override
     public void insert(Disco a) {
         int result = -1;
@@ -221,5 +222,42 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
         return d;
     }
     
-    // Aún por terminar 
+    /**
+     * Recibe el id de un disco y devuelve todas sus canciones
+     * @param id
+     * @return canciones
+     */
+    public List<Cancion> getListCanciones(int id) {
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        CancionDAO CaDAO = new CancionDAO();
+        List<Cancion> canciones = new ArrayList<>();
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETCANCLISTBYID.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                canciones.add(CaDAO.convert(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return canciones;
+    }
 }

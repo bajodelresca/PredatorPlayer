@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Artista;
+import model.Disco;
 
 /**
  *
@@ -24,7 +25,8 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         UPDATE("UPDATE artista SET Nombre=?,Nacionalidad=?,Foto=? WHERE ID=?"),
         DELETE("DELETE FROM artista WHERE ID=?"),
         GETBYID("SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID=?"),
-        GETALL("SELECT ID,Nombre,Nacionalidad,Foto FROM artista");
+        GETALL("SELECT ID,Nombre,Nacionalidad,Foto FROM artista"),
+        GETDISCOLISTBYID("SELECT ID, Nombre, Foto, fechap, IDArtista FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?");
 
         private String q;
 
@@ -214,5 +216,42 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         return a;
     }
     
-    // Aún por terminar
+    /**
+     * Recibe el id de un disco y devuelve todas sus canciones
+     * @param id
+     * @return canciones
+     */
+    public List<Disco> getListRepertorio(int id) {
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        DiscoDAO DiDAO = new DiscoDAO();
+        List<Disco> repertorio = new ArrayList<>();
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETDISCOLISTBYID.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                repertorio.add(DiDAO.convert(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return repertorio;
+    }
 }
