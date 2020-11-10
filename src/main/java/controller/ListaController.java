@@ -27,21 +27,21 @@ public class ListaController {
         return lDAO.getAll();
     }
 
-    public Lista getSongsById(int id) {
+    public Lista getListById(int id) {
         ListaDAO lDAO = new ListaDAO();
         return lDAO.getByID(id);
     }
 
-    public void insertSongs(Lista a) {
+    public void insertList(Lista a) {
         ListaDAO lDAO = new ListaDAO();
         lDAO.insert(a);
     }
 
-    public void editSongs(Lista a) {
+    public void editList(Lista a) {
         ListaDAO lDAO = new ListaDAO();
         lDAO.edit(a);
     }
-    public void removeSongs(Lista a) {
+    public void removeList(Lista a) {
         ListaDAO lDAO = new ListaDAO();
         lDAO.remove(a);
     }
