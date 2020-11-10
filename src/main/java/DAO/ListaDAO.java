@@ -32,7 +32,6 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         DELETE("DELETE FROM Lista WHERE ID=?"),
         GETBYID("SELECT * FROM Lista WHERE ID=?"),
         GETALL("SELECT * FROM Lista"),
-        GETCANCIONBYID("SELECT * FROM listacancion WHERE IDLista=?"),
         GETCANCLISTBYID("SELECT ID, Nombre, Duracion, IDGenero, IDDisco FROM cancion as c INNER JOIN listacancion as list on list.IDCancion=c.ID WHERE list.IDLista=?");
 
         private String q;
