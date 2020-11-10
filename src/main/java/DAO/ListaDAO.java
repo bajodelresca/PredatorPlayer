@@ -204,7 +204,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         ResultSet rs = null;
         Lista c = new Lista();
         try {
-             conn = ConnectionUtils.getConnection();
+            conn = ConnectionUtils.getConnection();
             stat = conn.prepareStatement(queries.GETBYID.getQ());
             stat.setInt(1, id);
             rs = stat.executeQuery();
@@ -231,10 +231,11 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         }
         return c;
     }
-    public  List<Cancion> getCancionFromList(int id) {
-         PreparedStatement stat = null;
+
+    public List<Cancion> getCancionFromList(int id) {
+        PreparedStatement stat = null;
         ResultSet rs = null;
-        CancionDAO lDAO=new CancionDAO();
+        CancionDAO lDAO = new CancionDAO();
         List<Cancion> listS = new ArrayList<>();
         try {
             conn = ConnectionUtils.getConnection();
@@ -242,7 +243,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
             stat.setInt(1, id);
             rs = stat.executeQuery();
             while (rs.next()) {
-                listS.add(lDAO.convert(rs)) ;
+                listS.add(lDAO.convert(rs));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,7 +263,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
                 }
             }
         }
-        
+
         return listS;
     }
 }
