@@ -37,16 +37,16 @@ public class AppController {
         return songControl.getSongsById(id);
     }
 
-    public void insertSongs(Cancion a) {
-        songControl.insertSongs(a);
+    public boolean insertSongs(Cancion a) {
+        return songControl.insertSongs(a);
     }
 
-    public void editSongs(Cancion a) {
-        songControl.editSongs(a);
+    public boolean editSongs(Cancion a) {
+       return songControl.editSongs(a);
     }
 
-    public void removeSongs(Cancion a) {
-        songControl.removeSongs(a);
+    public boolean removeSongs(Cancion a) {
+       return songControl.removeSongs(a);
     }
 
     /*Funciones de Subscripcion*/
@@ -54,16 +54,16 @@ public class AppController {
         return subsControl.getAllSubs();
     }
 
-    public void insertSongs(Subscripcion a) {
-        subsControl.insertSubs(a);
+    public boolean insertSongs(Subscripcion a) {
+       return subsControl.insertSubs(a);
     }
 
-    public void editSongs(Subscripcion a) {
-        subsControl.editSubs(a);
+    public boolean editSongs(Subscripcion a) {
+       return subsControl.editSubs(a);
     }
 
-    public void removeSongs(Subscripcion a) {
-        subsControl.removeSubs(a);
+    public boolean removeSongs(Subscripcion a) {
+      return subsControl.removeSubs(a);
     }
 
     public List<Usuario> getSubscriberFromList(int id) {

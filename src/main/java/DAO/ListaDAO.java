@@ -267,6 +267,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         return listS;
     }
 
+    /*REVISAR*/
     public int insertListCanc(Lista a, Cancion c) {
         int result = -1;
         try {
@@ -280,7 +281,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
             stat.setInt(2, c.getID());
 
             result = stat.executeUpdate();
-            
+
             a.setCancionListareproduccion(c);
 
         } catch (SQLException ex) {
