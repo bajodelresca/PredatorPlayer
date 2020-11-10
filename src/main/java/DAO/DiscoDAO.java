@@ -221,9 +221,10 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
         }
         return d;
     }
-    
+
     /**
      * Recibe el id de un disco y devuelve todas sus canciones
+     *
      * @param id
      * @return canciones
      */

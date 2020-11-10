@@ -27,7 +27,7 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         GETBYID("SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID=?"),
         GETALL("SELECT ID,Nombre,Nacionalidad,Foto FROM artista"),
         GETDISCOLISTBYID("SELECT d.ID, d.Nombre, d.Foto, d.fechap, d.IDArtista FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?");
-        
+
         private String q;
 
         queries(String q) {
@@ -74,7 +74,6 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
     }
 
 //______________________________________________________________________________CRUD
-    
     @Override
     public void insert(Artista a) {
         int result = -1;
@@ -182,7 +181,7 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         }
         return listA;
     }
-    
+
     public Artista getByID(int id) {
         PreparedStatement stat = null;
         ResultSet rs = null;
@@ -215,9 +214,10 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         }
         return a;
     }
-    
+
     /**
      * Recibe el id de un disco y devuelve todas sus canciones
+     *
      * @param id
      * @return canciones
      */

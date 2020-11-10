@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Utils;
 
 import java.util.Scanner;
@@ -32,7 +27,7 @@ public class Utilities {
     }
     
      public static int Menu() {
-        int opcion;
+        int opcion = 0;
         P("-----Bienvenido a Espotifi-----");
         P("1)Listar");
         P("2)Insertar");
@@ -41,13 +36,18 @@ public class Utilities {
         P("5)Salir");
         P("-------------------------------------");
         p("> ");
-
-        opcion = keyboard.nextInt(); 
+        
+        try{
+            opcion = keyboard.nextInt();
+        }catch(Exception e){
+            System.out.println("Introduzca un número entero");
+            keyboard=new Scanner(System.in);
+        }
 
         return opcion;
     }
      public static int MenuListar() {
-        int opcion;
+        int opcion = 0;
         P("-----Bienvenido a Espotifi-----");
         P("1)Listar Cancion");
         P("2)Listar Disco");
@@ -59,19 +59,30 @@ public class Utilities {
         P("-------------------------------------");
         p("> ");
 
-        opcion = keyboard.nextInt(); 
+        try{
+            opcion = keyboard.nextInt();
+        }catch(Exception e){
+            System.out.println("Introduzca un número entero");
+            keyboard=new Scanner(System.in);
+        }
 
         return opcion;
     }
       public static int MenuListarCancion() {
-        int resultado = 0;
+        int opcion = 0;
         P("1)Listar todos");
         P("2)Listar por ID");
         P("3)Listar por Nombre");
         P("4)Volver al menú anterior");
         p("> ");
-        resultado = keyboard.nextInt(); 
+        
+        try{
+            opcion = keyboard.nextInt();
+        }catch(Exception e){
+            System.out.println("Introduzca un número entero");
+            keyboard=new Scanner(System.in);
+        }
 
-        return resultado;
+        return opcion;
     }
 }
