@@ -1,8 +1,10 @@
 package controller;
 
 import java.util.List;
+import model.Artista;
 import model.Cancion;
 import model.Connection;
+import model.Disco;
 import model.Lista;
 import model.Subscripcion;
 import model.Usuario;
@@ -15,10 +17,14 @@ public class AppController {
 
     public static Connection currentConnection;
     private static AppController instancia = null;
+    private ArtistaController artistControl = null;
+    private DiscoController diskControl = null;
     private CancionController songControl = null;
     private SubscripcionController subsControl = null;
 
     public AppController() {
+        artistControl = ArtistaController.getInstance();
+        diskControl = DiscoController.getInstance();
         songControl = CancionController.getInstance();
         subsControl = SubscripcionController.getInstance();
     }
@@ -27,8 +33,53 @@ public class AppController {
         instancia = new AppController();
         return instancia;
     }
+    
+    //___________________________________________________________________________Funciones de ARTISTA
+    
+    public List<Artista> getAllArtists() {
+        return artistControl.getAllArtists();
+    }
 
-    /*Funciones de Cancion*/
+    public Artista getArtistsById(int id) {
+        return artistControl.getArtistsById(id);
+    }
+
+    public boolean insertArtists(Artista a) {
+        return artistControl.insertArtists(a);
+    }
+
+    public boolean editArtists(Artista a) {
+       return artistControl.editArtists(a);
+    }
+
+    public boolean removeArtists(Artista a) {
+       return artistControl.removeArtists(a);
+    }
+    
+    //___________________________________________________________________________Funciones de DISCO
+    
+    public List<Disco> getAllDiscs() {
+        return diskControl.getAllDiscs();
+    }
+
+    public Disco getDiscsById(int id) {
+        return diskControl.getDiscsById(id);
+    }
+
+    public boolean insertDiscs(Disco a) {
+        return diskControl.insertDiscs(a);
+    }
+
+    public boolean editDiscs(Disco a) {
+       return diskControl.editDiscs(a);
+    }
+
+    public boolean removeDiscs(Disco a) {
+       return diskControl.removeDiscs(a);
+    }
+    
+    //___________________________________________________________________________Funciones de CANCION
+    
     public List<Cancion> getAllSongs() {
         return songControl.getAllSongs();
     }
@@ -48,8 +99,9 @@ public class AppController {
     public boolean removeSongs(Cancion a) {
        return songControl.removeSongs(a);
     }
-
-    /*Funciones de Subscripcion*/
+    
+    //___________________________________________________________________________Funciones de SUBSCRIPCION
+    
     public List<Subscripcion> getAllSubs() {
         return subsControl.getAllSubs();
     }

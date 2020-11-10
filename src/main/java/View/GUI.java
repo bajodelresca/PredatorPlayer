@@ -40,14 +40,14 @@ public class GUI {
                     ControladorMenuEditar(op2);
                 } while (op2 != 5);
                 break;
-                
+
             case 4:
                 do {
                     op2 = Utilities.MenuEliminar();
                     ControladorMenuEliminar(op2);
                 } while (op2 != 7);
                 break;
-                
+
             case 5:
                 Utilities.P("Saliendo de la aplicación.");
                 break;
@@ -57,12 +57,144 @@ public class GUI {
         }
     }
     
-    private static void ControladorMenuListar(int op2) {}
+    //___________________________________________________________________________MenuListar
+    private static void ControladorMenuListar(int op2) {
+
+        switch (op2) {
+            case 1:
+
+                break;
+
+            case 2:
+
+                break;
+
+            case 3:
+
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+
+                break;
+
+            case 6:
+
+                break;
+
+            case 7:
+                Utilities.P("Saliendo del Menú de Información.");
+                break;
+
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
     
-    private static void ControladorMenuInsertar(int op2) {}
+    //___________________________________________________________________________MenuInsertar
+    private static void ControladorMenuInsertar(int op2) {
+
+        switch (op2) {
+            case 1:
+
+                break;
+
+            case 2:
+
+                break;
+
+            case 3:
+
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+
+                break;
+
+            case 6:
+
+                break;
+
+            case 7:
+                Utilities.P("Saliendo del Menú de Creación.");
+                break;
+
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
     
-    private static void ControladorMenuEditar(int op2) {}
+    //___________________________________________________________________________MenuEditar
+    private static void ControladorMenuEditar(int op2) {
+                
+        switch (op2) {
+            case 1:
+                
+                break;
+
+            case 2:
+                
+                break;
+
+            case 3:
+                
+                break;
+                
+            case 4:
+                
+                break;
+                
+            case 5:
+                Utilities.P("Saliendo del Menú de Edición.");
+                break;
+
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
     
-    private static void ControladorMenuEliminar(int op2) {}
+    //___________________________________________________________________________MenuEliminar
+    private static void ControladorMenuEliminar(int op2) {
+                
+        switch (op2) {
+            case 1:
+                
+                break;
+
+            case 2:
+                
+                break;
+
+            case 3:
+                
+                break;
+                
+            case 4:
+                
+                break;
+            
+            case 5:
+                
+                break;
+            
+            case 6:
+                
+                break;
+                
+            case 7:
+                Utilities.P("Saliendo del Menú de Eliminación.");
+                break;
+
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
 
 }
