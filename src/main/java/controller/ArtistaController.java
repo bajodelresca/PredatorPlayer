@@ -3,6 +3,7 @@ package controller;
 import DAO.ArtistaDAO;
 import java.util.List;
 import model.Artista;
+import model.Disco;
 
 /**
  *
@@ -60,6 +61,11 @@ public class ArtistaController {
             result = false;
         }
         return result;
+    }
+
+    public List<Disco> getRepertorio(int ID) {
+        ArtistaDAO aDAO = new ArtistaDAO();
+        return aDAO.getListRepertorio(ID);
     }
 
 }

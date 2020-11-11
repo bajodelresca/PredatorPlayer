@@ -2,6 +2,7 @@ package controller;
 
 import DAO.DiscoDAO;
 import java.util.List;
+import model.Cancion;
 import model.Disco;
 
 /**
@@ -62,4 +63,8 @@ public class DiscoController {
         return result;
     }
 
+    public List<Cancion> getCanciones(int ID) {
+        DiscoDAO dDAO = new DiscoDAO();
+        return dDAO.getListCanciones(ID);
+    }
 }
