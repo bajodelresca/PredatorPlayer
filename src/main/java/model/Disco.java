@@ -1,5 +1,7 @@
 package model;
 
+import controller.AppController;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +10,8 @@ import java.util.List;
  * @author Jorge SB
  */
 public class Disco {
+
+    private static AppController controlador = AppController.getInstance();
     protected int ID;
     protected String Nombre;
     protected String foto;
@@ -33,9 +37,9 @@ public class Disco {
     }
 
     public Disco() {
-        this (-1,"",null,null,null,null);
+        this(-1, "", null, null, null, null);
     }
-    
+
     public int getID() {
         return ID;
     }
@@ -77,7 +81,14 @@ public class Disco {
     }
 
     public List<Cancion> getCanciones() {
-        return canciones;
+        List<Cancion> canciones =  controlador.getCanciones(this.ID);
+        if (!canciones.isEmpty()) {
+            this.setCanciones(canciones);
+        } else {
+            canciones = new ArrayList<>();
+            this.setCanciones(canciones);
+        }
+        return this.canciones;
     }
 
     public void setCanciones(List<Cancion> canciones) {
@@ -92,14 +103,14 @@ public class Disco {
 
     @Override
     public boolean equals(Object obj) {
-        boolean igual=false;
-        if(obj!=null){
-            if(this==obj){
-                igual=true;
-            }else{
-                if(obj instanceof Disco){
-                    Disco n=(Disco) obj;
-                   if (this.ID == n.getID()) {
+        boolean igual = false;
+        if (obj != null) {
+            if (this == obj) {
+                igual = true;
+            } else {
+                if (obj instanceof Disco) {
+                    Disco n = (Disco) obj;
+                    if (this.ID == n.getID()) {
                         igual = true;
                     }
                 }
@@ -113,7 +124,4 @@ public class Disco {
         return "Disco{" + "ID=" + ID + ", Nombre=" + Nombre + ", foto=" + foto + ", fecha=" + fecha + ", creador=" + creador + ", canciones=" + canciones + '}';
     }
 
-    
-    
-    
 }

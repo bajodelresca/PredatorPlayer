@@ -5,6 +5,8 @@
  */
 package model;
 
+import controller.AppController;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +14,8 @@ import java.util.List;
  * @author espin
  */
 public class Lista {
+
+    private static AppController controlador = AppController.getInstance();
     protected int ID;
     protected String Nombre;
     protected String Descripcion;
@@ -34,12 +38,19 @@ public class Lista {
         this.Descripcion = Descripcion;
         this.creador = creador;
     }
-    
-    public Lista(){
-        this(-1,"","",null,null,null);
+
+    public Lista() {
+        this(-1, "", "", null, null, null);
     }
 
     public List<Usuario> getSubscriptores() {
+        List<Usuario> subscriptores = controlador.getSubscriberFromList(this.ID);
+         if (!subscriptores.isEmpty()) {
+            this.setSubscriptores(subscriptores);
+        } else {
+            subscriptores = new ArrayList<>();
+            this.setSubscriptores(subscriptores);
+        }
         return subscriptores;
     }
 
@@ -48,15 +59,23 @@ public class Lista {
     }
 
     public List<Cancion> getListareproduccion() {
+        List<Cancion> canciones = controlador.getAllSongsList(this.ID);
+        if (!canciones.isEmpty()) {
+            this.setListareproduccion(canciones);
+        } else {
+            canciones = new ArrayList<>();
+            this.setListareproduccion(canciones);
+        }
         return listareproduccion;
     }
 
     public void setListareproduccion(List<Cancion> listareproduccion) {
         this.listareproduccion = listareproduccion;
     }
-    
+
     /**
      * Introduce una cancion al la lista
+     *
      * @param c recibe una cancion
      */
     public void setCancionListareproduccion(Cancion c) {
@@ -103,14 +122,14 @@ public class Lista {
 
     @Override
     public boolean equals(Object obj) {
-        boolean igual=false;
-        if(obj!=null){
-            if(this==obj){
-                igual=true;
-            }else{
-                if(obj instanceof Lista){
-                    Lista n=(Lista) obj;
-                   if (this.ID == n.getID()) {
+        boolean igual = false;
+        if (obj != null) {
+            if (this == obj) {
+                igual = true;
+            } else {
+                if (obj instanceof Lista) {
+                    Lista n = (Lista) obj;
+                    if (this.ID == n.getID()) {
                         igual = true;
                     }
                 }
@@ -124,9 +143,4 @@ public class Lista {
         return "Lista{" + "ID=" + ID + ", Nombre=" + Nombre + ", Descripcion=" + Descripcion + ", creador=" + creador + ", subscriptores=" + subscriptores + ", listareproduccion=" + listareproduccion + '}';
     }
 
-    
-    
-    
-    
-    
 }

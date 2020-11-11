@@ -14,6 +14,8 @@ import java.util.List;
 import model.Artista;
 import model.Cancion;
 import model.Disco;
+import model.Lista;
+import model.Usuario;
 
 /**
  *

@@ -162,7 +162,7 @@ public class AppController {
     public boolean insertListCanc(Lista a, Cancion c) {
         return listControl.insertListCanc(a, c);
     }
-    //___________________________________________________________________________Funciones de LISTA
+    //___________________________________________________________________________Funciones de User
     
     public List<Usuario> getAllUsers() {
         return userControl.getAllList();        

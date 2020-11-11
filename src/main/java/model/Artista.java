@@ -1,5 +1,8 @@
 package model;
 
+import DAO.ArtistaDAO;
+import controller.AppController;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,11 +10,13 @@ import java.util.List;
  * @author Alberto343
  */
 public class Artista {
-   protected int ID;
-   protected String nombre;
-   protected String nacionalidad;
-   protected String foto;
-   protected List<Disco> repertorio;
+
+    private static AppController controlador = AppController.getInstance();
+    protected int ID;
+    protected String nombre;
+    protected String nacionalidad;
+    protected String foto;
+    protected List<Disco> repertorio;
 
     public Artista(int ID, String nombre, String nacionalidad, String foto, List<Disco> repertorio) {
         this.ID = ID;
@@ -29,7 +34,7 @@ public class Artista {
     }
 
     public Artista() {
-        this(-1,"","",null,null);
+        this(-1, "", "", null, null);
     }
 
     public int getID() {
@@ -65,6 +70,13 @@ public class Artista {
     }
 
     public List<Disco> getRepertorio() {
+        List<Disco> discos = controlador.getRepertorio(this.ID);
+        if (!discos.isEmpty()) {
+            this.setRepertorio(discos);
+        } else {
+            discos = new ArrayList<>();
+            this.setRepertorio(discos);
+        }
         return repertorio;
     }
 
@@ -80,14 +92,14 @@ public class Artista {
 
     @Override
     public boolean equals(Object obj) {
-         boolean igual=false;
-        if(obj!=null){
-            if(this==obj){
-                igual=true;
-            }else{
-                if(obj instanceof Artista){
-                    Artista n=(Artista) obj;
-                   if (this.ID == n.getID()) {
+        boolean igual = false;
+        if (obj != null) {
+            if (this == obj) {
+                igual = true;
+            } else {
+                if (obj instanceof Artista) {
+                    Artista n = (Artista) obj;
+                    if (this.ID == n.getID()) {
                         igual = true;
                     }
                 }
@@ -101,9 +113,4 @@ public class Artista {
         return "Artista{" + "ID=" + ID + ", nombre=" + nombre + ", nacionalidad=" + nacionalidad + ", foto=" + foto + ", repertorio=" + repertorio + '}';
     }
 
-    
-   
-    
-    
-    
 }

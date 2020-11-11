@@ -5,7 +5,9 @@
  */
 package model;
 
+import controller.AppController;
 import java.sql.Blob;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,6 +15,8 @@ import java.util.List;
  * @author espin
  */
 public class Usuario {
+
+    private static AppController controlador = AppController.getInstance();
     protected int ID;
     protected String Nombre;
     protected String Correo;
@@ -34,18 +38,24 @@ public class Usuario {
         this.Foto = Foto;
     }
 
-    public Usuario(){
-        this(-1,"","",null,null);
+    public Usuario() {
+        this(-1, "", "", null, null);
     }
 
     public List<Lista> getListasubscrito() {
+        List<Lista> listaSub = controlador.getListFromSubscriber(this.ID);
+        if (!listaSub.isEmpty()) {
+            this.setListasubscrito(listaSub);
+        } else {
+            listaSub = new ArrayList<>();
+            this.setListasubscrito(listaSub);
+        }
         return listasubscrito;
     }
 
     public void setListasubscrito(List<Lista> listasubscrito) {
         this.listasubscrito = listasubscrito;
     }
-    
 
     public int getID() {
         return ID;
@@ -87,14 +97,14 @@ public class Usuario {
 
     @Override
     public boolean equals(Object obj) {
-        boolean igual=false;
-        if(obj!=null){
-            if(this==obj){
-                igual=true;
-            }else{
-                if(obj instanceof Usuario){
-                    Usuario n=(Usuario) obj;
-                   if (this.ID == n.getID()) {
+        boolean igual = false;
+        if (obj != null) {
+            if (this == obj) {
+                igual = true;
+            } else {
+                if (obj instanceof Usuario) {
+                    Usuario n = (Usuario) obj;
+                    if (this.ID == n.getID()) {
                         igual = true;
                     }
                 }
@@ -108,7 +118,4 @@ public class Usuario {
         return "Usuario{" + "ID=" + ID + ", Nombre=" + Nombre + ", Correo=" + Correo + ", Foto=" + Foto + ", listasubscrito=" + listasubscrito + '}';
     }
 
-    
-    
-    
 }
