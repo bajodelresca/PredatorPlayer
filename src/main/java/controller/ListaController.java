@@ -15,6 +15,7 @@ import model.Lista;
  * @author espin
  */
 public class ListaController {
+
     private static ListaController instancia = null;
 
     public static ListaController getInstance() {
@@ -32,26 +33,53 @@ public class ListaController {
         return lDAO.getByID(id);
     }
 
-    public void insertList(Lista a) {
-        ListaDAO lDAO = new ListaDAO();
-        lDAO.insert(a);
+    public boolean insertList(Lista a) {
+        boolean result = false;
+        if (a != null) {
+            ListaDAO lDAO = new ListaDAO();
+            lDAO.insert(a);
+        } else {
+            result = false;
+        }
+        return result;
     }
 
-    public void editList(Lista a) {
-        ListaDAO lDAO = new ListaDAO();
-        lDAO.edit(a);
+    public boolean editList(Lista a) {
+         boolean result = false;
+        if (a != null) {
+            ListaDAO lDAO = new ListaDAO();
+            lDAO.edit(a);
+        } else {
+            result = false;
+        }
+        return result;
     }
-    public void removeList(Lista a) {
-        ListaDAO lDAO = new ListaDAO();
-        lDAO.remove(a);
+
+    public boolean removeList(Lista a) {
+         boolean result = false;
+        if (a != null) {
+            ListaDAO lDAO = new ListaDAO();
+            lDAO.remove(a);
+        } else {
+            result = false;
+        }
+        return result;
     }
-     public List<Cancion> getAllSongsList(int id) {
+
+    public List<Cancion> getAllSongsList(int id) {
         ListaDAO lDAO = new ListaDAO();
         return lDAO.getCancionFromList(id);
     }
-     public void insertListCanc(Lista a, Cancion c) {
-        ListaDAO lDAO = new ListaDAO();
-        lDAO.insertListCanc(a,c);
+
+    public boolean insertListCanc(Lista a, Cancion c) {
+        boolean result = false;
+        if (a != null && c != c) {
+            ListaDAO lDAO = new ListaDAO();
+        lDAO.insertListCanc(a, c);
+        } else {
+            result = false;
+        }
+        return result;
     }
-    
+
 }

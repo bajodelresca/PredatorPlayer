@@ -31,18 +31,36 @@ public class UsuarioController {
         return UDAO.getByID(id);
     }
 
-    public void insertUser(Usuario a) {
-        UsuarioDAO UDAO = new UsuarioDAO();
+    public boolean insertUser(Usuario a) {
+        boolean result = false;
+        if (a != null) {
+            UsuarioDAO UDAO = new UsuarioDAO();
         UDAO.insert(a);
+        } else {
+            result = false;
+        }
+        return result;
     }
 
-    public void editUser(Usuario a) {
-        UsuarioDAO UDAO = new UsuarioDAO();
+    public boolean editUser(Usuario a) {
+         boolean result = false;
+        if (a != null) {
+            UsuarioDAO UDAO = new UsuarioDAO();
         UDAO.edit(a);
+        } else {
+            result = false;
+        }
+        return result;
     }
-    public void removeUser(Usuario a) {
-        UsuarioDAO UDAO = new UsuarioDAO();
+    public boolean removeUser(Usuario a) {
+         boolean result = false;
+        if (a != null) {
+            UsuarioDAO UDAO = new UsuarioDAO();
         UDAO.remove(a);
+        } else {
+            result = false;
+        }
+        return result;
     }
      
 }

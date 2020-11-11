@@ -21,12 +21,16 @@ public class AppController {
     private DiscoController diskControl = null;
     private CancionController songControl = null;
     private SubscripcionController subsControl = null;
+    private ListaController listControl = null;
+    private UsuarioController userControl = null;
 
     public AppController() {
         artistControl = ArtistaController.getInstance();
         diskControl = DiscoController.getInstance();
         songControl = CancionController.getInstance();
         subsControl = SubscripcionController.getInstance();
+        listControl = ListaController.getInstance();
+        userControl = UsuarioController.getInstance();
     }
 
     public static AppController getInstance() {
@@ -128,5 +132,54 @@ public class AppController {
 
     public List<Lista> getListFromSubscriber(int id) {
         return subsControl.getListFromSubscriber(id);
+    }
+    //___________________________________________________________________________Funciones de LISTA
+
+    public List<Lista> getAllList() {
+        return listControl.getAllList();
+    }
+
+    public Lista getListById(int id) {
+        return listControl.getListById(id);
+    }
+
+    public boolean insertList(Lista a) {
+        return listControl.insertList(a);
+    }
+
+    public boolean editList(Lista a) {
+        return listControl.editList(a);
+    }
+
+    public boolean removeList(Lista a) {
+        return listControl.removeList(a);
+    }
+
+    public List<Cancion> getAllSongsList(int id) {
+        return listControl.getAllSongsList(id);
+    }
+
+    public boolean insertListCanc(Lista a, Cancion c) {
+        return listControl.insertListCanc(a, c);
+    }
+    //___________________________________________________________________________Funciones de LISTA
+    
+    public List<Usuario> getAllUsers() {
+        return userControl.getAllList();        
+    }
+
+    public Usuario getUserById(int id) {
+        return userControl.getUserById(id);
+    }
+
+    public boolean insertUser(Usuario a) {
+       return userControl.insertUser(a);
+    }
+
+    public boolean editUser(Usuario a) {
+         return userControl.editUser(a);
+    }
+    public boolean removeUser(Usuario a) {
+         return userControl.removeUser(a);
     }
 }
