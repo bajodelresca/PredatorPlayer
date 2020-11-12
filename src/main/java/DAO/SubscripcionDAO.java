@@ -256,4 +256,5 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
         
         return listS;
     }
+    
 }

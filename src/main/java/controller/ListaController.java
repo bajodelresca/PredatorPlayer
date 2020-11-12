@@ -75,5 +75,8 @@ public class ListaController {
         ListaDAO lDAO = new ListaDAO();
         return lDAO.insertListCanc(a, c);
     }
-
+    public boolean searchListByID(int id) {
+        ListaDAO lDAO = new ListaDAO();
+        return lDAO.searchByID(id);
+    }
 }

@@ -62,5 +62,10 @@ public class UsuarioController {
         }
         return result;
     }
-     
+    public boolean searchUserByID(int id) {
+        UsuarioDAO UDAO = new UsuarioDAO();
+        return UDAO.searchByID(id);
+    }
 }
+     
+

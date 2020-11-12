@@ -62,7 +62,9 @@ public class AppController {
     public List<Disco> getRepertorio(int ID) {
         return artistControl.getRepertorio(ID);
     }
-
+    public boolean searchArtistaByID(int id){
+     return artistControl.searchByArtistaID(id);
+     }
     //___________________________________________________________________________Funciones de DISCO
     public List<Disco> getAllDiscs() {
         return diskControl.getAllDiscs();
@@ -87,7 +89,9 @@ public class AppController {
     public List<Cancion> getCanciones(int ID) {
         return diskControl.getCanciones(ID);
     }
-
+    public boolean searchDiscByID(int id){
+     return diskControl.searchDiscByID(id);
+     }
     //___________________________________________________________________________Funciones de CANCION
     public List<Cancion> getAllSongs() {
         return songControl.getAllSongs();
@@ -109,7 +113,7 @@ public class AppController {
         return songControl.removeSongs(a);
     }
     public boolean searchSongByID(int id){
-     return songControl.searchByID(id);
+     return songControl.searchCancionByID(id);
      }
 
     //___________________________________________________________________________Funciones de SUBSCRIPCION
@@ -165,6 +169,9 @@ public class AppController {
     public boolean insertListCanc(int a, int c) {
         return listControl.insertListCanc(a, c);
     }
+    public boolean searchListByID(int id){
+     return listControl.searchListByID(id);
+     }
     //___________________________________________________________________________Funciones de User
     
     public List<Usuario> getAllUsers() {
@@ -185,4 +192,7 @@ public class AppController {
     public boolean removeUser(Usuario a) {
          return userControl.removeUser(a);
     }
+    public boolean searchUserByID(int id){
+     return userControl.searchUserByID(id);
+     }
 }

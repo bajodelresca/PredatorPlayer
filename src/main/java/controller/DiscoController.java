@@ -67,4 +67,9 @@ public class DiscoController {
         DiscoDAO dDAO = new DiscoDAO();
         return dDAO.getListCanciones(ID);
     }
+
+    public boolean searchDiscByID(int id) {
+        DiscoDAO dDAO = new DiscoDAO();
+        return dDAO.searchByID(id);
+    }
 }

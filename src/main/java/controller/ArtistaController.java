@@ -68,4 +68,8 @@ public class ArtistaController {
         return aDAO.getListRepertorio(ID);
     }
 
+    public boolean searchByArtistaID(int id) {
+        ArtistaDAO aDAO = new ArtistaDAO();
+        return aDAO.searchByID(id);
+    }
 }

@@ -254,4 +254,46 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
         }
         return repertorio;
     }
+    /**
+     * Metodo que comprueba si existe el ID en la tabla
+     * @param id recibe un entero
+     * @return devuelve un boolean, si existe devuelve true y false si no
+     */
+    public boolean searchByID(int id) {
+        boolean result = false;
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETBYID.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            if (rs.next()) {
+                Artista c = convert(rs);
+                if (c.getID() != -1) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return result;
+    }
 }
