@@ -66,4 +66,8 @@ public class CancionController {
         }
         return result;
     }
+     public boolean searchByID(int id){
+          CancionDAO cDAO = new CancionDAO();
+     return cDAO.searchByID(id);
+     }
 }

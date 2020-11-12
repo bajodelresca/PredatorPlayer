@@ -26,12 +26,7 @@ public class execute {
 
     public static void main(String[] args) {
       
-        //   GUI.principal();
-        AppController app=AppController.getInstance();
-        
-        app.insertListCanc(2, 6);
-        
-        
-        System.out.println(app.getAllSongsList(2));
+           GUI.principal();
+  
     }
 }

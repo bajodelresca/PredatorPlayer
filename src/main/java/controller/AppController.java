@@ -108,6 +108,9 @@ public class AppController {
     public boolean removeSongs(Cancion a) {
         return songControl.removeSongs(a);
     }
+    public boolean searchSongByID(int id){
+     return songControl.searchByID(id);
+     }
 
     //___________________________________________________________________________Funciones de SUBSCRIPCION
     public List<Subscripcion> getAllSubs() {

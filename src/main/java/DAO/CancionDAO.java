@@ -80,7 +80,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 
     @Override
     public void insert(Cancion a) {
-        int result=-1;
+        int result = -1;
         try {
             conn = ConnectionUtils.getConnection();
             if (this.ID > 0) {
@@ -97,26 +97,26 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
                         result = generatedKeys.getInt(1);
                     }
                 }
-                this.ID=result;
+                this.ID = result;
             }
         } catch (SQLException ex) {
             Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    
+
     @Override
     public void edit(Cancion a) {
-    try {
+        try {
             conn = ConnectionUtils.getConnection();
-                PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
-                stat.setString(1, a.getNombre());
-                stat.setInt(2, a.getDuracion());
-                stat.setInt(3, a.getGenero());
-                stat.setInt(4, a.getAlbum().getID());
-                stat.setInt(5, a.getID());
-                stat.executeUpdate();
-            
+            PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
+            stat.setString(1, a.getNombre());
+            stat.setInt(2, a.getDuracion());
+            stat.setInt(3, a.getGenero());
+            stat.setInt(4, a.getAlbum().getID());
+            stat.setInt(5, a.getID());
+            stat.executeUpdate();
+
         } catch (SQLException ex) {
             Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -125,19 +125,19 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 
     @Override
     public void remove(Cancion a) {
-            PreparedStatement ps=null;
-        try{
+        PreparedStatement ps = null;
+        try {
             conn = ConnectionUtils.getConnection();
-            ps=conn.prepareStatement(queries.DELETE.getQ());
-            ps.setInt(1,a.getID());
-           
-            if(ps.executeUpdate()==0) {
+            ps = conn.prepareStatement(queries.DELETE.getQ());
+            ps.setInt(1, a.getID());
+
+            if (ps.executeUpdate() == 0) {
                 throw new SQLException("No se Ha insertado correctamente");
             }
         } catch (SQLException ex) {
             Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
-            if(ps !=null){
+        } finally {
+            if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
@@ -236,5 +236,47 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
             }
         }
         return c;
+    }
+    /**
+     * Metodo que comprueba si existe el en la tabla
+     * @param id recibe un entero
+     * @return devuelve un boolean, si existe devuelve true y false si no
+     */
+    public boolean searchByID(int id) {
+        boolean result = false;
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETBYID.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            if (rs.next()) {
+                Cancion c = convert(rs);
+                if (c.getID() != -1) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return result;
     }
 }

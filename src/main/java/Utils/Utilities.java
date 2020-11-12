@@ -68,13 +68,13 @@ public class Utilities {
 
         return opcion;
     }
+    
 
-    public static int MenuListarCancion() {
+    public static int subMenuListar() {
         int opcion = 0;
         P("1) Listar todos");
         P("2) Listar por ID");
-        P("3) Listar por Nombre");
-        P("4) Volver al menú anterior");
+        P("3) Volver al menú anterior");
         p("> ");
 
         try {
