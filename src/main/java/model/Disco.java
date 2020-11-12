@@ -35,6 +35,13 @@ public class Disco {
         this.fecha = fecha;
         this.creador = creador;
     }
+    public Disco( String Nombre, String foto, Date fecha, Artista creador) {
+        this.ID = -1;
+        this.Nombre = Nombre;
+        this.foto = foto;
+        this.fecha = fecha;
+        this.creador = creador;
+    }
 
     public Disco() {
         this(-1, "", null, null, null, null);

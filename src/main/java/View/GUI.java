@@ -2,9 +2,17 @@ package View;
 
 import Utils.Utilities;
 import controller.AppController;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Artista;
 import model.Cancion;
+import model.Disco;
 
 public class GUI {
 
@@ -34,7 +42,9 @@ public class GUI {
             case 2:
                 do {
                     op2 = Utilities.MenuInsertar();
+
                     ControladorMenuInsertar(op2);
+
                 } while (op2 != 7);
                 break;
 
@@ -140,13 +150,52 @@ public class GUI {
 
     //___________________________________________________________________________MenuInsertar
     private static void ControladorMenuInsertar(int op2) {
-
+        String nombre = "";
+        String foto = "";
         switch (op2) {
             case 1:
-
+                Utilities.P("Introduzca el nombre del artista: ");
+                nombre = keyboard.next();
+                Utilities.P("Introduzca la nacionalidad: ");
+                String nacionalidad = keyboard.next();
+                Utilities.P("Introduzca la foto de perfil: ");
+                foto = keyboard.next();
+                Artista a = new Artista(nombre, nacionalidad, foto);
+                if (controlador.insertArtists(a)) {
+                    Utilities.P("EL ARTISTA HA SIDO CREADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA CREACION DEL ARTISTA");
+                }
                 break;
 
             case 2:
+                //ARREGLAR
+                Utilities.P("Introduzca el nombre del disco: ");
+                nombre = keyboard.next();
+                Utilities.P("Introduzca una foto: ");
+                foto = keyboard.next();
+                Utilities.P("Introduzca la fecha de salida (yyyy/MM/dd): ");
+                String fecha = keyboard.next();
+                DateFormat fechaFormat = new SimpleDateFormat("yyyy/MM/dd");
+                Date date = new Date();
+                try {
+                    date = fechaFormat.parse(fecha);
+                } catch (ParseException ex) {
+                    System.out.println(ex);
+                }
+                Utilities.P("Introduzca el ID del Artista: ");
+                int idArtista = keyboard.nextInt();
+                if (controlador.searchArtistaByID(idArtista)) {
+                    Artista art = controlador.getArtistsById(idArtista);
+                    Disco d = new Disco(nombre, foto, date, art);
+                    if (controlador.insertDiscs(d)) {
+                        Utilities.P("EL DISCO HA SIDO CREADO CON EXITO");
+                    } else {
+                        Utilities.P("HA OCURRIDO UN PROBLEMA EN LA CREACION DEL DISCO");
+                    }
+                } else {
+                    System.out.println("EL ID DEL ARTISTA NO EXISTE");
+                }
 
                 break;
 

@@ -33,6 +33,13 @@ public class Artista {
         this.foto = foto;
     }
 
+    public Artista(String nombre, String nacionalidad, String foto) {
+        this.ID = -1;
+        this.nombre = nombre;
+        this.nacionalidad = nacionalidad;
+        this.foto = foto;
+    }
+
     public Artista() {
         this(-1, "", "", null, null);
     }
