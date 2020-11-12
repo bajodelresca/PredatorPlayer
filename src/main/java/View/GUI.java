@@ -66,10 +66,10 @@ public class GUI {
         int op3 = 0;
         switch (op2) {
             case 1:
-                 do {
-                op3 = Utilities.subMenuListar();
-                ControladorSubMenuListar(op3);
-                 } while (op2 != 3);
+                do {
+                    op3 = Utilities.subMenuListar();
+                    ControladorSubMenuListar(op3);
+                } while (op3 != 3);
                 break;
 
             case 2:
@@ -126,11 +126,13 @@ public class GUI {
                     System.out.println("Duracion: " + c.getDuracion());
                     System.out.println("Disco: " + c.getAlbum());
                     System.out.println("----------------------------------");
-                }else{
-                 System.out.println("EL ID DE LA CANCION NO EXISTE");
+                } else {
+                    System.out.println("EL ID DE LA CANCION NO EXISTE");
                 }
                 break;
+            case 3:
 
+                break;
             default:
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
         }

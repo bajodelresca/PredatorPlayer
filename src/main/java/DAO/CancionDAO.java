@@ -238,7 +238,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         return c;
     }
     /**
-     * Metodo que comprueba si existe el en la tabla
+     * Metodo que comprueba si existe el ID en la tabla
      * @param id recibe un entero
      * @return devuelve un boolean, si existe devuelve true y false si no
      */
