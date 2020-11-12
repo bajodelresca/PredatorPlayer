@@ -10,6 +10,7 @@ import DAO.CancionDAO;
 import DAO.DiscoDAO;
 import DAO.ListaDAO;
 import View.GUI;
+import controller.AppController;
 import java.util.List;
 import model.Artista;
 import model.Cancion;
@@ -26,5 +27,11 @@ public class execute {
     public static void main(String[] args) {
       
         //   GUI.principal();
+        AppController app=AppController.getInstance();
+        
+        app.insertListCanc(2, 6);
+        
+        
+        System.out.println(app.getAllSongsList(2));
     }
 }

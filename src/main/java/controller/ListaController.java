@@ -45,7 +45,7 @@ public class ListaController {
     }
 
     public boolean editList(Lista a) {
-         boolean result = false;
+        boolean result = false;
         if (a != null) {
             ListaDAO lDAO = new ListaDAO();
             lDAO.edit(a);
@@ -56,7 +56,7 @@ public class ListaController {
     }
 
     public boolean removeList(Lista a) {
-         boolean result = false;
+        boolean result = false;
         if (a != null) {
             ListaDAO lDAO = new ListaDAO();
             lDAO.remove(a);
@@ -71,15 +71,9 @@ public class ListaController {
         return lDAO.getCancionFromList(id);
     }
 
-    public boolean insertListCanc(Lista a, Cancion c) {
-        boolean result = false;
-        if (a != null && c != c) {
-            ListaDAO lDAO = new ListaDAO();
-        lDAO.insertListCanc(a, c);
-        } else {
-            result = false;
-        }
-        return result;
+    public boolean insertListCanc(int a, int c) {
+        ListaDAO lDAO = new ListaDAO();
+        return lDAO.insertListCanc(a, c);
     }
 
 }
