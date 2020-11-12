@@ -267,14 +267,13 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         return listS;
     }
 
-    /*REVISAR*/
     public boolean insertListCanc(int a, int c) {
         boolean result = false;
         CancionDAO cDAO = new CancionDAO();
         try {
             PreparedStatement stat = null;
             conn = ConnectionUtils.getConnection();
-            conn.prepareStatement(queries.INSERTLISTACANCION.getQ());
+           stat = conn.prepareStatement(queries.INSERTLISTACANCION.getQ());
             if (this.getByID(a) != null && cDAO.getByID(c) != null) {
                 stat.setInt(1, a);
 
