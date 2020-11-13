@@ -223,17 +223,24 @@ public class GUI {
                 break;
 
             case 2:
-                //ARREGLAR
+               
                 Utilities.P("Introduzca el nombre del disco: ");
                 nombre = keyboard.next();
                 Utilities.P("Introduzca una foto: ");
                 foto = keyboard.next();
-                Utilities.P("Introduzca la fecha de salida (yyyy/MM/dd): ");
-                String fecha = keyboard.next();
-                DateFormat fechaFormat = new SimpleDateFormat("yyyy/MM/dd");
-                Date date = new Date();
+                Utilities.P("Introduzca el año de salida (yyyy): ");
+                String year = keyboard.next();
+                Utilities.P("Introduzca el mes de salida (MM): ");
+                String month = keyboard.next();
+                Utilities.P("Introduzca el dia de salida (dd): ");
+                String day = keyboard.next();
+                String fecha= year+"-"+month+"-"+day;
+                DateFormat fechaFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = null;
+                java.sql.Date sql=null;
                 try {
                     date = fechaFormat.parse(fecha);
+                    sql=new java.sql.Date(date.getTime());
                 } catch (ParseException ex) {
                     System.out.println(ex);
                 }
@@ -241,7 +248,7 @@ public class GUI {
                 int idArtista = keyboard.nextInt();
                 if (controlador.searchArtistaByID(idArtista)) {
                     Artista art = controlador.getArtistsById(idArtista);
-                    Disco d = new Disco(nombre, foto, date, art);
+                    Disco d = new Disco(nombre, foto, sql, art);
                     if (controlador.insertDiscs(d)) {
                         Utilities.P("EL DISCO HA SIDO CREADO CON EXITO");
                     } else {

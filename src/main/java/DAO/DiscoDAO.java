@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +23,7 @@ import model.Disco;
 public class DiscoDAO extends Disco implements DAO<Disco> {
 
     enum queries {
-        INSERT("INSERT INTO disco (ID, Nombre, Foto, fechap, IDArtista) VALUES (NULL,?,?,?)"),
+        INSERT("INSERT INTO disco (ID, Nombre, Foto, fechap, IDArtista) VALUES (NULL,?,?,?,?)"),
         UPDATE("UPDATE disco SET Nombre=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
         DELETE("DELETE FROM disco WHERE ID=?"),
         GETBYID("SELECT * FROM Disco WHERE ID=?"),
@@ -87,7 +87,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
                 PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
                 stat.setString(1, a.getNombre());
                 stat.setString(2, a.getFoto());
-                stat.setDate(3, (java.sql.Date) new Date(a.getFecha().getTime()));
+                stat.setDate(3,  a.getFecha());
                 stat.setInt(4, a.getCreador().getID());
 
                 stat.executeUpdate();
