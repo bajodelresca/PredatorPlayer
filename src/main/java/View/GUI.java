@@ -498,30 +498,76 @@ public class GUI {
 
         switch (op2) {
             case 1:
+                Utilities.P("Introduzca el ID de la cancion: ");
+                int idCancionb = keyboard.nextInt();
+                if (controlador.searchSongByID(idCancionb)) {
+                    Cancion c = controlador.getSongsById(idCancionb);
+                    controlador.removeSongs(c);
+                    Utilities.P("LA CANCION HA SIDO BORRADA CON EXITO");
+
+                } else {
+                    System.out.println("EL ID DE LA CANCION NO EXISTE");
+                }
 
                 break;
 
             case 2:
 
+                Utilities.P("Introduzca el ID del artista: ");
+                int idArtistab = keyboard.nextInt();
+                if (controlador.searchArtistaByID(idArtistab)) {
+                    Artista a = controlador.getArtistsById(idArtistab);
+                    controlador.removeArtists(a);
+                    Utilities.P("EL ARTISTA HA SIDO BORRADA CON EXITO");
+
+                } else {
+                    System.out.println("EL ID DEL ARTISTA NO EXISTE");
+                }
+
                 break;
 
             case 3:
+                Utilities.P("Introduzca el ID de la lista: ");
+                int idListab = keyboard.nextInt();
+                if (controlador.searchListByID(idListab)) {
+                    Lista l = controlador.getListById(idListab);
+                    controlador.removeList(l);
+                    Utilities.P("LA LISTA HA SIDO BORRADA CON EXITO");
+
+                } else {
+                    System.out.println("EL ID DE LA LISTA NO EXISTE");
+                }
 
                 break;
 
             case 4:
+                Utilities.P("Introduzca el ID del usuario: ");
+                int iduserb = keyboard.nextInt();
+                if (controlador.searchUserByID(iduserb)) {
+                    Usuario u = controlador.getUserById(iduserb);
+                    controlador.removeUser(u);
+                    Utilities.P("EL USUARIO HA SIDO BORRADA CON EXITO");
+
+                } else {
+                    System.out.println("EL ID DEL USUARIO NO EXISTE");
+                }
 
                 break;
 
             case 5:
+                Utilities.P("Introduzca el ID del disco: ");
+                int iddiscb = keyboard.nextInt();
+                if (controlador.searchDiscByID(iddiscb)) {
+                    Disco d = controlador.getDiscsById(iddiscb);
+                    controlador.removeDiscs(d);
+                    Utilities.P("EL DISCO HA SIDO BORRADA CON EXITO");
+
+                } else {
+                    System.out.println("EL ID DEL DISCO NO EXISTE");
+                }
 
                 break;
-
             case 6:
-
-                break;
-
-            case 7:
                 Utilities.P("Saliendo del Menú de Eliminación.");
                 break;
 
