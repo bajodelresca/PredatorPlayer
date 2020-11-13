@@ -10,6 +10,7 @@ package model;
  * @author espin
  */
 public class Cancion {
+
     protected int ID;
     protected String Nombre;
     protected int Duracion;
@@ -20,15 +21,21 @@ public class Cancion {
         this.ID = ID;
         this.Nombre = Nombre;
         this.Duracion = Duracion;
+        this.Genero = 0;
         this.Album = Album;
     }
 
-    
+    public Cancion(String Nombre, int Duracion, Disco Album) {
+        this.ID = -1;
+        this.Nombre = Nombre;
+        this.Duracion = Duracion;
+        this.Genero = 0;
+        this.Album = Album;
+    }
 
     public Cancion() {
-        this (-1,"",-1,null);
+        this(-1, "", -1, null);
     }
-    
 
     public int getID() {
         return ID;
@@ -62,10 +69,6 @@ public class Cancion {
         this.Genero = Genero;
     }
 
-    
-
-    
-
     public Disco getAlbum() {
         return Album;
     }
@@ -82,14 +85,14 @@ public class Cancion {
 
     @Override
     public boolean equals(Object obj) {
-       boolean igual=false;
-        if(obj!=null){
-            if(this==obj){
-                igual=true;
-            }else{
-                if(obj instanceof Cancion){
-                    Cancion n=(Cancion) obj;
-                   if (this.ID == n.getID()) {
+        boolean igual = false;
+        if (obj != null) {
+            if (this == obj) {
+                igual = true;
+            } else {
+                if (obj instanceof Cancion) {
+                    Cancion n = (Cancion) obj;
+                    if (this.ID == n.getID()) {
                         igual = true;
                     }
                 }
@@ -103,7 +106,4 @@ public class Cancion {
         return "Cancion{" + "ID=" + ID + ", Nombre=" + Nombre + ", Duracion=" + Duracion + ", Genero=" + Genero + ", Album=" + Album + '}';
     }
 
-    
-    
-    
 }

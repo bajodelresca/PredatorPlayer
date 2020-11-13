@@ -99,7 +99,7 @@ public class GUI {
             case 4:
                 do {
                     op3 = Utilities.subMenuListar();
-                    ControladorSubMenuListarListaDR(op3);
+                    //    ControladorSubMenuListarListaDR(op3);
                 } while (op3 != 3);
                 break;
 
@@ -163,7 +163,7 @@ public class GUI {
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
         }
     }
-    
+
     private static void ControladorSubMenuListarDisco(int op2) {
         switch (op2) {
             case 1:
@@ -238,7 +238,6 @@ public class GUI {
         }
     }
 
-
     //___________________________________________________________________________MenuInsertar
     private static void ControladorMenuInsertar(int op2) {
         String nombre = "";
@@ -260,7 +259,7 @@ public class GUI {
                 break;
 
             case 2:
-               
+
                 Utilities.P("Introduzca el nombre del disco: ");
                 nombre = keyboard.next();
                 Utilities.P("Introduzca una foto: ");
@@ -271,13 +270,13 @@ public class GUI {
                 String month = keyboard.next();
                 Utilities.P("Introduzca el dia de salida (dd): ");
                 String day = keyboard.next();
-                String fecha= year+"-"+month+"-"+day;
+                String fecha = year + "-" + month + "-" + day;
                 DateFormat fechaFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = null;
-                java.sql.Date sql=null;
+                java.sql.Date sql = null;
                 try {
                     date = fechaFormat.parse(fecha);
-                    sql=new java.sql.Date(date.getTime());
+                    sql = new java.sql.Date(date.getTime());
                 } catch (ParseException ex) {
                     System.out.println(ex);
                 }
@@ -298,6 +297,23 @@ public class GUI {
                 break;
 
             case 3:
+                Utilities.P("Introduzca el nombre de la Cancion: ");
+                nombre = keyboard.next();
+                Utilities.P("Introduzca su Duracion (Segundos): ");
+                int duracion = keyboard.nextInt();
+                Utilities.P("Introduzca el ID del Disco: ");
+                int idDisco = keyboard.nextInt();
+                if (controlador.searchDiscByID(idDisco)) {
+                    Disco d = controlador.getDiscsById(idDisco);
+                    Cancion c = new Cancion(nombre, duracion, d);
+                    if (controlador.insertSongs(c)) {
+                        Utilities.P("LA CANCION HA SIDO CREADA CON EXITO");
+                    } else {
+                        Utilities.P("HA OCURRIDO UN PROBLEMA EN LA CREACION DE LA CANCION");
+                    }
+                } else {
+                    System.out.println("EL ID DEL DISCO NO EXISTE");
+                }
 
                 break;
 

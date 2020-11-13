@@ -26,7 +26,7 @@ import model.Disco;
 public class CancionDAO extends Cancion implements DAO<Cancion> {
 
     enum queries {
-        INSERT("INSERT INTO cancion (ID, Nombre, Duracion, IDGenero, IDDisco) VALUES (NULL,?,?,NULL,?)"),
+        INSERT("INSERT INTO cancion (ID, Nombre, Duracion, IDDisco) VALUES (NULL,?,?,?)"),
         UPDATE("UPDATE cancion SET Nombre=?,Duracion=?,IDGenero=?,IDDisco=? WHERE ID=?"),
         DELETE("DELETE FROM cancion WHERE ID=?"),
         DELETEALL("DELETE FROM cancion INNER JOIN WHERE ID=?"),
@@ -89,8 +89,8 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
                 PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
                 stat.setString(1, a.getNombre());
                 stat.setInt(2, a.getDuracion());
-                stat.setInt(3, a.getGenero());
-                stat.setInt(4, a.getAlbum().getID());
+              //  stat.setInt(3, a.getGenero());
+                stat.setInt(3, a.getAlbum().getID());
                 stat.executeUpdate();
                 try ( ResultSet generatedKeys = stat.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -112,9 +112,9 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
             PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
             stat.setString(1, a.getNombre());
             stat.setInt(2, a.getDuracion());
-            stat.setInt(3, a.getGenero());
-            stat.setInt(4, a.getAlbum().getID());
-            stat.setInt(5, a.getID());
+           // stat.setInt(3, a.getGenero());
+            stat.setInt(3, a.getAlbum().getID());
+            stat.setInt(4, a.getID());
             stat.executeUpdate();
 
         } catch (SQLException ex) {
