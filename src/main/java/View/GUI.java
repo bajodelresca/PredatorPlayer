@@ -554,13 +554,32 @@ public class GUI {
                 break;
 
             case 2:
-                Utilities.P("Introduzca el ID del disco: ");
-                int iddiscb = keyboard.nextInt();
-                if (controlador.searchDiscByID(iddiscb)) {
-                    Disco d = controlador.getDiscsById(iddiscb);
-                    controlador.removeDiscs(d);
-                    Utilities.P("EL DISCO HA SIDO BORRADA CON EXITO");
+                 Utilities.P("Introduzca el ID del disco: ");
+                int idiscb = keyboard.nextInt();
+                if (controlador.searchDiscByID(idiscb)) {
+                    int opcion = 0;
+                    Utilities.P("¿Estas seguro de que quieres eliminar? ");
+                    Utilities.P("1- Si eliminar ");
+                    Utilities.P("2- No eliminar ");
+                    do {
+                        opcion = keyboard.nextInt();
+                        if (opcion == 1) {
 
+                            Disco a = controlador.getDiscsById(idiscb);
+                            List<Cancion> Cancionlist = controlador.getAllSongsList(idiscb);
+                            for (Cancion cancion : Cancionlist) {
+                                
+                                controlador.removeSongs(cancion);
+                            }
+                            controlador.removeDiscs(a);
+                            Utilities.P("EL DISCO HA SIDO BORRADA CON EXITO");
+
+                        } else if (opcion == 2) {
+                            System.out.println("SALIENDO");
+                        } else {
+                            System.out.println("Introduzca una opcion valida");
+                        }
+                    } while (opcion != 2);
                 } else {
                     System.out.println("EL ID DEL DISCO NO EXISTE");
                 }

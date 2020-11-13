@@ -129,7 +129,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
             ps.setInt(1, a.getID());
 
             if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se Ha insertado correctamente");
+                throw new SQLException("No se ha eliminado correctametne");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
