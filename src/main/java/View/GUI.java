@@ -502,6 +502,8 @@ public class GUI {
                 int idArtistab = keyboard.nextInt();
                 if (controlador.searchArtistaByID(idArtistab)) {
                     Utilities.P("¿Estas seguro de que quieres eliminar? ");
+                    Utilities.P("1- Si eliminar ");
+                    Utilities.P("2- No eliminar ");
                     int opcion = keyboard.nextInt();
                     if (opcion==1){
                     
