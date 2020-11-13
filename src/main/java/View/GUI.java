@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import model.Artista;
 import model.Cancion;
 import model.Disco;
+import model.Lista;
+import model.Usuario;
 
 public class GUI {
 
@@ -99,24 +101,26 @@ public class GUI {
             case 4:
                 do {
                     op3 = Utilities.subMenuListar();
-                    //    ControladorSubMenuListarListaDR(op3);
+                    ControladorSubMenuListarListaDR(op3);
                 } while (op3 != 3);
                 break;
 
             case 5:
                 do {
-                    Utilities.P("Introduzca el ID de la Lista de Reproducción");
-                    /* 
-                    ControladorSubMenuListarSUB(id); */
-                } while (op3 != 3);
+                    Utilities.P("Listar por ID: ");
+                    Utilities.P("Volver al menú anterior");
+                    Utilities.p("> ");
+                    ControladorSubMenuListarSUB(op3);
+                } while (op3 != 2);
                 break;
 
             case 6:
                 do {
-                    Utilities.P("Introduzca el ID del Usuario");
-                    /* 
-                    ControladorSubMenuListarListasDU(op3); */
-                } while (op3 != 3);
+                    Utilities.P("Listar por ID: ");
+                    Utilities.P("Volver al menú anterior");
+                    Utilities.p("> ");
+                    ControladorSubMenuListarListasDU(op3);
+                } while (op3 != 2);
                 break;
 
             case 7:
@@ -216,7 +220,7 @@ public class GUI {
                 }
                 break;
             case 2:
-                Utilities.P("Introduce el id de la cancion: ");
+                Utilities.P("Introduce el id del Artista: ");
                 int id = keyboard.nextInt();
                 if (controlador.searchArtistaByID(id)) {
                     Artista a = controlador.getArtistsById(id);
@@ -232,6 +236,93 @@ public class GUI {
                 break;
             case 3:
                 Utilities.P("Saliendo del Menú listar Artista ");
+                break;
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
+    private static void ControladorSubMenuListarListaDR(int op2) {
+        switch (op2) {
+            case 1:
+                List<Lista> listLista = controlador.getAllList();
+                for (Lista lista : listLista) {
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + lista.getID());
+                    System.out.println("Nombre: " + lista.getNombre());
+                    System.out.println("Descripción: " + lista.getDescripcion());
+                    System.out.println("Creador: " + lista.getCreador());
+                    System.out.println("----------------------------------");
+                }
+                break;
+            case 2:
+                Utilities.P("Introduce el id de la Lista de Reproducción: ");
+                int id = keyboard.nextInt();
+                if (controlador.searchListByID(id)) {
+                    Lista l = controlador.getListById(id);
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + l.getID());
+                    System.out.println("Nombre: " + l.getNombre());
+                    System.out.println("Descripción: " + l.getDescripcion());
+                    System.out.println("Creador: " + l.getCreador());
+                    System.out.println("----------------------------------");
+                } else {
+                    System.out.println("EL ID DE LA LISTA NO EXISTE");
+                }
+                break;
+            case 3:
+                Utilities.P("Saliendo del Menú listar Lista de Reproducción ");
+                break;
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
+    private static void ControladorSubMenuListarSUB(int op2) {
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduce el id de la Lista de Reproducción: ");
+                int id = keyboard.nextInt();
+                if (controlador.searchListByID(id)) {
+                    List<Usuario> listUsuario = controlador.getSubscriberFromList(id);
+                    for (Usuario u : listUsuario) {
+                        System.out.println("----------------------------------");
+                        System.out.println("ID: " + u.getID());
+                        System.out.println("Nombre: " + u.getNombre());
+                        System.out.println("Correo: " + u.getCorreo());
+                        System.out.println("----------------------------------");
+                    }
+                } else {
+                    System.out.println("EL ID DE LA LISTA NO EXISTE");
+                }
+                break;
+            case 2:
+                Utilities.P("Saliendo del Menú listar Suscriptores ");
+                break;
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
+    private static void ControladorSubMenuListarListasDU(int op2) {
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduce el id del Usuario: ");
+                int id = keyboard.nextInt();
+                if (controlador.searchUserByID(id)) {
+                    List<Lista> listLista = controlador.getListFromSubscriber(id);
+                    for (Lista li : listLista) {
+                        System.out.println("----------------------------------");
+                        System.out.println("ID: " + li.getID());
+                        System.out.println("Nombre: " + li.getNombre());
+                        System.out.println("----------------------------------");
+                    }
+                } else {
+                    System.out.println("EL ID DEL USUARIO NO EXISTE");
+                }
+                break;
+            case 2:
+                Utilities.P("Saliendo del Menú listar Listas Subscritas ");
                 break;
             default:
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
