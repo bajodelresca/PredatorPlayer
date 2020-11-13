@@ -409,7 +409,23 @@ public class GUI {
                 break;
 
             case 4:
-
+                Utilities.P("Introduzca el nombre de la Lista: ");
+                nombre = keyboard.nextLine();
+                Utilities.P("Introduzca la descripcion de la Lista: ");
+                String descripcion = keyboard.nextLine();
+                Utilities.P("Introduzca el ID del Creador: ");
+                int idCreador = keyboard.nextInt();
+                if (controlador.searchUserByID(idCreador)) {
+                   Usuario u=controlador.getUserById(idCreador);
+                   Lista l=new Lista(nombre, descripcion, u);
+                    if (controlador.insertList(l)) {
+                        Utilities.P("LA LISTA HA SIDO CREADA CON EXITO");
+                    } else {
+                        Utilities.P("HA OCURRIDO UN PROBLEMA EN LA CREACION DE LA LISTA");
+                    }
+                } else {
+                    System.out.println("EL ID DEL USUARIO NO EXISTE");
+                }
                 break;
 
             case 5:

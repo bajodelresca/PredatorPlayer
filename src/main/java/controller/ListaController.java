@@ -38,6 +38,7 @@ public class ListaController {
         if (a != null) {
             ListaDAO lDAO = new ListaDAO();
             lDAO.insert(a);
+            result = true;
         } else {
             result = false;
         }
@@ -49,6 +50,7 @@ public class ListaController {
         if (a != null) {
             ListaDAO lDAO = new ListaDAO();
             lDAO.edit(a);
+             result = true;
         } else {
             result = false;
         }
@@ -60,6 +62,7 @@ public class ListaController {
         if (a != null) {
             ListaDAO lDAO = new ListaDAO();
             lDAO.remove(a);
+             result = true;
         } else {
             result = false;
         }

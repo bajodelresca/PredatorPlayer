@@ -14,7 +14,8 @@ import model.Usuario;
  * @author espin
  */
 public class UsuarioController {
-     private static UsuarioController instancia = null;
+
+    private static UsuarioController instancia = null;
 
     public static UsuarioController getInstance() {
         instancia = new UsuarioController();
@@ -35,7 +36,8 @@ public class UsuarioController {
         boolean result = false;
         if (a != null) {
             UsuarioDAO UDAO = new UsuarioDAO();
-        UDAO.insert(a);
+            UDAO.insert(a);
+            result = true;
         } else {
             result = false;
         }
@@ -43,29 +45,31 @@ public class UsuarioController {
     }
 
     public boolean editUser(Usuario a) {
-         boolean result = false;
+        boolean result = false;
         if (a != null) {
             UsuarioDAO UDAO = new UsuarioDAO();
-        UDAO.edit(a);
+            UDAO.edit(a);
+            result = true;
         } else {
             result = false;
         }
         return result;
     }
+
     public boolean removeUser(Usuario a) {
-         boolean result = false;
+        boolean result = false;
         if (a != null) {
             UsuarioDAO UDAO = new UsuarioDAO();
-        UDAO.remove(a);
+            UDAO.remove(a);
+            result = true;
         } else {
             result = false;
         }
         return result;
     }
+
     public boolean searchUserByID(int id) {
         UsuarioDAO UDAO = new UsuarioDAO();
         return UDAO.searchByID(id);
     }
 }
-     
-

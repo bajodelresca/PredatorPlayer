@@ -38,7 +38,12 @@ public class Lista {
         this.Descripcion = Descripcion;
         this.creador = creador;
     }
-
+  public Lista(String Nombre, String Descripcion, Usuario creador) {
+        this.ID = -1;
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+        this.creador = creador;
+    }
     public Lista() {
         this(-1, "", "", null, null, null);
     }
