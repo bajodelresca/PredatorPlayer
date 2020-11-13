@@ -457,11 +457,11 @@ public class GUI {
                 int idList = keyboard.nextInt();
                 if (controlador.searchListByID(idList)) {
                     Lista listR = controlador.getListById(idList);
-                     Utilities.P("Introduzca el ID del usuario: ");
-                     int idUser = keyboard.nextInt();
-                       if (controlador.searchUserByID(idUser)) {
+                    Utilities.P("Introduzca el ID del usuario: ");
+                    int idUser = keyboard.nextInt();
+                    if (controlador.searchUserByID(idUser)) {
                         Usuario u = controlador.getUserById(idUser);
-                        Subscripcion sub=new Subscripcion(listR, u);
+                        Subscripcion sub = new Subscripcion(listR, u);
                         if (controlador.insertSubs(sub)) {
                             Utilities.P("SE HA CREADO LA SUBSCRIPCION CON EXITO");
                         } else {
@@ -521,35 +521,40 @@ public class GUI {
                 Utilities.P("Introduzca el ID del artista: ");
                 int idArtistab = keyboard.nextInt();
                 if (controlador.searchArtistaByID(idArtistab)) {
+                    int opcion = 0;
                     Utilities.P("¿Estas seguro de que quieres eliminar? ");
                     Utilities.P("1- Si eliminar ");
                     Utilities.P("2- No eliminar ");
-                    int opcion = keyboard.nextInt();
-                    if (opcion==1){
-                    
-                    Artista a = controlador.getArtistsById(idArtistab);
-                    List<Disco> disclist=controlador.getRepertorio(idArtistab);
-                    for (Disco disco : disclist){
-                        List<Cancion> canclist=controlador.getCanciones(disco.getID());
-                        for (Cancion cancion: canclist){
-                        controlador.removeSongs(cancion);
-                        }
-                        controlador.removeDiscs(disco);
-                    }
-                    controlador.removeArtists(a);
-                    Utilities.P("EL ARTISTA HA SIDO BORRADA CON EXITO");
+                    do {
+                        opcion = keyboard.nextInt();
+                        if (opcion == 1) {
 
+                            Artista a = controlador.getArtistsById(idArtistab);
+                            List<Disco> disclist = controlador.getRepertorio(idArtistab);
+                            for (Disco disco : disclist) {
+                                List<Cancion> canclist = controlador.getCanciones(disco.getID());
+                                for (Cancion cancion : canclist) {
+                                    controlador.removeSongs(cancion);
+                                }
+                                controlador.removeDiscs(disco);
+                            }
+                            controlador.removeArtists(a);
+                            Utilities.P("EL ARTISTA HA SIDO BORRADA CON EXITO");
+
+                        } else if (opcion == 2) {
+                            System.out.println("SALIENDO");
+                        } else {
+                            System.out.println("Introduzca una opcion valida");
+                        }
+                    } while (opcion != 2);
                 } else {
                     System.out.println("EL ID DEL ARTISTA NO EXISTE");
-                }}else{
-                    System.out.println("SALIENDO");
                 }
 
                 break;
-              
 
             case 2:
-                 Utilities.P("Introduzca el ID del disco: ");
+                Utilities.P("Introduzca el ID del disco: ");
                 int iddiscb = keyboard.nextInt();
                 if (controlador.searchDiscByID(iddiscb)) {
                     Disco d = controlador.getDiscsById(iddiscb);
@@ -561,10 +566,10 @@ public class GUI {
                 }
 
                 break;
-                
+
             case 3:
-                
-                  Utilities.P("Introduzca el ID de la cancion: ");
+
+                Utilities.P("Introduzca el ID de la cancion: ");
                 int idCancionb = keyboard.nextInt();
                 if (controlador.searchSongByID(idCancionb)) {
                     Cancion c = controlador.getSongsById(idCancionb);
@@ -576,7 +581,6 @@ public class GUI {
                 }
 
                 break;
-                
 
             case 4:
                 Utilities.P("Introduzca el ID de la lista: ");
@@ -591,10 +595,9 @@ public class GUI {
                 }
 
                 break;
-                
 
             case 5:
-               Utilities.P("Introduzca el ID del usuario: ");
+                Utilities.P("Introduzca el ID del usuario: ");
                 int iduserb = keyboard.nextInt();
                 if (controlador.searchUserByID(iduserb)) {
                     Usuario u = controlador.getUserById(iduserb);
