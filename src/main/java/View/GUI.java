@@ -181,7 +181,7 @@ public class GUI {
             case 2:
                 Utilities.P("Introduce el id del Disco: ");
                 int id = keyboard.nextInt();
-                if (controlador.searchSongByID(id)) {
+                if (controlador.searchDiscByID(id)) {
                     Disco d = controlador.getDiscsById(id);
                     System.out.println("----------------------------------");
                     System.out.println("ID: " + d.getID());
@@ -201,6 +201,43 @@ public class GUI {
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
         }
     }
+
+    private static void ControladorSubMenuListarArtista(int op2) {
+        switch (op2) {
+            case 1:
+                List<Artista> listArtist = controlador.getAllArtists();
+                for (Artista artista : listArtist) {
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + artista.getID());
+                    System.out.println("Nombre: " + artista.getNombre());
+                    System.out.println("Nacionalidad: " + artista.getNacionalidad());
+                    System.out.println("Foto: " + artista.getFoto());
+                    System.out.println("----------------------------------");
+                }
+                break;
+            case 2:
+                Utilities.P("Introduce el id de la cancion: ");
+                int id = keyboard.nextInt();
+                if (controlador.searchArtistaByID(id)) {
+                    Artista a = controlador.getArtistsById(id);
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + a.getID());
+                    System.out.println("Nombre: " + a.getNombre());
+                    System.out.println("Nacionalidad: " + a.getNacionalidad());
+                    System.out.println("Foto: " + a.getFoto());
+                    System.out.println("----------------------------------");
+                } else {
+                    System.out.println("EL ID DEL ARTISTA NO EXISTE");
+                }
+                break;
+            case 3:
+                Utilities.P("Saliendo del Menú listar Artista ");
+                break;
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
 
     //___________________________________________________________________________MenuInsertar
     private static void ControladorMenuInsertar(int op2) {
