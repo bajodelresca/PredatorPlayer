@@ -525,14 +525,14 @@ public class GUI {
                     Utilities.P("¿Estas seguro de que quieres eliminar? ");
                     Utilities.P("1- Si eliminar ");
                     Utilities.P("2- No eliminar ");
-                    do {
+                  
                         opcion = keyboard.nextInt();
                         if (opcion == 1) {
 
                             Artista a = controlador.getArtistsById(idArtistab);
-                            List<Disco> disclist = controlador.getRepertorio(idArtistab);
+                            List<Disco> disclist = a.getRepertorio();
                             for (Disco disco : disclist) {
-                                List<Cancion> canclist = controlador.getCanciones(disco.getID());
+                                List<Cancion> canclist = disco.getCanciones();
                                 for (Cancion cancion : canclist) {
                                     controlador.removeSongs(cancion);
                                 }
@@ -546,7 +546,6 @@ public class GUI {
                         } else {
                             System.out.println("Introduzca una opcion valida");
                         }
-                    } while (opcion != 2);
                 } else {
                     System.out.println("EL ID DEL ARTISTA NO EXISTE");
                 }
@@ -561,12 +560,12 @@ public class GUI {
                     Utilities.P("¿Estas seguro de que quieres eliminar? ");
                     Utilities.P("1- Si eliminar ");
                     Utilities.P("2- No eliminar ");
-                    do {
+                  
                         opcion = keyboard.nextInt();
                         if (opcion == 1) {
 
                             Disco a = controlador.getDiscsById(idiscb);
-                            List<Cancion> Cancionlist = controlador.getAllSongsList(idiscb);
+                            List<Cancion> Cancionlist = a.getCanciones();
                             for (Cancion cancion : Cancionlist) {
                                 
                                 controlador.removeSongs(cancion);
@@ -579,7 +578,6 @@ public class GUI {
                         } else {
                             System.out.println("Introduzca una opcion valida");
                         }
-                    } while (opcion != 2);
                 } else {
                     System.out.println("EL ID DEL DISCO NO EXISTE");
                 }
