@@ -416,8 +416,8 @@ public class GUI {
                 Utilities.P("Introduzca el ID del Creador: ");
                 int idCreador = keyboard.nextInt();
                 if (controlador.searchUserByID(idCreador)) {
-                   Usuario u=controlador.getUserById(idCreador);
-                   Lista l=new Lista(nombre, descripcion, u);
+                    Usuario u = controlador.getUserById(idCreador);
+                    Lista l = new Lista(nombre, descripcion, u);
                     if (controlador.insertList(l)) {
                         Utilities.P("LA LISTA HA SIDO CREADA CON EXITO");
                     } else {
@@ -429,7 +429,26 @@ public class GUI {
                 break;
 
             case 5:
-
+                Utilities.P("Introduzca el ID de la Lista: ");
+                int idLista = keyboard.nextInt();
+                if (controlador.searchListByID(idLista)) {
+                    Lista listR = controlador.getListById(idLista);
+                    Utilities.P("Introduzca el ID de la Cancion: ");
+                    int idCancion = keyboard.nextInt();
+                    if (controlador.searchSongByID(idCancion)) {
+                        Cancion song = controlador.getSongsById(idCancion);
+                        if (controlador.insertListCanc(listR.getID(), song.getID())) {
+                            listR.setCancionListareproduccion(song);
+                            Utilities.P("SE HA INSERTADO LA CANCION CON EXITO");
+                        } else {
+                            Utilities.P("HA OCURRIDO UN PROBLEMA INSERCION DE LA CANCION");
+                        }
+                    } else {
+                        Utilities.P("EL ID DE LA CANCION NO EXISTE ");
+                    }
+                } else {
+                    Utilities.P("EL ID DE LA LISTA NO EXISTE ");
+                }
                 break;
 
             case 6:

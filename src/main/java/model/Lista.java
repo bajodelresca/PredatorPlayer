@@ -37,12 +37,16 @@ public class Lista {
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
         this.creador = creador;
+         this.subscriptores = new ArrayList<>();
+        this.listareproduccion = new ArrayList<>();
     }
   public Lista(String Nombre, String Descripcion, Usuario creador) {
         this.ID = -1;
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
         this.creador = creador;
+         this.subscriptores =  new ArrayList<>();
+        this.listareproduccion = new ArrayList<>();
     }
     public Lista() {
         this(-1, "", "", null, null, null);
