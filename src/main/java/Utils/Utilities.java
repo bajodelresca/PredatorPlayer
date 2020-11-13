@@ -121,6 +121,46 @@ public class Utilities {
         P("2) Editar un Disco");
         P("3) Editar un Canción");
         P("4) Editar una lista de reproducción");       
+        P("5) Editar un Usuario");       
+        P("6) Salir");
+        P("-------------------------------------");
+        p("> ");
+
+        try {
+            opcion = keyboard.nextInt();
+        } catch (Exception e) {
+            System.out.println("Introduzca un número entero");
+            keyboard = new Scanner(System.in);
+        }
+
+        return opcion;
+    }
+    public static int MenuEditarArtista() {
+        int opcion = 0;
+        P("-----Edicion Artista-----");
+        P("1) Editar nombre");
+        P("2) Editar nacionalidad");
+        P("3) Editar foto");     
+        P("4) Salir");
+        P("-------------------------------------");
+        p("> ");
+
+        try {
+            opcion = keyboard.nextInt();
+        } catch (Exception e) {
+            System.out.println("Introduzca un número entero");
+            keyboard = new Scanner(System.in);
+        }
+
+        return opcion;
+    }
+    public static int MenuEditarDisco() {
+        int opcion = 0;
+        P("-----Edicion Disco-----");
+        P("1) Editar Nombre");
+        P("2) Editar foto");
+        P("3) Editar fecha");     
+        P("4) Editar creador");     
         P("5) Salir");
         P("-------------------------------------");
         p("> ");
@@ -134,7 +174,62 @@ public class Utilities {
 
         return opcion;
     }
-    
+    public static int MenuEditarCancion() {
+        int opcion = 0;
+        P("-----Edicion Cancion-----");
+        P("1) Editar Nombre");
+        P("2) Editar Duracion");
+        P("3) Editar Album");        
+        P("4) Salir");
+        P("-------------------------------------");
+        p("> ");
+
+        try {
+            opcion = keyboard.nextInt();
+        } catch (Exception e) {
+            System.out.println("Introduzca un número entero");
+            keyboard = new Scanner(System.in);
+        }
+
+        return opcion;
+    }
+    public static int MenuEditarLsita() {
+        int opcion = 0;
+        P("-----Edicion Lista-----");
+        P("1) Editar Nombre");
+        P("2) Editar Descripcion");  
+        P("3) Salir");
+        P("-------------------------------------");
+        p("> ");
+
+        try {
+            opcion = keyboard.nextInt();
+        } catch (Exception e) {
+            System.out.println("Introduzca un número entero");
+            keyboard = new Scanner(System.in);
+        }
+
+        return opcion;
+    }
+    public static int MenuEditarUsuario() {
+        int opcion = 0;
+        P("-----Edicion Usuario-----");
+        P("1) Editar nombre");
+        P("2) Editar Correo");
+        P("3) Editar foto");     
+        P("4) Salir");
+        P("-------------------------------------");
+        p("> ");
+
+        try {
+            opcion = keyboard.nextInt();
+        } catch (Exception e) {
+            System.out.println("Introduzca un número entero");
+            keyboard = new Scanner(System.in);
+        }
+
+        return opcion;
+    }
     //____________________________________________________________________________MenuEliminar
     
     public static int MenuEliminar() {

@@ -55,7 +55,7 @@ public class GUI {
                 do {
                     op2 = Utilities.MenuEditar();
                     ControladorMenuEditar(op2);
-                } while (op2 != 5);
+                } while (op2 != 6);
                 break;
 
             case 4:
@@ -291,6 +291,7 @@ public class GUI {
                         System.out.println("ID: " + u.getID());
                         System.out.println("Nombre: " + u.getNombre());
                         System.out.println("Correo: " + u.getCorreo());
+                        System.out.println("Foto: " + u.getFoto());
                         System.out.println("----------------------------------");
                     }
                 } else {
@@ -489,23 +490,358 @@ public class GUI {
 
         switch (op2) {
             case 1:
+                Utilities.P("Introduzca el ID del Artista a editar: ");
+                int idArtEdit = keyboard.nextInt();
+                if (controlador.searchArtistaByID(idArtEdit)) {
+                    Artista a = controlador.getArtistsById(idArtEdit);
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + a.getID());
+                    System.out.println("Nombre: " + a.getNombre());
+                    System.out.println("Nacionalidad: " + a.getNacionalidad());
+                    System.out.println("Foto: " + a.getFoto());
+                    System.out.println("----------------------------------");
+                    int op = 0;
+                    do {
+                        op = Utilities.MenuEditarArtista();
+                        ControladorMenuEditarArtista(op, a);
+                    } while (op != 4);
+
+                } else {
+                    Utilities.P("El ID DEL ARTISTA NO EXISTE");
+                }
+                break;
+
+            case 2:
+                Utilities.P("Introduzca el ID del Disco a editar: ");
+                int idDiscEdit = keyboard.nextInt();
+                if (controlador.searchDiscByID(idDiscEdit)) {
+                    Disco d = controlador.getDiscsById(idDiscEdit);
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + d.getID());
+                    System.out.println("Nombre: " + d.getNombre());
+                    System.out.println("Foto: " + d.getFoto());
+                    System.out.println("Fecha: " + d.getFecha());
+                    System.out.println("Creador: " + d.getCreador());
+                    System.out.println("----------------------------------");
+                    int op = 0;
+                    do {
+                        op = Utilities.MenuEditarArtista();
+                        ControladorMenuEditarDisco(op, d);
+                    } while (op != 5);
+
+                } else {
+                    Utilities.P("El ID DEL DISCO NO EXISTE");
+                }
+                break;
+
+            case 3:
+                Utilities.P("Introduzca el ID de la Cancion a editar: ");
+                int idSongEdit = keyboard.nextInt();
+                if (controlador.searchSongByID(idSongEdit)) {
+                    Cancion c = controlador.getSongsById(idSongEdit);
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + c.getID());
+                    System.out.println("Nombre: " + c.getNombre());
+                    System.out.println("Duracion: " + c.getDuracion());
+                    System.out.println("Disco: " + c.getAlbum());
+                    System.out.println("----------------------------------");
+                    int op = 0;
+                    do {
+                        op = Utilities.MenuEditarCancion();
+                        ControladorMenuEditarCancion(op, c);
+                    } while (op != 4);
+
+                } else {
+                    Utilities.P("El ID DE LA CANCION NO EXISTE");
+                }
+                break;
+
+            case 4:
+                Utilities.P("Introduzca el ID de la Lista a editar: ");
+                int idListEdit = keyboard.nextInt();
+                if (controlador.searchListByID(idListEdit)) {
+                    Lista l = controlador.getListById(idListEdit);
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + l.getID());
+                    System.out.println("Nombre: " + l.getNombre());
+                    System.out.println("Descripción: " + l.getDescripcion());
+                    System.out.println("Creador: " + l.getCreador());
+                    System.out.println("----------------------------------");
+                    int op = 0;
+                    do {
+                        op = Utilities.MenuEditarLsita();
+                        ControladorMenuEditarLista(op, l);
+                    } while (op != 3);
+
+                } else {
+                    Utilities.P("El ID DE LA LISTA NO EXISTE");
+                }
+                break;
+            case 5:
+                Utilities.P("Introduzca el ID del Usuario a editar: ");
+                int idUserEdit = keyboard.nextInt();
+                if (controlador.searchUserByID(idUserEdit)) {
+                    Usuario u = controlador.getUserById(idUserEdit);
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + u.getID());
+                    System.out.println("Nombre: " + u.getNombre());
+                    System.out.println("Correo: " + u.getCorreo());
+                    System.out.println("Foto: " + u.getFoto());
+                    System.out.println("----------------------------------");
+                    int op = 0;
+                    do {
+                        op = Utilities.MenuEditarUsuario();
+                        ControladorMenuEditarUsuario(op, u);
+                    } while (op != 4);
+
+                } else {
+                    Utilities.P("El ID DEL USUARIO NO EXISTE");
+                }
+                break;
+            case 6:
+                Utilities.P("Saliendo del Menú de Edición.");
+                break;
+
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
+    private static void ControladorMenuEditarArtista(int op2, Artista a) {
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduzca el nuevo nombre: ");
+                String newNombre = keyboard.next();
+                a.setNombre(newNombre);
+                if (controlador.editArtists(a)) {
+                    Utilities.P("EL ARTISTA HA SIDO EDITADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL ARTISTA");
+                }
 
                 break;
 
             case 2:
-
+                Utilities.P("Introduzca la nueva nacinalidad: ");
+                String newnacinalidad = keyboard.next();
+                a.setNacionalidad(newnacinalidad);
+                if (controlador.editArtists(a)) {
+                    Utilities.P("EL ARTISTA HA SIDO EDITADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL ARTISTA");
+                }
                 break;
 
             case 3:
+                Utilities.P("Introduzca la nueva foto: ");
+                String newfoto = keyboard.next();
+                a.setNacionalidad(newfoto);
+                if (controlador.editArtists(a)) {
+                    Utilities.P("EL ARTISTA HA SIDO EDITADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL ARTISTA");
+                }
+                break;
+            case 4:
+                Utilities.P("Saliendo del Menú de Edición Artista.");
+                break;
 
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
+    private static void ControladorMenuEditarDisco(int op2, Disco d) {
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduzca el nuevo nombre: ");
+                String newNombre = keyboard.next();
+                d.setNombre(newNombre);
+                if (controlador.editDiscs(d)) {
+                    Utilities.P("EL DISCO HA SIDO EDITADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL DISCO");
+                }
+                break;
+
+            case 2:
+                Utilities.P("Introduzca la nueva foto: ");
+                String newFoto = keyboard.next();
+                d.setFoto(newFoto);
+                if (controlador.editDiscs(d)) {
+                    Utilities.P("EL DISCO HA SIDO EDITADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL DISCO");
+                }
+                break;
+
+            case 3:
+                Utilities.P("Introduzca la nueva fecha: ");
+                Utilities.P("Introduzca el año de salida (yyyy): ");
+                String year = keyboard.next();
+                Utilities.P("Introduzca el mes de salida (MM): ");
+                String month = keyboard.next();
+                Utilities.P("Introduzca el dia de salida (dd): ");
+                String day = keyboard.next();
+                String fecha = year + "-" + month + "-" + day;
+                DateFormat fechaFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = null;
+                java.sql.Date sql = null;
+                try {
+                    date = fechaFormat.parse(fecha);
+                    sql = new java.sql.Date(date.getTime());
+                } catch (ParseException ex) {
+                    System.out.println(ex);
+                }
+
+                d.setFecha(sql);
+                if (controlador.editDiscs(d)) {
+                    Utilities.P("EL DISCO HA SIDO EDITADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL DISCO");
+                }
+                break;
+            case 4:
+                Utilities.P("Introduzca el ID del Artista: ");
+                int idArt = keyboard.nextInt();
+                if (controlador.searchArtistaByID(idArt)) {
+                    Artista newArt = controlador.getArtistsById(idArt);
+                    d.setCreador(newArt);
+                    if (controlador.editDiscs(d)) {
+                        Utilities.P("EL DISCO HA SIDO EDITADO CON EXITO");
+                    } else {
+                        Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL DISCO");
+                    }
+                } else {
+                    System.out.println("EL ID DEL DISCO NO EXISTE");
+                }
+                break;
+            case 5:
+                Utilities.P("Saliendo del Menú de Edición Disco.");
+                break;
+
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
+    private static void ControladorMenuEditarCancion(int op2, Cancion a) {
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduzca el nuevo nombre: ");
+                String newNombre = keyboard.next();
+                a.setNombre(newNombre);
+                if (controlador.editSongs(a)) {
+                    Utilities.P("LA CANCION HA SIDO EDITADA CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DE LA CANCION");
+                }
+                break;
+
+            case 2:
+                Utilities.P("Introduzca la nueva Duracion: ");
+                int newDuracion = keyboard.nextInt();
+                a.setDuracion(newDuracion);
+                if (controlador.editSongs(a)) {
+                    Utilities.P("LA CANCION HA SIDO EDITADA CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DE LA CANCION");
+                }
+                break;
+
+            case 3:
+                Utilities.P("Introduzca el ID del Album: ");
+                int idAlbum = keyboard.nextInt();
+                if (controlador.searchDiscByID(idAlbum)) {
+                    Disco newDisc = controlador.getDiscsById(idAlbum);
+                    a.setAlbum(newDisc);
+                    if (controlador.editSongs(a)) {
+                        Utilities.P("LA CANCION HA SIDO EDITADA CON EXITO");
+                    } else {
+                        Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DE LA CANCION");
+                    }
+                } else {
+                    System.out.println("EL ID DEL DISCO NO EXISTE");
+                }
+                break;
+            case 4:
+                Utilities.P("Saliendo del Menú de Edición Cancion.");
+                break;
+
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
+    private static void ControladorMenuEditarLista(int op2, Lista a) {
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduzca el nuevo nombre: ");
+                String newNombre = keyboard.next();
+                a.setNombre(newNombre);
+                if (controlador.editList(a)) {
+                    Utilities.P("LA LISTA HA SIDO EDITADA CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DE LA LISTA");
+                }
+                break;
+
+            case 2:
+                Utilities.P("Introduzca la descripcion: ");
+                String newdescrip = keyboard.next();
+                a.setDescripcion(newdescrip);
+                if (controlador.editList(a)) {
+                    Utilities.P("LA LISTA HA SIDO EDITADA CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DE LA LISTA");
+                }
+                break;
+
+            case 3:
+                Utilities.P("Saliendo del Menú de Edición Lista.");
+                break;
+
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+
+    private static void ControladorMenuEditarUsuario(int op2, Usuario a) {
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduzca el nuevo nombre: ");
+                String newNombre = keyboard.next();
+                a.setNombre(newNombre);
+                if (controlador.editUser(a)) {
+                    Utilities.P("EL USUARIO HA SIDO EDITADA CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL USUARIO");
+                }
+                break;
+
+            case 2:
+                Utilities.P("Introduzca el nuevo correo: ");
+                String newEmail = keyboard.next();
+                a.setCorreo(newEmail);
+                if (controlador.editUser(a)) {
+                    Utilities.P("EL USUARIO HA SIDO EDITADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL USUARIO");
+                }
+                break;
+            case 3:
+                Utilities.P("Introduzca la nueva foto: ");
+                String newfoto = keyboard.next();
+                a.setFoto(newfoto);
+                if (controlador.editUser(a)) {
+                    Utilities.P("EL USUARIO HA SIDO EDITADO CON EXITO");
+                } else {
+                    Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL USUARIO");
+                }
                 break;
 
             case 4:
-
-                break;
-
-            case 5:
-                Utilities.P("Saliendo del Menú de Edición.");
+                Utilities.P("Saliendo del Menú de Edición Usuario.");
                 break;
 
             default:
@@ -525,27 +861,27 @@ public class GUI {
                     Utilities.P("¿Estas seguro de que quieres eliminar? ");
                     Utilities.P("1- Si eliminar ");
                     Utilities.P("2- No eliminar ");
-                  
-                        opcion = keyboard.nextInt();
-                        if (opcion == 1) {
 
-                            Artista a = controlador.getArtistsById(idArtistab);
-                            List<Disco> disclist = a.getRepertorio();
-                            for (Disco disco : disclist) {
-                                List<Cancion> canclist = disco.getCanciones();
-                                for (Cancion cancion : canclist) {
-                                    controlador.removeSongs(cancion);
-                                }
-                                controlador.removeDiscs(disco);
+                    opcion = keyboard.nextInt();
+                    if (opcion == 1) {
+
+                        Artista a = controlador.getArtistsById(idArtistab);
+                        List<Disco> disclist = a.getRepertorio();
+                        for (Disco disco : disclist) {
+                            List<Cancion> canclist = disco.getCanciones();
+                            for (Cancion cancion : canclist) {
+                                controlador.removeSongs(cancion);
                             }
-                            controlador.removeArtists(a);
-                            Utilities.P("EL ARTISTA HA SIDO BORRADA CON EXITO");
-
-                        } else if (opcion == 2) {
-                            System.out.println("SALIENDO");
-                        } else {
-                            System.out.println("Introduzca una opcion valida");
+                            controlador.removeDiscs(disco);
                         }
+                        controlador.removeArtists(a);
+                        Utilities.P("EL ARTISTA HA SIDO BORRADA CON EXITO");
+
+                    } else if (opcion == 2) {
+                        System.out.println("SALIENDO");
+                    } else {
+                        System.out.println("Introduzca una opcion valida");
+                    }
                 } else {
                     System.out.println("EL ID DEL ARTISTA NO EXISTE");
                 }
@@ -553,31 +889,31 @@ public class GUI {
                 break;
 
             case 2:
-                 Utilities.P("Introduzca el ID del disco: ");
+                Utilities.P("Introduzca el ID del disco: ");
                 int idiscb = keyboard.nextInt();
                 if (controlador.searchDiscByID(idiscb)) {
                     int opcion = 0;
                     Utilities.P("¿Estas seguro de que quieres eliminar? ");
                     Utilities.P("1- Si eliminar ");
                     Utilities.P("2- No eliminar ");
-                  
-                        opcion = keyboard.nextInt();
-                        if (opcion == 1) {
 
-                            Disco a = controlador.getDiscsById(idiscb);
-                            List<Cancion> Cancionlist = a.getCanciones();
-                            for (Cancion cancion : Cancionlist) {
-                                
-                                controlador.removeSongs(cancion);
-                            }
-                            controlador.removeDiscs(a);
-                            Utilities.P("EL DISCO HA SIDO BORRADA CON EXITO");
+                    opcion = keyboard.nextInt();
+                    if (opcion == 1) {
 
-                        } else if (opcion == 2) {
-                            System.out.println("SALIENDO");
-                        } else {
-                            System.out.println("Introduzca una opcion valida");
+                        Disco a = controlador.getDiscsById(idiscb);
+                        List<Cancion> Cancionlist = a.getCanciones();
+                        for (Cancion cancion : Cancionlist) {
+
+                            controlador.removeSongs(cancion);
                         }
+                        controlador.removeDiscs(a);
+                        Utilities.P("EL DISCO HA SIDO BORRADA CON EXITO");
+
+                    } else if (opcion == 2) {
+                        System.out.println("SALIENDO");
+                    } else {
+                        System.out.println("Introduzca una opcion valida");
+                    }
                 } else {
                     System.out.println("EL ID DEL DISCO NO EXISTE");
                 }
