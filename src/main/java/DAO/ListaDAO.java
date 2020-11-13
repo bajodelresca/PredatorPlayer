@@ -32,6 +32,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         UPDATE("UPDATE Lista SET Nombre = ?, Descripcion = ?, IDUsuario = ? WHERE ID = ?"),
         DELETE("DELETE FROM Lista WHERE ID=?"),
         GETBYID("SELECT * FROM Lista WHERE ID=?"),
+        GETLCBYID("SELECT * FROM ListaCancion WHERE IDLista=? && IDCancion=?"),
         GETALL("SELECT * FROM Lista"),
         GETCANCLISTBYID("SELECT ID, Nombre, Duracion, IDGenero, IDDisco FROM cancion as c INNER JOIN listacancion as list on list.IDCancion=c.ID WHERE list.IDLista=?");
 
@@ -307,6 +308,46 @@ public class ListaDAO extends Lista implements DAO<Lista> {
             if (rs.next()) {
                 Lista c = convert(rs);
                 if (c.getID() != -1) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return result;
+    }
+    public boolean searchListaCanByID(int a,int c) {
+        boolean result = false;
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        CancionDAO cDAO=new CancionDAO();
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETLCBYID.getQ());
+            stat.setInt(1, a);
+            stat.setInt(2, c);
+            rs = stat.executeQuery();
+            if (rs.next()) {
+                Lista l = convert(rs);
+                Cancion ca= cDAO.convert(rs);
+                if (l.getID() != -1 && ca.getID() != -1) {
                     result = true;
                 } else {
                     result = false;
