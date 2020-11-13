@@ -27,7 +27,7 @@ import model.Usuario;
 public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
 
     enum queries {
-        INSERT("INSERT INTO subscripcion (IDLista,IDUsuario) VALUES (NULL,NULL)"),
+        INSERT("INSERT INTO subscripcion (IDLista,IDUsuario) VALUES (?,?)"),
         DELETE("DELETE FROM subscripcion WHERE IDLista=? AND IDUsuario=?"),
         UPDATE("UPDATE subscripcion SET IDLista=?,IDUsuario=?"),
         GETALL("SELECT * FROM subscripcion"),
@@ -84,14 +84,12 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     public void insert(Subscripcion a) {
         try {
             conn = ConnectionUtils.getConnection();
-            if (a.getLista().getID() > 0 && a.getUsuario().getID() > 0) {
-                edit(a);
-            } else {
+         
                 PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ());
                 stat.setInt(1, a.getLista().getID());
                 stat.setInt(2, a.getUsuario().getID());
                 stat.executeUpdate();
-            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
