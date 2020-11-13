@@ -78,28 +78,45 @@ public class GUI {
             case 1:
                 do {
                     op3 = Utilities.subMenuListar();
-                    ControladorSubMenuListar(op3);
+                    ControladorSubMenuListarCancion(op3);
                 } while (op3 != 3);
                 break;
 
             case 2:
-
+                do {
+                    op3 = Utilities.subMenuListar();
+                    ControladorSubMenuListarDisco(op3);
+                } while (op3 != 3);
                 break;
 
             case 3:
-
+                do {
+                    op3 = Utilities.subMenuListar();
+                    ControladorSubMenuListarArtista(op3);
+                } while (op3 != 3);
                 break;
 
             case 4:
-
+                do {
+                    op3 = Utilities.subMenuListar();
+                    ControladorSubMenuListarListaDR(op3);
+                } while (op3 != 3);
                 break;
 
             case 5:
-
+                do {
+                    Utilities.P("Introduzca el ID de la Lista de Reproducción");
+                    /* 
+                    ControladorSubMenuListarSUB(id); */
+                } while (op3 != 3);
                 break;
 
             case 6:
-
+                do {
+                    Utilities.P("Introduzca el ID del Usuario");
+                    /* 
+                    ControladorSubMenuListarListasDU(op3); */
+                } while (op3 != 3);
                 break;
 
             case 7:
@@ -111,7 +128,7 @@ public class GUI {
         }
     }
 
-    private static void ControladorSubMenuListar(int op2) {
+    private static void ControladorSubMenuListarCancion(int op2) {
         switch (op2) {
             case 1:
                 List<Cancion> listCancio = controlador.getAllSongs();
@@ -124,7 +141,6 @@ public class GUI {
                     System.out.println("----------------------------------");
                 }
                 break;
-
             case 2:
                 Utilities.P("Introduce el id de la cancion: ");
                 int id = keyboard.nextInt();
@@ -141,7 +157,45 @@ public class GUI {
                 }
                 break;
             case 3:
-
+                Utilities.P("Saliendo del Menú listar Canción ");
+                break;
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+    
+    private static void ControladorSubMenuListarDisco(int op2) {
+        switch (op2) {
+            case 1:
+                List<Disco> listDisco = controlador.getAllDiscs();
+                for (Disco disco : listDisco) {
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + disco.getID());
+                    System.out.println("Nombre: " + disco.getNombre());
+                    System.out.println("Foto: " + disco.getFoto());
+                    System.out.println("Fecha: " + disco.getFecha());
+                    System.out.println("Creador: " + disco.getCreador());
+                    System.out.println("----------------------------------");
+                }
+                break;
+            case 2:
+                Utilities.P("Introduce el id del Disco: ");
+                int id = keyboard.nextInt();
+                if (controlador.searchSongByID(id)) {
+                    Disco d = controlador.getDiscsById(id);
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + d.getID());
+                    System.out.println("Nombre: " + d.getNombre());
+                    System.out.println("Foto: " + d.getFoto());
+                    System.out.println("Fecha: " + d.getFecha());
+                    System.out.println("Creador: " + d.getCreador());
+                    System.out.println("----------------------------------");
+                } else {
+                    System.out.println("EL ID DEL DISCO NO EXISTE");
+                }
+                break;
+            case 3:
+                Utilities.P("Saliendo del Menú listar Disco ");
                 break;
             default:
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
