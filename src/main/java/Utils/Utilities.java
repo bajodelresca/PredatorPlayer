@@ -145,8 +145,9 @@ public class Utilities {
         P("3) Eliminar Canción");
         P("4) Eliminar una lista de reproducción");
         P("5) Eliminar una canción de una lista");
-        P("6) Eliminar una suscripción a lista");        
-        P("7) Salir");
+        P("6) Eliminar una suscripción a una lista");        
+        P("7) Eliminar un Usuario"); 
+        P("8) Salir");
         P("-------------------------------------");
         p("> ");
 

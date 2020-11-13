@@ -84,7 +84,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
     public void insert(Subscripcion a) {
         try {
             conn = ConnectionUtils.getConnection();
-            if (this.Lista.getID() > 0 && this.Usuario.getID() > 0) {
+            if (a.getLista().getID() > 0 && a.getUsuario().getID() > 0) {
                 edit(a);
             } else {
                 PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ());

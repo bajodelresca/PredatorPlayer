@@ -216,7 +216,7 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
     }
 
     /**
-     * Recibe el id de un disco y devuelve todas sus canciones
+     * Recibe el id de un artista y devuelve todos sus discos
      *
      * @param id
      * @return canciones

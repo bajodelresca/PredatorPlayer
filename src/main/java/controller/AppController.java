@@ -121,7 +121,7 @@ public class AppController {
         return subsControl.getAllSubs();
     }
 
-    public boolean insertSongs(Subscripcion a) {
+    public boolean insertSubs(Subscripcion a) {
         return subsControl.insertSubs(a);
     }
 

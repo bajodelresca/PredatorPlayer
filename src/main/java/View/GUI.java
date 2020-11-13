@@ -14,6 +14,7 @@ import model.Artista;
 import model.Cancion;
 import model.Disco;
 import model.Lista;
+import model.Subscripcion;
 import model.Usuario;
 
 public class GUI {
@@ -61,7 +62,7 @@ public class GUI {
                 do {
                     op2 = Utilities.MenuEliminar();
                     ControladorMenuEliminar(op2);
-                } while (op2 != 7);
+                } while (op2 != 8);
                 break;
 
             case 5:
@@ -452,7 +453,26 @@ public class GUI {
                 break;
 
             case 6:
-
+                Utilities.P("Introduzca el ID de la Lista: ");
+                int idList = keyboard.nextInt();
+                if (controlador.searchListByID(idList)) {
+                    Lista listR = controlador.getListById(idList);
+                     Utilities.P("Introduzca el ID del usuario: ");
+                     int idUser = keyboard.nextInt();
+                       if (controlador.searchUserByID(idUser)) {
+                        Usuario u = controlador.getUserById(idUser);
+                        Subscripcion sub=new Subscripcion(listR, u);
+                        if (controlador.insertSubs(sub)) {
+                            Utilities.P("SE HA CREADO LA SUBSCRIPCION CON EXITO");
+                        } else {
+                            Utilities.P("HA OCURRIDO UN PROBLEMA AL CREAR LA SUBSCRIPCION");
+                        }
+                    } else {
+                        Utilities.P("EL ID DEl USUARIO NO EXISTE ");
+                    }
+                } else {
+                    Utilities.P("EL ID DE LA LISTA NO EXISTE ");
+                }
                 break;
 
             case 7:
