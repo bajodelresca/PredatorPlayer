@@ -31,6 +31,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         INSERTLISTACANCION("INSERT INTO listacancion (IDLista,IDCancion) VALUES(?,?)"),
         UPDATE("UPDATE Lista SET Nombre = ?, Descripcion = ?, IDUsuario = ? WHERE ID = ?"),
         DELETE("DELETE FROM Lista WHERE ID=?"),
+        DELETESONGLIST("DELETE FROM Listacancion WHERE IDCancion=?"),
         GETBYID("SELECT * FROM Lista WHERE ID=?"),
         GETLCBYID("SELECT * FROM ListaCancion WHERE IDLista=? && IDCancion=?"),
         GETALL("SELECT * FROM Lista"),
@@ -373,4 +374,28 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         }
         return result;
     }
+    
+    public void removeSongList(Cancion a) {
+        PreparedStatement ps = null;
+        try {
+            conn = ConnectionUtils.getConnection();
+            ps = conn.prepareStatement(queries.DELETESONGLIST.getQ());
+            ps.setInt(1, a.getID());
+
+            if (ps.executeUpdate() == 0) {
+                throw new SQLException("No se ha borrado correctamente");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
 }

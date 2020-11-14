@@ -132,7 +132,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
             ps.setInt(1, a.getID());
 
             if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se Ha insertado correctamente");
+                throw new SQLException("No se ha borrado correctamente");
             }
         } catch (SQLException ex) {
             Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);

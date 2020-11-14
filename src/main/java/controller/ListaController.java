@@ -82,4 +82,15 @@ public class ListaController {
         ListaDAO lDAO = new ListaDAO();
         return lDAO.searchByID(id);
     }
+    public boolean removecanclist(Cancion a) {
+        boolean result = false;
+        if (a != null) {
+            ListaDAO lDAO = new ListaDAO();
+            lDAO.removeSongList(a);
+             result = true;
+        } else {
+            result = false;
+        }
+        return result;
+    }
 }

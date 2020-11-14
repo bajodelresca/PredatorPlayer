@@ -119,7 +119,7 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
             ps.setInt(2, a.getUsuario().getID());
 
             if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se Ha insertado correctamente");
+                throw new SQLException("No se ha borrado correctamente");
             }
         } catch (SQLException ex) {
             Logger.getLogger(SubscripcionDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -254,5 +254,5 @@ public class SubscripcionDAO extends Subscripcion implements DAO<Subscripcion> {
         
         return listS;
     }
-    
+     
 }

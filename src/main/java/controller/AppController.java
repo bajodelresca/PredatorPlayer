@@ -129,7 +129,7 @@ public class AppController {
         return subsControl.editSubs(a);
     }
 
-    public boolean removeSongs(Subscripcion a) {
+    public boolean removeSubs(Subscripcion a) {
         return subsControl.removeSubs(a);
     }
 
@@ -160,6 +160,9 @@ public class AppController {
 
     public boolean removeList(Lista a) {
         return listControl.removeList(a);
+    }
+    public boolean removesongofList(Cancion a) {
+        return listControl.removecanclist(a);
     }
 
     public List<Cancion> getAllSongsList(int id) {

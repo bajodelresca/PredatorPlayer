@@ -950,6 +950,41 @@ public class GUI {
                 break;
 
             case 5:
+                 Utilities.P("Introduzca el ID de la cancion: ");
+                int idcab = keyboard.nextInt();
+                if (controlador.searchSongByID(idcab)) {
+                    Cancion u = controlador.getSongsById(idcab);
+                    controlador.removesongofList(u);
+                    Utilities.P("LA CANCION HA SIDO BORRADA CON EXITO");
+
+                } else {
+                    System.out.println("EL ID DE LA CANCION NO EXISTE");
+                }
+               
+                break;
+            case 6:
+                Utilities.P("Introduzca el ID de la lista: ");
+                int idli = keyboard.nextInt();
+                if (controlador.searchListByID(idli)) {
+                    Utilities.P("Introduzca el ID del subscriptor: ");
+                    int idusub = keyboard.nextInt();
+                    if (controlador.searchUserByID(idusub)) {
+                    Lista l=controlador.getListById(idli);
+                    Usuario s=controlador.getUserById(idusub);                    
+                    Subscripcion u =new Subscripcion(l, s);                    
+                    controlador.removeSubs(u);
+                    Utilities.P("LA SUBSCRIPCION HA SIDO BORRADA CON EXITO");
+                    }else{
+                    System.out.println("EL ID DEL USUARIO NO EXISTE");
+                    }
+
+                } else {
+                    System.out.println("EL ID DE LA LISTA NO EXISTE");
+                }
+               break;
+                 
+            
+            case 7:
                 Utilities.P("Introduzca el ID del usuario: ");
                 int iduserb = keyboard.nextInt();
                 if (controlador.searchUserByID(iduserb)) {
@@ -962,12 +997,14 @@ public class GUI {
                 }
 
                 break;
-            case 6:
+            case 8:
                 Utilities.P("Saliendo del Menú de Eliminación.");
                 break;
-
             default:
+                
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
+                break;
+                
         }
     }
 

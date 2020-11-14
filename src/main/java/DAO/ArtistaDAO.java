@@ -125,7 +125,7 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
             ps.setInt(1, a.getID());
 
             if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se ha insertado correctamente");
+                throw new SQLException("No se ha borrado correctamente");
             }
         } catch (SQLException ex) {
             Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
