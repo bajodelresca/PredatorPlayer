@@ -148,7 +148,7 @@ public class GUI {
                 break;
             case 2:
                 Utilities.P("Introduce el id de la cancion: ");
-                int id = keyboard.nextInt();
+                int id = Utilities.getInt();
                 if (controlador.searchSongByID(id)) {
                     Cancion c = controlador.getSongsById(id);
                     System.out.println("----------------------------------");
@@ -185,7 +185,7 @@ public class GUI {
                 break;
             case 2:
                 Utilities.P("Introduce el id del Disco: ");
-                int id = keyboard.nextInt();
+                int id = Utilities.getInt();
                 if (controlador.searchDiscByID(id)) {
                     Disco d = controlador.getDiscsById(id);
                     System.out.println("----------------------------------");

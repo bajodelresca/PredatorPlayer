@@ -24,6 +24,43 @@ public class Utilities {
         Utilities.p(f + "\n");
     }
 
+    /**
+     * Lee un entero de teclado
+     *
+     * @return devuelve el entero leído
+     */
+    public static int getInt() {
+        int result = 0;
+        boolean valid = false;
+        do {
+            try {
+                result = Integer.parseInt(keyboard.nextLine());
+                valid = true;
+
+            } catch (IllegalStateException ex) {
+                keyboard = new Scanner(System.in);
+                Utilities.P("Error in keyboard. Please, try it again: ");
+            } catch (NumberFormatException ex) {
+                Utilities.P("Error reading integer type. Please, try it again: ");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                Utilities.P("Error unknown. Please, try it again: ");
+            }
+        } while (!valid);
+        return result;
+    }
+
+    /**
+     * Lee un entero de teclado
+     *
+     * @param f Mensaje a imprimir al usuario antes de solicitar el entero
+     * @return devuelve el entero leído
+     */
+    public static int getInt(String f) {
+        Utilities.p(f + " : ");
+        return Utilities.getInt();
+    }
+
     public static int Menu() {
         int opcion = 0;
         P("-----Bienvenido a Espotifi-----");
@@ -68,7 +105,6 @@ public class Utilities {
 
         return opcion;
     }
-    
 
     public static int subMenuListar() {
         int opcion = 0;
@@ -86,9 +122,8 @@ public class Utilities {
 
         return opcion;
     }
-    
+
     //____________________________________________________________________________MenuInsertar
-    
     public static int MenuInsertar() {
         int opcion = 0;
         P("-----Menú de Creación-----");
@@ -97,7 +132,7 @@ public class Utilities {
         P("3) Insertar Canción");
         P("4) Crear una lista de reproducción");
         P("5) Insertar una canción a una lista");
-        P("6) Subscribirte una lista de reproducción");        
+        P("6) Subscribirte una lista de reproducción");
         P("7) Salir");
         P("-------------------------------------");
         p("> ");
@@ -111,17 +146,16 @@ public class Utilities {
 
         return opcion;
     }
-    
+
     //____________________________________________________________________________MenuEditar
-    
     public static int MenuEditar() {
         int opcion = 0;
         P("-----Menú de Edición-----");
         P("1) Editar un Artista");
         P("2) Editar un Disco");
         P("3) Editar un Canción");
-        P("4) Editar una lista de reproducción");       
-        P("5) Editar un Usuario");       
+        P("4) Editar una lista de reproducción");
+        P("5) Editar un Usuario");
         P("6) Salir");
         P("-------------------------------------");
         p("> ");
@@ -135,12 +169,13 @@ public class Utilities {
 
         return opcion;
     }
+
     public static int MenuEditarArtista() {
         int opcion = 0;
         P("-----Edicion Artista-----");
         P("1) Editar nombre");
         P("2) Editar nacionalidad");
-        P("3) Editar foto");     
+        P("3) Editar foto");
         P("4) Salir");
         P("-------------------------------------");
         p("> ");
@@ -154,13 +189,14 @@ public class Utilities {
 
         return opcion;
     }
+
     public static int MenuEditarDisco() {
         int opcion = 0;
         P("-----Edicion Disco-----");
         P("1) Editar Nombre");
         P("2) Editar foto");
-        P("3) Editar fecha");     
-        P("4) Editar creador");     
+        P("3) Editar fecha");
+        P("4) Editar creador");
         P("5) Salir");
         P("-------------------------------------");
         p("> ");
@@ -174,12 +210,13 @@ public class Utilities {
 
         return opcion;
     }
+
     public static int MenuEditarCancion() {
         int opcion = 0;
         P("-----Edicion Cancion-----");
         P("1) Editar Nombre");
         P("2) Editar Duracion");
-        P("3) Editar Album");        
+        P("3) Editar Album");
         P("4) Salir");
         P("-------------------------------------");
         p("> ");
@@ -193,11 +230,12 @@ public class Utilities {
 
         return opcion;
     }
+
     public static int MenuEditarLsita() {
         int opcion = 0;
         P("-----Edicion Lista-----");
         P("1) Editar Nombre");
-        P("2) Editar Descripcion");  
+        P("2) Editar Descripcion");
         P("3) Salir");
         P("-------------------------------------");
         p("> ");
@@ -211,12 +249,13 @@ public class Utilities {
 
         return opcion;
     }
+
     public static int MenuEditarUsuario() {
         int opcion = 0;
         P("-----Edicion Usuario-----");
         P("1) Editar nombre");
         P("2) Editar Correo");
-        P("3) Editar foto");     
+        P("3) Editar foto");
         P("4) Salir");
         P("-------------------------------------");
         p("> ");
@@ -231,7 +270,7 @@ public class Utilities {
         return opcion;
     }
     //____________________________________________________________________________MenuEliminar
-    
+
     public static int MenuEliminar() {
         int opcion = 0;
         P("-----Menú de Eliminación-----");
@@ -240,8 +279,8 @@ public class Utilities {
         P("3) Eliminar Canción");
         P("4) Eliminar una lista de reproducción");
         P("5) Eliminar una canción de una lista");
-        P("6) Eliminar una suscripción a una lista");        
-        P("7) Eliminar un Usuario"); 
+        P("6) Eliminar una suscripción a una lista");
+        P("7) Eliminar un Usuario");
         P("8) Salir");
         P("-------------------------------------");
         p("> ");
@@ -255,7 +294,5 @@ public class Utilities {
 
         return opcion;
     }
-    
-    
-    
+
 }
