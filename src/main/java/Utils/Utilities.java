@@ -6,7 +6,7 @@ public class Utilities {
 
     private static Scanner keyboard = new Scanner(System.in);
 
-    /**
+        /**
      * Escribe un texto en consola sin retorno de carro
      *
      * @param f texto a imprimir
@@ -30,7 +30,7 @@ public class Utilities {
      * @return devuelve el entero leído
      */
     public static int getInt() {
-        int result = 0;
+       Integer result = 0;
         boolean valid = false;
         do {
             try {
@@ -60,6 +60,7 @@ public class Utilities {
         Utilities.p(f + " : ");
         return Utilities.getInt();
     }
+
 
     public static int Menu() {
         int opcion = 0;
