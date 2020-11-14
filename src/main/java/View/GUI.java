@@ -133,7 +133,7 @@ public class GUI {
                     Utilities.p("> ");
                     op3 = keyboard.nextInt();
                     ControladorSubMenuListarListaDeCAN(op3);
-                } while (op3 != 3);
+                } while (op3 != 2);
                 break;
 
             case 8:
@@ -361,7 +361,7 @@ public class GUI {
                 Utilities.P("Introduce el id de la Lista de Reproducción: ");
                 int id = 0;
                 boolean valid = false;
-                do {
+                  do {
                     try {
                         id = Integer.parseInt(keyboard.nextLine());
                         valid = true;
@@ -425,6 +425,7 @@ public class GUI {
                         System.out.println("----------------------------------");
                         System.out.println("ID: " + li.getID());
                         System.out.println("Nombre: " + li.getNombre());
+                        System.out.println("Descripcion: " + li.getDescripcion());
                         System.out.println("----------------------------------");
                     }
                 } else {
@@ -466,6 +467,7 @@ public class GUI {
                         System.out.println("----------------------------------");
                         System.out.println("ID: " + c.getID());
                         System.out.println("Nombre: " + c.getNombre());
+                        System.out.println("Duracion: " + c.getDuracion());
                         System.out.println("----------------------------------");
                     }
                 } else {
