@@ -39,7 +39,7 @@ public class GUI {
                 do {
                     op2 = Utilities.MenuListar();
                     ControladorMenuListar(op2);
-                } while (op2 != 7);
+                } while (op2 != 8);
                 break;
 
             case 2:
@@ -108,23 +108,35 @@ public class GUI {
 
             case 5:
                 do {
-                    Utilities.P("Listar por ID: ");
-                    Utilities.P("Volver al menú anterior");
+                    Utilities.P("1) Listar por ID: ");
+                    Utilities.P("2) Volver al menú anterior");
                     Utilities.p("> ");
+                    op3 = keyboard.nextInt();
                     ControladorSubMenuListarSUB(op3);
                 } while (op3 != 2);
                 break;
 
             case 6:
                 do {
-                    Utilities.P("Listar por ID: ");
-                    Utilities.P("Volver al menú anterior");
+                    Utilities.P("1) Listar por ID: ");
+                    Utilities.P("2) Volver al menú anterior");
                     Utilities.p("> ");
+                    op3 = keyboard.nextInt();
                     ControladorSubMenuListarListasDU(op3);
                 } while (op3 != 2);
                 break;
-
+            
             case 7:
+                do {
+                    Utilities.P("1) Listar Canciones de la Lista de Reproducción");
+                    Utilities.P("2) Volver al menú anterior");
+                    Utilities.p("> ");
+                    op3 = keyboard.nextInt();
+                    ControladorSubMenuListarListaDeCAN(op3);
+                } while (op3 != 3);
+                break;
+
+            case 8:
                 Utilities.P("Saliendo del Menú de Información.");
                 break;
 
@@ -421,6 +433,47 @@ public class GUI {
                 break;
             case 2:
                 Utilities.P("Saliendo del Menú listar Listas Subscritas ");
+                break;
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+    
+    private static void ControladorSubMenuListarListaDeCAN (int op2){
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduce el id de la Lista de Reproducción: ");
+                int id = 0;
+                boolean valid = false;
+                do {
+                    try {
+                        id = Integer.parseInt(keyboard.nextLine());
+                        valid = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid);
+                if (controlador.searchListByID(id)) {
+                    List<Cancion> listCanc = controlador.getAllSongsList(id);
+                    for (Cancion c : listCanc) {
+                        System.out.println("----------------------------------");
+                        System.out.println("ID: " + c.getID());
+                        System.out.println("Nombre: " + c.getNombre());
+                        System.out.println("----------------------------------");
+                    }
+                } else {
+                    System.out.println("EL ID DE LA LISTA NO EXISTE");
+                }
+                break;
+            case 2:
+                Utilities.P("Saliendo del Menú listar canciones de la Lista de Reproducción ");
                 break;
             default:
                 Utilities.P("Opción no válida, vuelve a intentarlo.");

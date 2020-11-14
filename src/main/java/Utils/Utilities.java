@@ -90,10 +90,11 @@ public class Utilities {
         P("1) Listar Cancion");
         P("2) Listar Disco");
         P("3) Listar Artista");
-        P("4) Listar lista de Reproduccion");
+        P("4) Listar lista de Reproducción");
         P("5) Listar subscriptores por Id de la lista");
         P("6) Listar listas a las que esta subscrito el usuario por Id");
-        P("7) Volver al menú anterior");
+        P("7) Listar las canciones de una lista de Reproducción");
+        P("8) Volver al menú anterior");
         P("-------------------------------------");
         p("> ");
 
