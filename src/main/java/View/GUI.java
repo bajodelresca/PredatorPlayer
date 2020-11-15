@@ -1383,9 +1383,21 @@ public class GUI {
                     }
                 } while (!valid3);
                 if (controlador.searchSongByID(idCancionb)) {
-                    Cancion c = controlador.getSongsById(idCancionb);
-                    controlador.removeSongs(c);
-                    Utilities.P("LA CANCION HA SIDO BORRADA CON EXITO");
+                    int opcion = 0;
+                    Utilities.P("¿Estas seguro de que quieres eliminar? ");
+                    Utilities.P("1- Si eliminar ");
+                    Utilities.P("2- No eliminar ");
+
+                    opcion = keyboard.nextInt();
+                    if (opcion == 1) {
+                        Cancion c = controlador.getSongsById(idCancionb);
+                        controlador.removeSongs(c);
+                        Utilities.P("LA CANCION HA SIDO BORRADA CON EXITO");
+                    } else if (opcion == 2) {
+                        System.out.println("SALIENDO");
+                    } else {
+                        System.out.println("Introduzca una opcion valida");
+                    }
 
                 } else {
                     System.out.println("EL ID DE LA CANCION NO EXISTE");
@@ -1413,9 +1425,21 @@ public class GUI {
                     }
                 } while (!valid4);
                 if (controlador.searchListByID(idListab)) {
-                    Lista l = controlador.getListById(idListab);
-                    controlador.removeList(l);
-                    Utilities.P("LA LISTA HA SIDO BORRADA CON EXITO");
+                    int opcion = 0;
+                    Utilities.P("¿Estas seguro de que quieres eliminar? ");
+                    Utilities.P("1- Si eliminar ");
+                    Utilities.P("2- No eliminar ");
+
+                    opcion = keyboard.nextInt();
+                    if (opcion == 1) {
+                        Lista l = controlador.getListById(idListab);
+                        controlador.removeList(l);
+                        Utilities.P("LA LISTA HA SIDO BORRADA CON EXITO");
+                    } else if (opcion == 2) {
+                        System.out.println("SALIENDO");
+                    } else {
+                        System.out.println("Introduzca una opcion valida");
+                    }
 
                 } else {
                     System.out.println("EL ID DE LA LISTA NO EXISTE");
@@ -1443,9 +1467,21 @@ public class GUI {
                     }
                 } while (!valid5);
                 if (controlador.searchSongByID(idcab)) {
-                    Cancion u = controlador.getSongsById(idcab);
-                    controlador.removesongofList(u);
-                    Utilities.P("LA CANCION HA SIDO BORRADA CON EXITO");
+                    int opcion = 0;
+                    Utilities.P("¿Estas seguro de que quieres eliminar? ");
+                    Utilities.P("1- Si eliminar ");
+                    Utilities.P("2- No eliminar ");
+
+                    opcion = keyboard.nextInt();
+                    if (opcion == 1) {
+                        Cancion u = controlador.getSongsById(idcab);
+                        controlador.removesongofList(u);
+                        Utilities.P("LA CANCION HA SIDO BORRADA CON EXITO");
+                    } else if (opcion == 2) {
+                        System.out.println("SALIENDO");
+                    } else {
+                        System.out.println("Introduzca una opcion valida");
+                    }
 
                 } else {
                     System.out.println("EL ID DE LA CANCION NO EXISTE");
@@ -1491,11 +1527,23 @@ public class GUI {
                         }
                     } while (!valid7);
                     if (controlador.searchUserByID(idusub)) {
-                        Lista l = controlador.getListById(idli);
-                        Usuario s = controlador.getUserById(idusub);
-                        Subscripcion u = new Subscripcion(l, s);
-                        controlador.removeSubs(u);
-                        Utilities.P("LA SUBSCRIPCION HA SIDO BORRADA CON EXITO");
+                        int opcion = 0;
+                        Utilities.P("¿Estas seguro de que quieres eliminar? ");
+                        Utilities.P("1- Si eliminar ");
+                        Utilities.P("2- No eliminar ");
+
+                        opcion = keyboard.nextInt();
+                        if (opcion == 1) {
+                            Lista l = controlador.getListById(idli);
+                            Usuario s = controlador.getUserById(idusub);
+                            Subscripcion u = new Subscripcion(l, s);
+                            controlador.removeSubs(u);
+                            Utilities.P("LA SUBSCRIPCION HA SIDO BORRADA CON EXITO");
+                        } else if (opcion == 2) {
+                            System.out.println("SALIENDO");
+                        } else {
+                            System.out.println("Introduzca una opcion valida");
+                        }
                     } else {
                         System.out.println("EL ID DEL USUARIO NO EXISTE");
                     }
@@ -1525,9 +1573,21 @@ public class GUI {
                     }
                 } while (!valid8);
                 if (controlador.searchUserByID(iduserb)) {
-                    Usuario u = controlador.getUserById(iduserb);
-                    controlador.removeUser(u);
-                    Utilities.P("EL USUARIO HA SIDO BORRADA CON EXITO");
+                    int opcion = 0;
+                    Utilities.P("¿Estas seguro de que quieres eliminar? ");
+                    Utilities.P("1- Si eliminar ");
+                    Utilities.P("2- No eliminar ");
+
+                    opcion = keyboard.nextInt();
+                    if (opcion == 1) {
+                        Usuario u = controlador.getUserById(iduserb);
+                        controlador.removeUser(u);
+                        Utilities.P("EL USUARIO HA SIDO BORRADA CON EXITO");
+                    } else if (opcion == 2) {
+                        System.out.println("SALIENDO");
+                    } else {
+                        System.out.println("Introduzca una opcion valida");
+                    }
 
                 } else {
                     System.out.println("EL ID DEL USUARIO NO EXISTE");
