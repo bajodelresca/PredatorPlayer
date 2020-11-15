@@ -124,7 +124,40 @@ public class Utilities {
 
         return opcion;
     }
+    public static int subMenuListarDisco() {
+        int opcion = 0;
+        P("1) Listar todos");
+        P("2) Listar por ID");
+        P("3) Listar las canciones por ID de disco");
+        P("4) Volver al menú anterior");
+        p("> ");
 
+        try {
+            opcion = keyboard.nextInt();
+        } catch (Exception e) {
+            System.out.println("Introduzca un número entero");
+            keyboard = new Scanner(System.in);
+        }
+
+        return opcion;
+    }
+    public static int subMenuListarArtista() {
+        int opcion = 0;
+        P("1) Listar todos");
+        P("2) Listar por ID");
+        P("3) Listar discos por ID de Artista");
+        P("4) Volver al menú anterior");
+        p("> ");
+
+        try {
+            opcion = keyboard.nextInt();
+        } catch (Exception e) {
+            System.out.println("Introduzca un número entero");
+            keyboard = new Scanner(System.in);
+        }
+
+        return opcion;
+    }
     //____________________________________________________________________________MenuInsertar
     public static int MenuInsertar() {
         int opcion = 0;

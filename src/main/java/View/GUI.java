@@ -111,7 +111,12 @@ public class GUI {
                     Utilities.P("1) Listar por ID: ");
                     Utilities.P("2) Volver al menú anterior");
                     Utilities.p("> ");
-                    op3 = keyboard.nextInt();
+                    try {
+                        op3 = keyboard.nextInt();
+                    } catch (Exception e) {
+                        System.out.println("Introduzca un número entero");
+                        keyboard = new Scanner(System.in);
+                    }
                     ControladorSubMenuListarSUB(op3);
                 } while (op3 != 2);
                 break;
@@ -121,7 +126,12 @@ public class GUI {
                     Utilities.P("1) Listar por ID: ");
                     Utilities.P("2) Volver al menú anterior");
                     Utilities.p("> ");
-                    op3 = keyboard.nextInt();
+                    try {
+                        op3 = keyboard.nextInt();
+                    } catch (Exception e) {
+                        System.out.println("Introduzca un número entero");
+                        keyboard = new Scanner(System.in);
+                    }
                     ControladorSubMenuListarListasDU(op3);
                 } while (op3 != 2);
                 break;
@@ -131,7 +141,12 @@ public class GUI {
                     Utilities.P("1) Listar Canciones de la Lista de Reproducción");
                     Utilities.P("2) Volver al menú anterior");
                     Utilities.p("> ");
-                    op3 = keyboard.nextInt();
+                    try {
+                        op3 = keyboard.nextInt();
+                    } catch (Exception e) {
+                        System.out.println("Introduzca un número entero");
+                        keyboard = new Scanner(System.in);
+                    }
                     ControladorSubMenuListarListaDeCAN(op3);
                 } while (op3 != 2);
                 break;
