@@ -474,7 +474,8 @@ public class GUI {
                     }
                 } while (!valid);
                 if (controlador.searchListByID(id)) {
-                    List<Usuario> listUsuario = controlador.getSubscriberFromList(id);
+                    Lista l=controlador.getListById(id);
+                    List<Usuario> listUsuario = l.getSubscriptores();
                     for (Usuario u : listUsuario) {
                         System.out.println("----------------------------------");
                         System.out.println("ID: " + u.getID());
@@ -517,7 +518,8 @@ public class GUI {
                     }
                 } while (!valid);
                 if (controlador.searchUserByID(id)) {
-                    List<Lista> listLista = controlador.getListFromSubscriber(id);
+                    Usuario u=controlador.getUserById(id);
+                    List<Lista> listLista = u.getListasubscrito();
                     for (Lista li : listLista) {
                         System.out.println("----------------------------------");
                         System.out.println("ID: " + li.getID());
@@ -559,7 +561,8 @@ public class GUI {
                     }
                 } while (!valid);
                 if (controlador.searchListByID(id)) {
-                    List<Cancion> listCanc = controlador.getAllSongsList(id);
+                    Lista l=controlador.getListById(id);
+                    List<Cancion> listCanc = l.getListareproduccion();
                     for (Cancion c : listCanc) {
                         System.out.println("----------------------------------");
                         System.out.println("ID: " + c.getID());

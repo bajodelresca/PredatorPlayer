@@ -403,7 +403,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     public List<Lista> getListFromUser(int id) {
         PreparedStatement stat = null;
         ResultSet rs = null;
-        List<Lista> listUser = null;
+        List<Lista> listUser = new ArrayList<>();
         try {
             conn = ConnectionUtils.getConnection();
             stat = conn.prepareStatement(queries.GETLISTFROMUSER.getQ());
