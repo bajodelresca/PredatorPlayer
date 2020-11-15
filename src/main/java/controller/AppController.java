@@ -175,6 +175,10 @@ public class AppController {
     public boolean searchListByID(int id){
      return listControl.searchListByID(id);
      }
+    
+    public List<Lista> getAllListUser(int id) {
+        return listControl.getListFromUser(id);
+    }
     //___________________________________________________________________________Funciones de User
     
     public List<Usuario> getAllUsers() {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DAO;
 
 import Utils.ConnectionUtils;
@@ -35,8 +30,10 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         GETBYID("SELECT * FROM Lista WHERE ID=?"),
         GETLCBYID("SELECT * FROM ListaCancion WHERE IDLista=? && IDCancion=?"),
         GETALL("SELECT * FROM Lista"),
-        GETCANCLISTBYID("SELECT ID, Nombre, Duracion, IDGenero, IDDisco FROM cancion as c INNER JOIN listacancion as list on list.IDCancion=c.ID WHERE list.IDLista=?");
-
+        GETCANCLISTBYID("SELECT ID, Nombre, Duracion, IDGenero, IDDisco FROM cancion as c INNER JOIN listacancion as list on list.IDCancion=c.ID WHERE list.IDLista=?"),
+        GETLISTFROMUSER("SELECT * FROM Lista WHERE IDUsuario = ?");
+        
+        
         private String q;
 
         queries(String q) {
@@ -398,4 +395,42 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         }
     }
     
+    /**
+     * Recibe el ID del usuario y devuelve Las listas que ha creado
+     * @param id
+     * @return listUser
+     */
+    public List<Lista> getListFromUser(int id) {
+        PreparedStatement stat = null;
+        ResultSet rs = null;
+        List<Lista> listUser = null;
+        try {
+            conn = ConnectionUtils.getConnection();
+            stat = conn.prepareStatement(queries.GETLISTFROMUSER.getQ());
+            stat.setInt(1, id);
+            rs = stat.executeQuery();
+            while (rs.next()) {
+                listUser.add(convert(rs));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (stat != null) {
+                try {
+                    stat.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return listUser;
+    }
 }

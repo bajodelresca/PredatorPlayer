@@ -94,7 +94,8 @@ public class Utilities {
         P("5) Listar subscriptores por Id de la lista");
         P("6) Listar listas a las que esta subscrito el usuario por Id");
         P("7) Listar las canciones de una lista de Reproducción");
-        P("8) Volver al menú anterior");
+        P("8) Listar las listas de Reproducción que ha creado un usuario");
+        P("9) Volver al menú anterior");
         P("-------------------------------------");
         p("> ");
 

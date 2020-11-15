@@ -39,7 +39,7 @@ public class GUI {
                 do {
                     op2 = Utilities.MenuListar();
                     ControladorMenuListar(op2);
-                } while (op2 != 8);
+                } while (op2 != 9);
                 break;
 
             case 2:
@@ -152,6 +152,21 @@ public class GUI {
                 break;
 
             case 8:
+                do {
+                    Utilities.P("1) Listar por ID: ");
+                    Utilities.P("2) Volver al menú anterior");
+                    Utilities.p("> ");
+                    try {
+                        op3 = keyboard.nextInt();
+                    } catch (Exception e) {
+                        System.out.println("Introduzca un número entero");
+                        keyboard = new Scanner(System.in);
+                    }
+                    ControladorSubMenuListarLDU(op3);
+                } while (op3 != 2);
+                break;
+                
+            case 9:
                 Utilities.P("Saliendo del Menú de Información.");
                 break;
 
@@ -364,15 +379,15 @@ public class GUI {
                 } while (!valid2);
                 if (controlador.searchArtistaByID(id2)) {
                     Artista a = controlador.getArtistsById(id2);
-                    List<Disco> album=a.getRepertorio();
+                    List<Disco> album = a.getRepertorio();
                     for (Disco disco : album) {
-                    System.out.println("----------------------------------");
-                    System.out.println("ID: " + disco.getID());
-                    System.out.println("Nombre: " + disco.getNombre());
-                    System.out.println("Foto: " + disco.getFoto());
-                    System.out.println("Fecha: " + disco.getFecha());
-                    System.out.println("----------------------------------");
-                }
+                        System.out.println("----------------------------------");
+                        System.out.println("ID: " + disco.getID());
+                        System.out.println("Nombre: " + disco.getNombre());
+                        System.out.println("Foto: " + disco.getFoto());
+                        System.out.println("Fecha: " + disco.getFecha());
+                        System.out.println("----------------------------------");
+                    }
                 } else {
                     System.out.println("EL ID DEL ARTISTA NO EXISTE");
                 }
@@ -558,6 +573,48 @@ public class GUI {
                 break;
             case 2:
                 Utilities.P("Saliendo del Menú listar canciones de la Lista de Reproducción ");
+                break;
+            default:
+                Utilities.P("Opción no válida, vuelve a intentarlo.");
+        }
+    }
+            
+    private static void ControladorSubMenuListarLDU(int op2) {
+        switch (op2) {
+            case 1:
+                Utilities.P("Introduce el id del Usuario: ");
+                int id = 0;
+                boolean valid = false;
+                do {
+                    try {
+                        id = Integer.parseInt(keyboard.nextLine());
+                        valid = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid);
+                if (controlador.searchUserByID(id)) {
+                    List<Lista> listDU = controlador.getAllListUser(id);
+                    for (Lista li : listDU) {
+                        System.out.println("----------------------------------");
+                        System.out.println("ID: " + li.getID());
+                        System.out.println("Nombre: " + li.getNombre());
+                        System.out.println("Descripcion: " + li.getDescripcion());
+                        System.out.println("----------------------------------");
+                    }
+                } else {
+                    System.out.println("EL ID DE LA USUARIO NO EXISTE");
+                }
+                break;
+            case 2:
+                Utilities.P("Saliendo del Menú listar las Listas de Reproducción creadas por un Usuario ");
                 break;
             default:
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
