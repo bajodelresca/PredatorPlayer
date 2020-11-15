@@ -87,16 +87,16 @@ public class GUI {
 
             case 2:
                 do {
-                    op3 = Utilities.subMenuListar();
+                    op3 = Utilities.subMenuListarDisco();
                     ControladorSubMenuListarDisco(op3);
-                } while (op3 != 3);
+                } while (op3 != 4);
                 break;
 
             case 3:
                 do {
-                    op3 = Utilities.subMenuListar();
+                    op3 = Utilities.subMenuListarArtista();
                     ControladorSubMenuListarArtista(op3);
-                } while (op3 != 3);
+                } while (op3 != 4);
                 break;
 
             case 4:
@@ -259,6 +259,39 @@ public class GUI {
                 }
                 break;
             case 3:
+                Utilities.P("Introduce el id del Disco: ");
+                int id2 = 0;
+                boolean valid2 = false;
+                do {
+                    try {
+                        id2 = Integer.parseInt(keyboard.nextLine());
+                        valid2 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid2);
+                if (controlador.searchDiscByID(id2)) {
+                    Disco d = controlador.getDiscsById(id2);
+                    List<Cancion> listC = d.getCanciones();
+                    for (Cancion cancion : listC) {
+                        System.out.println("----------------------------------");
+                        System.out.println("ID: " + cancion.getID());
+                        System.out.println("Nombre: " + cancion.getNombre());
+                        System.out.println("Duracion: " + cancion.getDuracion());
+                        System.out.println("----------------------------------");
+                    }
+                } else {
+                    System.out.println("EL ID DEL DISCO NO EXISTE");
+                }
+                break;
+            case 4:
                 Utilities.P("Saliendo del Menú listar Disco ");
                 break;
             default:
@@ -311,6 +344,40 @@ public class GUI {
                 }
                 break;
             case 3:
+                Utilities.P("Introduce el id del Artista: ");
+                int id2 = 0;
+                boolean valid2 = false;
+                do {
+                    try {
+                        id2 = Integer.parseInt(keyboard.nextLine());
+                        valid2 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid2);
+                if (controlador.searchArtistaByID(id2)) {
+                    Artista a = controlador.getArtistsById(id2);
+                    List<Disco> album=a.getRepertorio();
+                    for (Disco disco : album) {
+                    System.out.println("----------------------------------");
+                    System.out.println("ID: " + disco.getID());
+                    System.out.println("Nombre: " + disco.getNombre());
+                    System.out.println("Foto: " + disco.getFoto());
+                    System.out.println("Fecha: " + disco.getFecha());
+                    System.out.println("----------------------------------");
+                }
+                } else {
+                    System.out.println("EL ID DEL ARTISTA NO EXISTE");
+                }
+                break;
+            case 4:
                 Utilities.P("Saliendo del Menú listar Artista ");
                 break;
             default:
