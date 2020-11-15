@@ -128,7 +128,7 @@ public class Disco {
 
     @Override
     public String toString() {
-        return "Disco{" + "ID=" + ID + ", Nombre=" + Nombre + ", foto=" + foto + ", fecha=" + fecha + ", creador=" + creador + ", canciones=" + canciones + '}';
+        return "Disco{" + "ID=" + ID + ", Nombre=" + Nombre + ", foto=" + foto + ", fecha=" + fecha + ", creador=" + creador + '}';
     }
 
 }

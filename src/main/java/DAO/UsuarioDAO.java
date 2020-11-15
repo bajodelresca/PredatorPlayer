@@ -112,7 +112,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
             stat.setString(1, a.getCorreo());
             stat.setString(2, a.getNombre());
             stat.setString(3, a.getFoto());
-            stat.setInt(5, a.getID());
+            stat.setInt(4, a.getID());
             stat.executeUpdate();
 
         } catch (SQLException ex) {

@@ -125,7 +125,7 @@ public class GUI {
                     ControladorSubMenuListarListasDU(op3);
                 } while (op3 != 2);
                 break;
-            
+
             case 7:
                 do {
                     Utilities.P("1) Listar Canciones de la Lista de Reproducción");
@@ -361,7 +361,7 @@ public class GUI {
                 Utilities.P("Introduce el id de la Lista de Reproducción: ");
                 int id = 0;
                 boolean valid = false;
-                  do {
+                do {
                     try {
                         id = Integer.parseInt(keyboard.nextLine());
                         valid = true;
@@ -439,8 +439,8 @@ public class GUI {
                 Utilities.P("Opción no válida, vuelve a intentarlo.");
         }
     }
-    
-    private static void ControladorSubMenuListarListaDeCAN (int op2){
+
+    private static void ControladorSubMenuListarListaDeCAN(int op2) {
         switch (op2) {
             case 1:
                 Utilities.P("Introduce el id de la Lista de Reproducción: ");
@@ -580,7 +580,23 @@ public class GUI {
                     }
                 } while (!valid2);
                 Utilities.P("Introduzca el ID del Disco: ");
-                int idDisco = keyboard.nextInt();
+                int idDisco = 0;
+                boolean valid3 = false;
+                do {
+                    try {
+                        idDisco = Integer.parseInt(keyboard.nextLine());
+                        valid3 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid3);
                 if (controlador.searchDiscByID(idDisco)) {
                     Disco d = controlador.getDiscsById(idDisco);
                     Cancion c = new Cancion(nombre, duracion, d);
@@ -602,11 +618,11 @@ public class GUI {
                 String descripcion = keyboard.nextLine();
                 Utilities.P("Introduzca el ID del Creador: ");
                 int idCreador = 0;
-                boolean valid3 = false;
+                boolean valid4 = false;
                 do {
                     try {
                         idCreador = Integer.parseInt(keyboard.nextLine());
-                        valid3 = true;
+                        valid4 = true;
 
                     } catch (IllegalStateException ex) {
                         keyboard = new Scanner(System.in);
@@ -617,7 +633,7 @@ public class GUI {
                         ex.printStackTrace();
                         Utilities.P("Error unknown. Please, try it again: ");
                     }
-                } while (!valid3);
+                } while (!valid4);
                 if (controlador.searchUserByID(idCreador)) {
                     Usuario u = controlador.getUserById(idCreador);
                     Lista l = new Lista(nombre, descripcion, u);
@@ -634,11 +650,11 @@ public class GUI {
             case 5:
                 Utilities.P("Introduzca el ID de la Lista: ");
                 int idLista = 0;
-                boolean valid4 = false;
+                boolean valid5 = false;
                 do {
                     try {
                         idLista = Integer.parseInt(keyboard.nextLine());
-                        valid4 = true;
+                        valid5 = true;
 
                     } catch (IllegalStateException ex) {
                         keyboard = new Scanner(System.in);
@@ -649,16 +665,16 @@ public class GUI {
                         ex.printStackTrace();
                         Utilities.P("Error unknown. Please, try it again: ");
                     }
-                } while (!valid4);
+                } while (!valid5);
                 if (controlador.searchListByID(idLista)) {
                     Lista listR = controlador.getListById(idLista);
                     Utilities.P("Introduzca el ID de la Cancion: ");
                     int idCancion = 0;
-                    boolean valid5 = false;
+                    boolean valid6 = false;
                     do {
                         try {
                             idCancion = Integer.parseInt(keyboard.nextLine());
-                            valid5 = true;
+                            valid6 = true;
 
                         } catch (IllegalStateException ex) {
                             keyboard = new Scanner(System.in);
@@ -669,7 +685,7 @@ public class GUI {
                             ex.printStackTrace();
                             Utilities.P("Error unknown. Please, try it again: ");
                         }
-                    } while (!valid5);
+                    } while (!valid6);
                     if (controlador.searchSongByID(idCancion)) {
                         Cancion song = controlador.getSongsById(idCancion);
                         if (controlador.insertListCanc(listR.getID(), song.getID())) {
@@ -708,7 +724,24 @@ public class GUI {
                 if (controlador.searchListByID(idList)) {
                     Lista listR = controlador.getListById(idList);
                     Utilities.P("Introduzca el ID del usuario: ");
-                    int idUser = keyboard.nextInt();
+
+                    int idUser = 0;
+                    boolean valid7 = false;
+                    do {
+                        try {
+                            idUser = Integer.parseInt(keyboard.nextLine());
+                            valid7 = true;
+
+                        } catch (IllegalStateException ex) {
+                            keyboard = new Scanner(System.in);
+                            Utilities.P("Error in keyboard. Please, try it again: ");
+                        } catch (NumberFormatException ex) {
+                            Utilities.P("Error reading integer type. Please, try it again: ");
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            Utilities.P("Error unknown. Please, try it again: ");
+                        }
+                    } while (!valid7);
                     if (controlador.searchUserByID(idUser)) {
                         Usuario u = controlador.getUserById(idUser);
                         Subscripcion sub = new Subscripcion(listR, u);
@@ -740,7 +773,23 @@ public class GUI {
         switch (op2) {
             case 1:
                 Utilities.P("Introduzca el ID del Artista a editar: ");
-                int idArtEdit = keyboard.nextInt();
+                int idArtEdit = 0;
+                boolean valid = false;
+                do {
+                    try {
+                        idArtEdit = Integer.parseInt(keyboard.nextLine());
+                        valid = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid);
                 if (controlador.searchArtistaByID(idArtEdit)) {
                     Artista a = controlador.getArtistsById(idArtEdit);
                     System.out.println("----------------------------------");
@@ -762,7 +811,23 @@ public class GUI {
 
             case 2:
                 Utilities.P("Introduzca el ID del Disco a editar: ");
-                int idDiscEdit = keyboard.nextInt();
+                int idDiscEdit = 0;
+                boolean valid2 = false;
+                do {
+                    try {
+                        idDiscEdit = Integer.parseInt(keyboard.nextLine());
+                        valid2 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid2);
                 if (controlador.searchDiscByID(idDiscEdit)) {
                     Disco d = controlador.getDiscsById(idDiscEdit);
                     System.out.println("----------------------------------");
@@ -774,7 +839,7 @@ public class GUI {
                     System.out.println("----------------------------------");
                     int op = 0;
                     do {
-                        op = Utilities.MenuEditarArtista();
+                        op = Utilities.MenuEditarDisco();
                         ControladorMenuEditarDisco(op, d);
                     } while (op != 5);
 
@@ -785,7 +850,23 @@ public class GUI {
 
             case 3:
                 Utilities.P("Introduzca el ID de la Cancion a editar: ");
-                int idSongEdit = keyboard.nextInt();
+                int idSongEdit = 0;
+                boolean valid3 = false;
+                do {
+                    try {
+                        idSongEdit = Integer.parseInt(keyboard.nextLine());
+                        valid3 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid3);
                 if (controlador.searchSongByID(idSongEdit)) {
                     Cancion c = controlador.getSongsById(idSongEdit);
                     System.out.println("----------------------------------");
@@ -807,7 +888,23 @@ public class GUI {
 
             case 4:
                 Utilities.P("Introduzca el ID de la Lista a editar: ");
-                int idListEdit = keyboard.nextInt();
+                int idListEdit = 0;
+                boolean valid4 = false;
+                do {
+                    try {
+                        idListEdit = Integer.parseInt(keyboard.nextLine());
+                        valid4 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid4);
                 if (controlador.searchListByID(idListEdit)) {
                     Lista l = controlador.getListById(idListEdit);
                     System.out.println("----------------------------------");
@@ -828,7 +925,23 @@ public class GUI {
                 break;
             case 5:
                 Utilities.P("Introduzca el ID del Usuario a editar: ");
-                int idUserEdit = keyboard.nextInt();
+                int idUserEdit = 0;
+                boolean valid5 = false;
+                do {
+                    try {
+                        idUserEdit = Integer.parseInt(keyboard.nextLine());
+                        valid5 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid5);
                 if (controlador.searchUserByID(idUserEdit)) {
                     Usuario u = controlador.getUserById(idUserEdit);
                     System.out.println("----------------------------------");
@@ -952,7 +1065,23 @@ public class GUI {
                 break;
             case 4:
                 Utilities.P("Introduzca el ID del Artista: ");
-                int idArt = keyboard.nextInt();
+                int idArt = 0;
+                boolean valid2 = false;
+                do {
+                    try {
+                        idArt = Integer.parseInt(keyboard.nextLine());
+                        valid2 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid2);
                 if (controlador.searchArtistaByID(idArt)) {
                     Artista newArt = controlador.getArtistsById(idArt);
                     d.setCreador(newArt);
@@ -962,7 +1091,7 @@ public class GUI {
                         Utilities.P("HA OCURRIDO UN PROBLEMA EN LA EDICION DEL DISCO");
                     }
                 } else {
-                    System.out.println("EL ID DEL DISCO NO EXISTE");
+                    System.out.println("EL ID DEL ARTISTA NO EXISTE");
                 }
                 break;
             case 5:
@@ -1058,7 +1187,7 @@ public class GUI {
         switch (op2) {
             case 1:
                 Utilities.P("Introduzca el nuevo nombre: ");
-                String newNombre = keyboard.next();
+                String newNombre = keyboard.nextLine();
                 a.setNombre(newNombre);
                 if (controlador.editList(a)) {
                     Utilities.P("LA LISTA HA SIDO EDITADA CON EXITO");
@@ -1069,7 +1198,7 @@ public class GUI {
 
             case 2:
                 Utilities.P("Introduzca la descripcion: ");
-                String newdescrip = keyboard.next();
+                String newdescrip = keyboard.nextLine();
                 a.setDescripcion(newdescrip);
                 if (controlador.editList(a)) {
                     Utilities.P("LA LISTA HA SIDO EDITADA CON EXITO");
@@ -1136,7 +1265,23 @@ public class GUI {
         switch (op2) {
             case 1:
                 Utilities.P("Introduzca el ID del artista: ");
-                int idArtistab = keyboard.nextInt();
+                int idArtistab = 0;
+                boolean valid = false;
+                do {
+                    try {
+                        idArtistab = Integer.parseInt(keyboard.nextLine());
+                        valid = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid);
                 if (controlador.searchArtistaByID(idArtistab)) {
                     int opcion = 0;
                     Utilities.P("¿Estas seguro de que quieres eliminar? ");
@@ -1171,7 +1316,23 @@ public class GUI {
 
             case 2:
                 Utilities.P("Introduzca el ID del disco: ");
-                int idiscb = keyboard.nextInt();
+                int idiscb = 0;
+                boolean valid2 = false;
+                do {
+                    try {
+                        idiscb = Integer.parseInt(keyboard.nextLine());
+                        valid2 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid2);
                 if (controlador.searchDiscByID(idiscb)) {
                     int opcion = 0;
                     Utilities.P("¿Estas seguro de que quieres eliminar? ");
@@ -1204,7 +1365,23 @@ public class GUI {
             case 3:
 
                 Utilities.P("Introduzca el ID de la cancion: ");
-                int idCancionb = keyboard.nextInt();
+                int idCancionb = 0;
+                boolean valid3 = false;
+                do {
+                    try {
+                        idCancionb = Integer.parseInt(keyboard.nextLine());
+                        valid3 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid3);
                 if (controlador.searchSongByID(idCancionb)) {
                     Cancion c = controlador.getSongsById(idCancionb);
                     controlador.removeSongs(c);
@@ -1218,7 +1395,23 @@ public class GUI {
 
             case 4:
                 Utilities.P("Introduzca el ID de la lista: ");
-                int idListab = keyboard.nextInt();
+                int idListab = 0;
+                boolean valid4 = false;
+                do {
+                    try {
+                        idListab = Integer.parseInt(keyboard.nextLine());
+                        valid4 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid4);
                 if (controlador.searchListByID(idListab)) {
                     Lista l = controlador.getListById(idListab);
                     controlador.removeList(l);
@@ -1232,7 +1425,23 @@ public class GUI {
 
             case 5:
                 Utilities.P("Introduzca el ID de la cancion: ");
-                int idcab = keyboard.nextInt();
+                int idcab = 0;
+                boolean valid5 = false;
+                do {
+                    try {
+                        idcab = Integer.parseInt(keyboard.nextLine());
+                        valid5 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid5);
                 if (controlador.searchSongByID(idcab)) {
                     Cancion u = controlador.getSongsById(idcab);
                     controlador.removesongofList(u);
@@ -1245,10 +1454,42 @@ public class GUI {
                 break;
             case 6:
                 Utilities.P("Introduzca el ID de la lista: ");
-                int idli = keyboard.nextInt();
+                int idli = 0;
+                boolean valid6 = false;
+                do {
+                    try {
+                        idli = Integer.parseInt(keyboard.nextLine());
+                        valid6 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid6);
                 if (controlador.searchListByID(idli)) {
                     Utilities.P("Introduzca el ID del subscriptor: ");
-                    int idusub = keyboard.nextInt();
+                    int idusub = 0;
+                    boolean valid7 = false;
+                    do {
+                        try {
+                            idusub = Integer.parseInt(keyboard.nextLine());
+                            valid7 = true;
+
+                        } catch (IllegalStateException ex) {
+                            keyboard = new Scanner(System.in);
+                            Utilities.P("Error in keyboard. Please, try it again: ");
+                        } catch (NumberFormatException ex) {
+                            Utilities.P("Error reading integer type. Please, try it again: ");
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                            Utilities.P("Error unknown. Please, try it again: ");
+                        }
+                    } while (!valid7);
                     if (controlador.searchUserByID(idusub)) {
                         Lista l = controlador.getListById(idli);
                         Usuario s = controlador.getUserById(idusub);
@@ -1266,7 +1507,23 @@ public class GUI {
 
             case 7:
                 Utilities.P("Introduzca el ID del usuario: ");
-                int iduserb = keyboard.nextInt();
+                int iduserb = 0;
+                boolean valid8 = false;
+                do {
+                    try {
+                        iduserb = Integer.parseInt(keyboard.nextLine());
+                        valid8 = true;
+
+                    } catch (IllegalStateException ex) {
+                        keyboard = new Scanner(System.in);
+                        Utilities.P("Error in keyboard. Please, try it again: ");
+                    } catch (NumberFormatException ex) {
+                        Utilities.P("Error reading integer type. Please, try it again: ");
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        Utilities.P("Error unknown. Please, try it again: ");
+                    }
+                } while (!valid8);
                 if (controlador.searchUserByID(iduserb)) {
                     Usuario u = controlador.getUserById(iduserb);
                     controlador.removeUser(u);

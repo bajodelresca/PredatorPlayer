@@ -117,7 +117,7 @@ public class Artista {
 
     @Override
     public String toString() {
-        return "Artista{" + "ID=" + ID + ", nombre=" + nombre + ", nacionalidad=" + nacionalidad + ", foto=" + foto + ", repertorio=" + repertorio + '}';
+        return "Artista{" + "ID=" + ID + ", nombre=" + nombre + ", nacionalidad=" + nacionalidad + ", foto=" + foto + '}';
     }
 
 }
