@@ -6,6 +6,8 @@
 package model;
 
 import controller.AppController;
+
+import java.io.Serializable;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="USUARIO")
-public class Usuario {
+public class Usuario implements Serializable{
 
     private static AppController controlador = AppController.getInstance();
     @Id

@@ -2,6 +2,8 @@ package model;
 
 import DAO.ArtistaDAO;
 import controller.AppController;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
  *
  * @author Alberto343
  */
-public class Artista {
+public class Artista implements Serializable {
 
     private static AppController controlador = AppController.getInstance();
     protected int ID;

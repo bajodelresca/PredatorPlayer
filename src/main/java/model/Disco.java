@@ -2,6 +2,7 @@ package model;
 
 import controller.AppController;
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import javax.persistence.OneToMany;
  *
  * @author Jorge SB
  */
-public class Disco {
+public class Disco implements Serializable{
 
     private static AppController controlador = AppController.getInstance();
     protected int ID;
