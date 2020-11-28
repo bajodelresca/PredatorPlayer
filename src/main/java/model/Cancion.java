@@ -36,7 +36,7 @@ public class Cancion implements Serializable{
 	@JoinColumn(name="IDDISCO")
     protected Disco Album;
 	
-     @ManyToMany(mappedBy = "listareproduccion")
+    @ManyToMany(mappedBy = "listareproduccion")
     private List<Lista> listas;
 
     public Cancion(int ID, String Nombre, int Duracion, Disco Album) {

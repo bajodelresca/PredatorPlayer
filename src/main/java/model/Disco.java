@@ -7,21 +7,43 @@ import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author Jorge SB
  */
+
+@Entity
+@Table(name = "DISCO")
 public class Disco implements Serializable{
 
     private static AppController controlador = AppController.getInstance();
+    
+    @Id
+	@Column(name = "ID")
     protected int ID;
+    
+    @Column(name = "NOMBRE")
     protected String Nombre;
+    
+    @Column(name = "FOTO")
     protected String foto;
+    
+    @Column(name = "FECHA")
     protected Date fecha;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="IDARTISTA")
     protected Artista creador;
+    
     @OneToMany(mappedBy = "Album",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected List<Cancion> canciones;
 

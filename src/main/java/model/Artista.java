@@ -7,17 +7,39 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  *
  * @author Alberto343
  */
+
+@Entity
+@Table(name = "ARTISTA")
 public class Artista implements Serializable {
 
     private static AppController controlador = AppController.getInstance();
+    
+    @Id
+	@Column(name = "ID")
     protected int ID;
+    
+    @Column(name = "NOMBRE")
     protected String nombre;
+    
+    @Column(name = "NACIONALIDAD")
     protected String nacionalidad;
+    
+    @Column(name = "FOTO")
     protected String foto;
+    
+    @OneToMany(mappedBy = "creador",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected List<Disco> repertorio;
 
     public Artista(int ID, String nombre, String nacionalidad, String foto, List<Disco> repertorio) {
