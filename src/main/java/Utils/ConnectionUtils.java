@@ -11,13 +11,18 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 /**
  *
  * @author Alberto343
  */
 public class ConnectionUtils {
   private static java.sql.Connection _conn=null;
-    
+
+	
     public static java.sql.Connection connect(Connection c) throws ClassNotFoundException, SQLException{
         java.sql.Connection conn=null;
         
@@ -46,5 +51,7 @@ public class ConnectionUtils {
         }
         return _conn;
     }
+    
+   
     
 }

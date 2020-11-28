@@ -41,7 +41,7 @@ public class Lista implements Serializable {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="CREADOR")
     protected Usuario creador;
-    @OneToMany(mappedBy = "Usuario",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "ID",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected List<Usuario> subscriptores;
     @Column(name="LISTAREPRODUCCION")
     @JoinTable(

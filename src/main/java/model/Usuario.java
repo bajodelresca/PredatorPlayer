@@ -37,7 +37,7 @@ public class Usuario implements Serializable{
     protected String Correo;
     @Column(name="FOTO")
     protected String Foto;
-    @OneToMany(mappedBy = "Lista",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "ID",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected List<Lista> listasubscrito;
     @OneToMany(mappedBy = "creador",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected List<Lista> listacreada;

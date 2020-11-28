@@ -32,7 +32,7 @@ public class AppController {
         listControl = ListaController.getInstance();
         userControl = UsuarioController.getInstance();
     }
-
+    
     public static AppController getInstance() {
         instancia = new AppController();
         return instancia;

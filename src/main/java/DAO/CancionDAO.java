@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import model.Cancion;
 import model.Disco;
 
@@ -44,7 +49,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
         }
     }
     Connection conn;
-
+	
     public CancionDAO(int ID, String Nombre, int Duracion, Disco Album) {
         super(ID, Nombre, Duracion, Album);
         try {

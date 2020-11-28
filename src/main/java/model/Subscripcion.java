@@ -20,13 +20,14 @@ public class Subscripcion implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="IDLISTA")
     protected Lista Lista;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="IDUSUARIO")
-    protected Usuario Usuario;
+    protected Usuario user;
 
     public Subscripcion(Lista Lista, Usuario Usuario) {
         this.Lista = Lista;
-        this.Usuario = Usuario;
+        this.user = Usuario;
     }
 
     public Subscripcion() {
@@ -43,11 +44,11 @@ public class Subscripcion implements Serializable{
     }
 
     public Usuario getUsuario() {
-        return Usuario;
+        return user;
     }
 
     public void setUsuario(Usuario Usuario) {
-        this.Usuario = Usuario;
+        this.user = Usuario;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class Subscripcion implements Serializable{
             }else{
                 if(obj instanceof Subscripcion){
                     Subscripcion n=(Subscripcion) obj;
-                   if (this.Lista == n.getLista() && this.Usuario == n.getUsuario()) {
+                   if (this.Lista == n.getLista() && this.user == n.getUsuario()) {
                         igual = true;
                     }
                 }
@@ -76,7 +77,7 @@ public class Subscripcion implements Serializable{
 
     @Override
     public String toString() {
-        return "Subscripci\u00f3n{" + "Lista=" + Lista + ", Usuario=" + Usuario + '}';
+        return "Subscripci\u00f3n{" + "Lista=" + Lista + ", Usuario=" + user + '}';
     }
     
     

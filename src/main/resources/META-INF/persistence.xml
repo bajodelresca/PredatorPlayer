@@ -4,7 +4,7 @@
              http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 
-  <persistence-unit name="aplicacion">
+  <persistence-unit name="aplicacionH2">
     <properties>
         <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
         <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" /> <!-- ~/Desktop/Autores -->
@@ -15,5 +15,12 @@
         <property name="hibernate.hbm2ddl.auto" value="create-drop" /> <!--validate (ya deberí existir -> el más seguro en producción si ya está creado)) craete / create-drop    ||  update -->
     </properties>
   </persistence-unit>
-
+  <persistence-unit name="aplicacionSQL" transaction-type="RESOURCE_LOCAL">
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hibernate"/>
+      <property name="javax.persistence.jdbc.user" value="test"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
 </persistence>
