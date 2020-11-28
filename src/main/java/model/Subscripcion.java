@@ -5,13 +5,14 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author espin
  */
-public class Subscripcion {
+public class Subscripcion implements Serializable{
     protected Lista Lista;
     protected Usuario Usuario;
 

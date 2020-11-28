@@ -5,16 +5,30 @@
  */
 package model;
 
-/**
- *
- * @author espin
- */
-public class Cancion {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "CANCION")
+public class Cancion {
+	
+	@Id
+	@Column(name = "ID")
     protected int ID;
+	@Column(name = "NOMBRE")
     protected String Nombre;
+	@Column(name = "DURACION")
     protected int Duracion;
+	@Column(name = "Genero")
     protected int Genero;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="IDDISCO")
     protected Disco Album;
 
     public Cancion(int ID, String Nombre, int Duracion, Disco Album) {

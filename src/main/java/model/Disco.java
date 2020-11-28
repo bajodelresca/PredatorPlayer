@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+
 /**
  *
  * @author Jorge SB
@@ -17,6 +21,7 @@ public class Disco {
     protected String foto;
     protected Date fecha;
     protected Artista creador;
+    @OneToMany(mappedBy = "Album",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected List<Cancion> canciones;
 
     public Disco(int ID, String Nombre, String foto, Date fecha, Artista creador, List<Cancion> canciones) {
