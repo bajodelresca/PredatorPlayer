@@ -5,24 +5,54 @@
  */
 package model;
 
+import com.mysql.cj.x.protobuf.MysqlxCursor.Fetch;
 import controller.AppController;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
  * @author espin
  */
-public class Lista {
-
+@Entity
+@Table(name="LISTA")
+public class Lista implements Serializable {
+    
     private static AppController controlador = AppController.getInstance();
+    @Id
+    @Column(name="ID")
     protected int ID;
+    @Column(name="NOMBRE")
     protected String Nombre;
+    @Column(name="DESCRIPCION")
     protected String Descripcion;
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="CREADOR")
     protected Usuario creador;
+    @Column(name="SUBSCRIPTORES")
     protected List<Usuario> subscriptores;
+    @Column(name="LISTAREPRODUCCION")
+    @JoinTable(
+        name = "listacancion",
+        joinColumns = @JoinColumn(name = "FK_LISTA", nullable = false),
+        inverseJoinColumns = @JoinColumn(name="FK_CANCION", nullable = false)
+    )
+    @ManyToMany(cascade = CascadeType.ALL)
     protected List<Cancion> listareproduccion;
-
+    
+    
+   
     public Lista(int ID, String Nombre, String Descripcion, Usuario creador, List<Usuario> subscriptores, List<Cancion> listareproduccion) {
         this.ID = ID;
         this.Nombre = Nombre;

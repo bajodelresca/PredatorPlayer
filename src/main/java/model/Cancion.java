@@ -5,6 +5,9 @@
  */
 package model;
 
+import java.util.List;
+import javax.persistence.ManyToMany;
+
 /**
  *
  * @author espin
@@ -16,6 +19,8 @@ public class Cancion {
     protected int Duracion;
     protected int Genero;
     protected Disco Album;
+     @ManyToMany(mappedBy = "listareproduccion")
+    private List<Lista> listas;
 
     public Cancion(int ID, String Nombre, int Duracion, Disco Album) {
         this.ID = ID;
