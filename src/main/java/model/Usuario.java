@@ -9,19 +9,38 @@ import controller.AppController;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author espin
  */
+@Entity
+@Table(name="USUARIO")
 public class Usuario {
 
     private static AppController controlador = AppController.getInstance();
+    @Id
+    @Column(name="ID")
     protected int ID;
+    @Column(name="NOMBRE")
     protected String Nombre;
+    @Column(name="CORREO")
     protected String Correo;
+    @Column(name="FOTO")
     protected String Foto;
+    @OneToMany(mappedBy = "Lista",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected List<Lista> listasubscrito;
+    @OneToMany(mappedBy = "creador",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    protected List<Lista> listacreada;
+    
+    
 
     public Usuario(int ID, String Nombre, String Correo, String Foto, List<Lista> listasubscrito) {
         this.ID = ID;

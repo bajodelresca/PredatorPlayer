@@ -8,12 +8,20 @@ package model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 /**
  *
  * @author espin
  */
 public class Subscripcion implements Serializable{
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="IDLISTA")
     protected Lista Lista;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="IDUSUARIO")
     protected Usuario Usuario;
 
     public Subscripcion(Lista Lista, Usuario Usuario) {

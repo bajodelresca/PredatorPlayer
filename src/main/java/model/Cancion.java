@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.ManyToMany;
+
 
 @Entity
 @Table(name = "CANCION")
@@ -30,6 +33,9 @@ public class Cancion {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="IDDISCO")
     protected Disco Album;
+	
+     @ManyToMany(mappedBy = "listareproduccion")
+    private List<Lista> listas;
 
     public Cancion(int ID, String Nombre, int Duracion, Disco Album) {
         this.ID = ID;
