@@ -56,11 +56,11 @@ public class ConnectionUtils {
 		return _conn;
 	}
 
-	public static EntityManagerFactory APLICATIONH2() {
+	private static EntityManagerFactory APLICATIONH2() {
 		return Persistence.createEntityManagerFactory(APLICATIONH2);
 	}
 
-	public static EntityManagerFactory APLICATIONSQL() {
+	private static EntityManagerFactory APLICATIONSQL() {
 		return Persistence.createEntityManagerFactory(APLICATIONSQL);
 	}
 

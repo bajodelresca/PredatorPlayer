@@ -30,258 +30,132 @@ import model.Disco;
  */
 public class CancionDAO extends Cancion implements DAO<Cancion> {
 
-    enum queries {
-        INSERT("INSERT INTO cancion (ID, Nombre, Duracion, IDDisco) VALUES (NULL,?,?,?)"),
-        UPDATE("UPDATE cancion SET Nombre=?,Duracion=?,IDDisco=? WHERE ID=?"),
-        DELETE("DELETE FROM cancion WHERE ID=?"),
-        DELETEALL("DELETE FROM cancion INNER JOIN WHERE ID=?"),
-        GETBYID("SELECT ID,Nombre,Duracion,IDDisco FROM cancion Where ID=?"),
-        GETALL("SELECT  ID,Nombre,Duracion,IDDisco FROM cancion");
+	enum queries {
+		INSERT("INSERT INTO cancion (ID, Nombre, Duracion, IDDisco) VALUES (NULL,?,?,?)"),
+		UPDATE("UPDATE cancion SET Nombre=?,Duracion=?,IDDisco=? WHERE ID=?"), DELETE("DELETE FROM cancion WHERE ID=?"),
+		DELETEALL("DELETE FROM cancion INNER JOIN WHERE ID=?"),
+		GETBYID("SELECT ID,Nombre,Duracion,IDDisco FROM cancion Where ID=?"),
+		GETALL("SELECT  ID,Nombre,Duracion,IDDisco FROM cancion");
 
-        private String q;
+		private String q;
 
-        queries(String q) {
-            this.q = q;
-        }
+		queries(String q) {
+			this.q = q;
+		}
 
-        public String getQ() {
-            return this.q;
-        }
-    }
-    Connection conn;
-	
-    public CancionDAO(int ID, String Nombre, int Duracion, Disco Album) {
-        super(ID, Nombre, Duracion, Album);
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+		public String getQ() {
+			return this.q;
+		}
+	}
 
-    public CancionDAO() {
-        super();
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public CancionDAO(int ID, String Nombre, int Duracion, Disco Album) {
+		super(ID, Nombre, Duracion, Album);
 
-    public CancionDAO(Cancion c) {
-        super(c.getID(), c.getNombre(), c.getDuracion(), c.getAlbum());
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	}
 
-    @Override
-    public void insert(Cancion a) {
-        int result = -1;
-        try {
-            conn = ConnectionUtils.getConnection();
-            if (this.ID > 0) {
-                edit(a);
-            } else {
-                PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
-                stat.setString(1, a.getNombre());
-                stat.setInt(2, a.getDuracion());
-              //  stat.setInt(3, a.getGenero());
-                stat.setInt(3, a.getAlbum().getID());
-                stat.executeUpdate();
-                try ( ResultSet generatedKeys = stat.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        result = generatedKeys.getInt(1);
-                    }
-                }
-                this.ID = result;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	public CancionDAO() {
+		super();
 
-    }
+	}
 
-    @Override
-    public void edit(Cancion a) {
-        try {
-            conn = ConnectionUtils.getConnection();
-            PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
-            stat.setString(1, a.getNombre());
-            stat.setInt(2, a.getDuracion());
-           // stat.setInt(3, a.getGenero());
-            stat.setInt(3, a.getAlbum().getID());
-            stat.setInt(4, a.getID());
-            stat.executeUpdate();
+	public CancionDAO(Cancion c) {
+		super(c.getID(), c.getNombre(), c.getDuracion(), c.getAlbum());
 
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+	}
 
-    }
+	@Override
+	public void insert(Cancion a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.persist(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-    @Override
-    public void remove(Cancion a) {
-        PreparedStatement ps = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            ps = conn.prepareStatement(queries.DELETE.getQ());
-            ps.setInt(1, a.getID());
+	@Override
+	public void edit(Cancion a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.merge(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-            if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se ha borrado correctamente");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+	@Override
+	public void remove(Cancion a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.remove(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-    /**
-     * Metodo que convierte un ResultSet en Cancion
-     *
-     * @param rs Recibe un ResultSet
-     * @return Devuelve una Subscripcion
-     * @throws SQLException lanza una SQLException
-     */
-    protected Cancion convert(ResultSet rs) throws SQLException {
-        DiscoDAO dDAO = new DiscoDAO();
-        int id = rs.getInt("ID");
-        String nombre = rs.getString("Nombre");
-        int duracion = rs.getInt("Duracion");
-        //  int idGenero=rs.getInt("IDGenero");
-        int idDisco = rs.getInt("IDDisco");
-        Disco album = dDAO.getByID(idDisco);
-        Cancion c = new Cancion(id, nombre, duracion, album);
-        return c;
-    }
+	/**
+	 * Metodo que convierte un ResultSet en Cancion
+	 *
+	 * @param rs Recibe un ResultSet
+	 * @return Devuelve una Subscripcion
+	 * @throws SQLException lanza una SQLException
+	 */
+	protected Cancion convert(ResultSet rs) throws SQLException {
+		DiscoDAO dDAO = new DiscoDAO();
+		int id = rs.getInt("ID");
+		String nombre = rs.getString("Nombre");
+		int duracion = rs.getInt("Duracion");
+		// int idGenero=rs.getInt("IDGenero");
+		int idDisco = rs.getInt("IDDisco");
+		Disco album = dDAO.getByID(idDisco);
+		Cancion c = new Cancion(id, nombre, duracion, album);
+		return c;
+	}
 
-    @Override
-    public List<Cancion> getAll() {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        List<Cancion> listS = new ArrayList<>();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETALL.getQ());
-            rs = stat.executeQuery();
-            while (rs.next()) {
-                listS.add(convert(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return listS;
-    }
+	@Override
+	public List<Cancion> getAll() {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		List<Cancion> canciones = manager.createQuery("FROM CANCION").getResultList();
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return canciones;
+	}
 
-    /**
-     * Metodo que devuelve una Cancion por id pasado
-     *
-     * @param id identificador de cada Cancion
-     * @return Devuelve una Cancion
-     */
-    public Cancion getByID(int id) {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        Cancion c = new Cancion();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                c = convert(rs);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return c;
-    }
-    /**
-     * Metodo que comprueba si existe el ID en la tabla
-     * @param id recibe un entero
-     * @return devuelve un boolean, si existe devuelve true y false si no
-     */
-    public boolean searchByID(int id) {
-        boolean result = false;
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                Cancion c = convert(rs);
-                if (c.getID() != -1) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return result;
-    }
+	/**
+	 * Metodo que devuelve una Cancion por id pasado
+	 *
+	 * @param id identificador de cada Cancion
+	 * @return Devuelve una Cancion
+	 */
+	public Cancion getByID(int id) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+
+		Cancion c = manager.find(Cancion.class, id);
+
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return c;
+
+	}
+
+	/**
+	 * Metodo que comprueba si existe el ID en la tabla
+	 * 
+	 * @param id recibe un entero
+	 * @return devuelve un boolean, si existe devuelve true y false si no
+	 */
+	public boolean searchByID(int id) {
+		boolean result = false;
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+
+		Cancion c = manager.find(Cancion.class, id);
+		if (c != null) {
+			result = true;
+		} else {
+			result = false;
+		}
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return result;
+	}
 }

@@ -15,7 +15,6 @@ import model.Usuario;
  */
 public class AppController {
 
-    public static Connection currentConnection;
     private static AppController instancia = null;
     private ArtistaController artistControl = null;
     private DiscoController diskControl = null;
