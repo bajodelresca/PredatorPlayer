@@ -90,24 +90,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 		ConnectionUtils.closeManager(manager);
 	}
 
-	/**
-	 * Metodo que convierte un ResultSet en Cancion
-	 *
-	 * @param rs Recibe un ResultSet
-	 * @return Devuelve una Subscripcion
-	 * @throws SQLException lanza una SQLException
-	 */
-	protected Cancion convert(ResultSet rs) throws SQLException {
-		DiscoDAO dDAO = new DiscoDAO();
-		int id = rs.getInt("ID");
-		String nombre = rs.getString("Nombre");
-		int duracion = rs.getInt("Duracion");
-		// int idGenero=rs.getInt("IDGenero");
-		int idDisco = rs.getInt("IDDisco");
-		Disco album = dDAO.getByID(idDisco);
-		Cancion c = new Cancion(id, nombre, duracion, album);
-		return c;
-	}
+	
 
 	@Override
 	public List<Cancion> getAll() {
