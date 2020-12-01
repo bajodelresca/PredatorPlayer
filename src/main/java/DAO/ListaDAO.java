@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import model.Cancion;
 import model.Lista;
 import model.Usuario;
@@ -32,8 +33,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         GETALL("SELECT * FROM Lista"),
         GETCANCLISTBYID("SELECT ID, Nombre, Duracion, IDGenero, IDDisco FROM cancion as c INNER JOIN listacancion as list on list.IDCancion=c.ID WHERE list.IDLista=?"),
         GETLISTFROMUSER("SELECT * FROM Lista WHERE IDUsuario = ?");
-        
-        
+
         private String q;
 
         queries(String q) {
@@ -48,148 +48,52 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 
     public ListaDAO(int ID, String Nombre, String Descripcion, Usuario creador) {
         super(ID, Nombre, Descripcion, creador);
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public ListaDAO() {
         super();
-
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
     }
 
     public ListaDAO(Lista c) {
         super(c.getID(), c.getNombre(), c.getDescripcion(), c.getCreador());
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     @Override
     public void insert(Lista a) {
-        int result = -1;
-        try {
-            conn = ConnectionUtils.getConnection();
-            if (this.ID > 0) {
-                edit(a);
-            } else {
-                PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
-                stat.setString(1, a.getNombre());
-                stat.setString(2, a.getDescripcion());
-                stat.setInt(3, a.getCreador().getID());
-
-                stat.executeUpdate();
-                try ( ResultSet generatedKeys = stat.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        result = generatedKeys.getInt(1);
-                    }
-                }
-                this.ID = result;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+        manager.persist(a);
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
 
     }
 
     @Override
     public void edit(Lista a) {
-        try {
-            conn = ConnectionUtils.getConnection();
-            PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
-            stat.setString(1, a.getNombre());
-            stat.setString(2, a.getDescripcion());
-            stat.setInt(3, a.getCreador().getID());
-            stat.setInt(4, a.getID());
-            stat.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+        manager.merge(a);
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
     }
 
     @Override
     public void remove(Lista a) {
-        PreparedStatement ps = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            ps = conn.prepareStatement(queries.DELETE.getQ());
-            ps.setInt(1, a.getID());
-
-            if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se Ha insertado correctamente");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(CancionDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
-
-    protected Lista convert(ResultSet rs) throws SQLException {
-        UsuarioDAO UDAO = new UsuarioDAO();
-        int id = rs.getInt("ID");
-        String nombre = rs.getString("Nombre");
-        String descripcion = rs.getString("Descripcion");
-        int idUsuario = rs.getInt("IDUsuario");
-        Usuario crea = UDAO.getByID(idUsuario);
-        Lista c = new Lista(id, nombre, descripcion, crea);
-        return c;
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+        manager.remove(a);
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
     }
 
     @Override
     public List<Lista> getAll() {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        List<Lista> listS = new ArrayList<>();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETALL.getQ());
-            rs = stat.executeQuery();
-            while (rs.next()) {
-                listS.add(convert(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return listS;
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+        List<Lista> listas = manager.createQuery("FROM LISTA").getResultList();
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
+        return listas;
     }
 
     /**
@@ -199,36 +103,14 @@ public class ListaDAO extends Lista implements DAO<Lista> {
      * @return Devuelve una Lista
      */
     public Lista getByID(int id) {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        Lista c = new Lista();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                c = convert(rs);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return c;
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+
+        Lista l = manager.find(Lista.class, id);
+
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
+        return l;
     }
 
     public List<Cancion> getCancionFromList(int id) {
@@ -272,16 +154,16 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         try {
             PreparedStatement stat = null;
             conn = ConnectionUtils.getConnection();
-           stat = conn.prepareStatement(queries.INSERTLISTACANCION.getQ());
+            stat = conn.prepareStatement(queries.INSERTLISTACANCION.getQ());
             if (this.getByID(a) != null && cDAO.getByID(c) != null) {
                 stat.setInt(1, a);
 
                 stat.setInt(2, c);
 
                 stat.executeUpdate();
-                result=true;
+                result = true;
             } else {
-                result=false;
+                result = false;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -289,89 +171,48 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 
         return result;
     }
+
     /**
      * Metodo que comprueba si existe el ID en la tabla
+     *
      * @param id recibe un entero
      * @return devuelve un boolean, si existe devuelve true y false si no
      */
     public boolean searchByID(int id) {
         boolean result = false;
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                Lista c = convert(rs);
-                if (c.getID() != -1) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+
+        Lista l = manager.find(Lista.class, id);
+        if (l != null) {
+            result = true;
+        } else {
+            result = false;
         }
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
         return result;
+
     }
-    public boolean searchListaCanByID(int a,int c) {
+
+    public boolean searchListaCanByID(int a, int c) {
         boolean result = false;
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        CancionDAO cDAO=new CancionDAO();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETLCBYID.getQ());
-            stat.setInt(1, a);
-            stat.setInt(2, c);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                Lista l = convert(rs);
-                Cancion ca= cDAO.convert(rs);
-                if (l.getID() != -1 && ca.getID() != -1) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+        
+        Cancion ca = manager.find(Cancion.class, a);
+        Lista li = manager.find(Lista.class, c);
+        if (ca != null && li != null) {
+            result = true;
+        } else {
+            result = false;
         }
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
         return result;
+
     }
-    
+
     public void removeSongList(Cancion a) {
         PreparedStatement ps = null;
         try {
@@ -394,9 +235,10 @@ public class ListaDAO extends Lista implements DAO<Lista> {
             }
         }
     }
-    
+
     /**
      * Recibe el ID del usuario y devuelve Las listas que ha creado
+     *
      * @param id
      * @return listUser
      */

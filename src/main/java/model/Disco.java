@@ -20,31 +20,30 @@ import javax.persistence.Table;
  *
  * @author Jorge SB
  */
-
 @Entity
 @Table(name = "DISCO")
-public class Disco implements Serializable{
+public class Disco implements Serializable {
 
     private static AppController controlador = AppController.getInstance();
-    
+
     @Id
-	@Column(name = "ID")
+    @Column(name = "ID")
     protected int ID;
-    
+
     @Column(name = "NOMBRE")
     protected String Nombre;
-    
+
     @Column(name = "FOTO")
     protected String foto;
-    
+
     @Column(name = "FECHA")
     protected Date fecha;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="IDARTISTA")
+    @JoinColumn(name = "IDARTISTA")
     protected Artista creador;
-    
-    @OneToMany(mappedBy = "Album",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+
+    @OneToMany(mappedBy = "Album", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Cancion> canciones;
 
     public Disco(int ID, String Nombre, String foto, Date fecha, Artista creador, List<Cancion> canciones) {
@@ -63,7 +62,8 @@ public class Disco implements Serializable{
         this.fecha = fecha;
         this.creador = creador;
     }
-    public Disco( String Nombre, String foto, Date fecha, Artista creador) {
+
+    public Disco(String Nombre, String foto, Date fecha, Artista creador) {
         this.ID = -1;
         this.Nombre = Nombre;
         this.foto = foto;
@@ -116,7 +116,7 @@ public class Disco implements Serializable{
     }
 
     public List<Cancion> getCanciones() {
-        List<Cancion> canciones =  controlador.getCanciones(this.ID);
+        List<Cancion> canciones = controlador.getCanciones(this.ID);
         if (!canciones.isEmpty()) {
             this.setCanciones(canciones);
         } else {

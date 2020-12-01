@@ -25,25 +25,23 @@ import javax.persistence.Table;
  * @author espin
  */
 @Entity
-@Table(name="USUARIO")
-public class Usuario implements Serializable{
+@Table(name = "USUARIO")
+public class Usuario implements Serializable {
 
     private static AppController controlador = AppController.getInstance();
     @Id
-    @Column(name="ID")
+    @Column(name = "ID")
     protected int ID;
-    @Column(name="NOMBRE")
+    @Column(name = "NOMBRE")
     protected String Nombre;
-    @Column(name="CORREO")
+    @Column(name = "CORREO")
     protected String Correo;
-    @Column(name="FOTO")
+    @Column(name = "FOTO")
     protected String Foto;
     @ManyToMany(mappedBy = "subscriptores")
     protected List<Lista> listasubscrito;
-    @OneToMany(mappedBy = "creador",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "creador", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected List<Lista> listacreada;
-    
-    
 
     public Usuario(int ID, String Nombre, String Correo, String Foto, List<Lista> listasubscrito) {
         this.ID = ID;
