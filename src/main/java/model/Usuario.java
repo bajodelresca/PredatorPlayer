@@ -16,6 +16,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,7 +38,7 @@ public class Usuario implements Serializable{
     protected String Correo;
     @Column(name="FOTO")
     protected String Foto;
-    @OneToMany(mappedBy = "ID",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "subscriptores")
     protected List<Lista> listasubscrito;
     @OneToMany(mappedBy = "creador",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     protected List<Lista> listacreada;
