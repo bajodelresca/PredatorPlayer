@@ -20,47 +20,23 @@ import model.Artista;
 import model.Cancion;
 import model.Disco;
 import model.Lista;
-import model.Subscripcion;
 import model.Usuario;
 
 public class GUI {
 
 	private static AppController controlador = AppController.getInstance();
 	private static Scanner keyboard = new Scanner(System.in);
-	private final static String APLICATIONH2 = "aplicacionH2";
-	private final static String APLICATIONSQL = "aplicacionSQL";
 
 	public static void principal() {
 		int opcion = 0;
 		do {
 			opcion = Utilities.MenuBD();
-			conexion(opcion);
+			boolean result = ConnectionUtils.conexion(opcion);
+			if (result) {
+				secundario();
+			}
+
 		} while (opcion != 3);
-
-	}
-
-	public static EntityManager conexion(int op) {
-		EntityManager manager = null;
-		EntityManagerFactory emf;
-		switch (op) {
-		case 1:
-			emf = Persistence.createEntityManagerFactory(APLICATIONH2);
-			manager = emf.createEntityManager();
-			secundario();
-			break;
-		case 2:
-			emf = Persistence.createEntityManagerFactory(APLICATIONSQL);
-			manager = emf.createEntityManager();
-			secundario();
-			break;
-		case 3:
-			Utilities.p("Saliendo...");
-			break;
-		default:
-			Utilities.p("Opción no valida");
-		}
-
-		return manager;
 
 	}
 
