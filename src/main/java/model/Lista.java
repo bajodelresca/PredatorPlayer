@@ -27,39 +27,37 @@ import javax.persistence.Table;
  * @author espin
  */
 @Entity
-@Table(name="LISTA")
+@Table(name = "LISTA")
 public class Lista implements Serializable {
-    
+
     private static AppController controlador = AppController.getInstance();
     @Id
-    @Column(name="ID")
+    @Column(name = "ID")
     protected int ID;
-    @Column(name="NOMBRE")
+    @Column(name = "NOMBRE")
     protected String Nombre;
-    @Column(name="DESCRIPCION")
+    @Column(name = "DESCRIPCION")
     protected String Descripcion;
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="CREADOR")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CREADOR")
     protected Usuario creador;
-    @Column(name="LISTASUBSCRIPCION")
+    @Column(name = "LISTASUBSCRIPCION")
     @JoinTable(
-        name = "listasubscripcion",
-        joinColumns = @JoinColumn(name = "FK_LISTA", nullable = false),
-        inverseJoinColumns = @JoinColumn(name="FK_USUARIO", nullable = false)
+            name = "listasubscripcion",
+            joinColumns = @JoinColumn(name = "FK_LISTA", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "FK_USUARIO", nullable = false)
     )
     @ManyToMany(cascade = CascadeType.ALL)
     protected List<Usuario> subscriptores;
-    @Column(name="LISTAREPRODUCCION")
+    @Column(name = "LISTAREPRODUCCION")
     @JoinTable(
-        name = "listacancion",
-        joinColumns = @JoinColumn(name = "FK_LISTA", nullable = false),
-        inverseJoinColumns = @JoinColumn(name="FK_CANCION", nullable = false)
+            name = "listacancion",
+            joinColumns = @JoinColumn(name = "FK_LISTA", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "FK_CANCION", nullable = false)
     )
     @ManyToMany(cascade = CascadeType.ALL)
     protected List<Cancion> listareproduccion;
-    
-    
-   
+
     public Lista(int ID, String Nombre, String Descripcion, Usuario creador, List<Usuario> subscriptores, List<Cancion> listareproduccion) {
         this.ID = ID;
         this.Nombre = Nombre;
@@ -74,24 +72,26 @@ public class Lista implements Serializable {
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
         this.creador = creador;
-         this.subscriptores = new ArrayList<>();
+        this.subscriptores = new ArrayList<>();
         this.listareproduccion = new ArrayList<>();
     }
-  public Lista(String Nombre, String Descripcion, Usuario creador) {
+
+    public Lista(String Nombre, String Descripcion, Usuario creador) {
         this.ID = -1;
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
         this.creador = creador;
-         this.subscriptores =  new ArrayList<>();
+        this.subscriptores = new ArrayList<>();
         this.listareproduccion = new ArrayList<>();
     }
+
     public Lista() {
         this(-1, "", "", null, null, null);
     }
 
     public List<Usuario> getSubscriptores() {
         List<Usuario> subscriptores = controlador.getSubscriberFromList(this.ID);
-         if (!subscriptores.isEmpty()) {
+        if (!subscriptores.isEmpty()) {
             this.setSubscriptores(subscriptores);
         } else {
             subscriptores = new ArrayList<>();

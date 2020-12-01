@@ -17,25 +17,24 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.ManyToMany;
 
-
 @Entity
 @Table(name = "CANCION")
-public class Cancion implements Serializable{
-	
-	@Id
-	@Column(name = "ID")
+public class Cancion implements Serializable {
+
+    @Id
+    @Column(name = "ID")
     protected int ID;
-	@Column(name = "NOMBRE")
+    @Column(name = "NOMBRE")
     protected String Nombre;
-	@Column(name = "DURACION")
+    @Column(name = "DURACION")
     protected int Duracion;
-	@Column(name = "Genero")
+    @Column(name = "Genero")
     protected int Genero;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="IDDISCO")
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDDISCO")
     protected Disco Album;
-	
+
     @ManyToMany(mappedBy = "listareproduccion")
     private List<Lista> listas;
 
