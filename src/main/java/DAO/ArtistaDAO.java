@@ -11,7 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.persistence.EntityManager;
+
 import model.Artista;
+import model.Cancion;
 import model.Disco;
 
 /**
@@ -20,280 +24,135 @@ import model.Disco;
  */
 public class ArtistaDAO extends Artista implements DAO<Artista> {
 
-    enum queries {
-        INSERT("INSERT INTO artista (ID, Nombre, Nacionalidad, Foto) VALUES (NULL,?,?,?)"),
-        UPDATE("UPDATE artista SET Nombre=?,Nacionalidad=?,Foto=? WHERE ID=?"),
-        DELETE("DELETE FROM artista WHERE ID=?"),
-        GETBYID("SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID=?"),
-        GETALL("SELECT ID,Nombre,Nacionalidad,Foto FROM artista"),
-        GETDISCOLISTBYID("SELECT d.ID, d.Nombre, d.Foto, d.fechap, d.IDArtista FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?");
+	enum queries {
+		INSERT("INSERT INTO artista (ID, Nombre, Nacionalidad, Foto) VALUES (NULL,?,?,?)"),
+		UPDATE("UPDATE artista SET Nombre=?,Nacionalidad=?,Foto=? WHERE ID=?"),
+		DELETE("DELETE FROM artista WHERE ID=?"), GETBYID("SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID=?"),
+		GETALL("SELECT ID,Nombre,Nacionalidad,Foto FROM artista"), GETDISCOLISTBYID(
+				"SELECT d.ID, d.Nombre, d.Foto, d.fechap, d.IDArtista FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?");
 
-        private String q;
+		private String q;
 
-        queries(String q) {
-            this.q = q;
-        }
+		queries(String q) {
+			this.q = q;
+		}
 
-        public String getQ() {
-            return this.q;
-        }
-    }
-    Connection conn;
+		public String getQ() {
+			return this.q;
+		}
+	}
 
-    public ArtistaDAO(int ID, String Nombre, String Nacionalidad, String Foto) {
-        super(ID, Nombre, Nacionalidad, Foto);
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	Connection conn;
 
-    public ArtistaDAO() {
-        super();
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public ArtistaDAO(int ID, String Nombre, String Nacionalidad, String Foto) {
+		super(ID, Nombre, Nacionalidad, Foto);
+	}
 
-    public ArtistaDAO(Artista a) {
-        super(a.getID(), a.getNombre(), a.getNacionalidad(), a.getFoto());
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public ArtistaDAO() {
+		super();
+	}
+
+	public ArtistaDAO(Artista a) {
+		super(a.getID(), a.getNombre(), a.getNacionalidad(), a.getFoto());
+	}
 
 //______________________________________________________________________________CRUD
-    @Override
-    public void insert(Artista a) {
-        int result = -1;
-        try {
-            conn = ConnectionUtils.getConnection();
-            if (this.ID > 0) {
-                edit(a);
-            } else {
-                PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
-                stat.setString(1, a.getNombre());
-                stat.setString(2, a.getNacionalidad());
-                stat.setString(3, a.getFoto());
+	@Override
+	public void insert(Artista a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.persist(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-                stat.executeUpdate();
-                try ( ResultSet generatedKeys = stat.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        result = generatedKeys.getInt(1);
-                    }
-                }
-                this.ID = result;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	@Override
+	public void edit(Artista a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.merge(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-    @Override
-    public void edit(Artista a) {
-        try {
-            conn = ConnectionUtils.getConnection();
-            PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
-            stat.setString(1, a.getNombre());
-            stat.setString(2, a.getNacionalidad());
-            stat.setString(3, a.getFoto());
-            stat.setInt(4, a.getID());
-            stat.executeUpdate();
+	@Override
+	public void remove(Artista a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.remove(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	@Override
+	public List<Artista> getAll() {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		List<Artista> canciones = manager.createQuery("FROM ARTISTA").getResultList();
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return canciones;
+	}
 
-    @Override
-    public void remove(Artista a) {
-        PreparedStatement ps = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            ps = conn.prepareStatement(queries.DELETE.getQ());
-            ps.setInt(1, a.getID());
+	public Artista getByID(int id) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
 
-            if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se ha borrado correctamente");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+		Artista a = manager.find(Artista.class, id);
 
-    private Artista convert(ResultSet rs) throws SQLException {
-        int id = rs.getInt("ID");
-        String Nombre = rs.getString("Nombre");
-        String Nacionalidad = rs.getString("Nacionalidad");
-        String Foto = rs.getString("Foto");
-        Artista a = new Artista(id, Nombre, Nacionalidad, Foto);
-        return a;
-    }
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return a;
+	}
 
-    @Override
-    public List<Artista> getAll() {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        List<Artista> listA = new ArrayList<>();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETALL.getQ());
-            rs = stat.executeQuery();
-            while (rs.next()) {
-                listA.add(convert(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return listA;
-    }
+	/**
+	 * Recibe el id de un artista y devuelve todos sus discos
+	 *
+	 * @param id
+	 * @return canciones
+	 */
+	
+	/*
+	public List<Disco> getListRepertorio(int id) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
 
-    public Artista getByID(int id) {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        Artista a = new Artista();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                a = convert(rs);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return a;
-    }
+		// PREGUNTAR
+		List<Disco> repertorio = manager
+				.createQuery("FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?")
+				.getResultList();
+		if (d != null) {
+			result = true;
+		} else {
+			result = false;
+		}
 
-    /**
-     * Recibe el id de un artista y devuelve todos sus discos
-     *
-     * @param id
-     * @return canciones
-     */
-    public List<Disco> getListRepertorio(int id) {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        DiscoDAO DiDAO = new DiscoDAO();
-        List<Disco> repertorio = new ArrayList<>();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETDISCOLISTBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            while (rs.next()) {
-                repertorio.add(DiDAO.convert(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return repertorio;
-    }
-    /**
-     * Metodo que comprueba si existe el ID en la tabla
-     * @param id recibe un entero
-     * @return devuelve un boolean, si existe devuelve true y false si no
-     */
-    public boolean searchByID(int id) {
-        boolean result = false;
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                Artista c = convert(rs);
-                if (c.getID() != -1) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ArtistaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return result;
-    }
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+
+		return repertorio;
+	}
+	*/
+
+	/**
+	 * Metodo que comprueba si existe el ID en la tabla
+	 * 
+	 * @param id recibe un entero
+	 * @return devuelve un boolean, si existe devuelve true y false si no
+	 */
+	public boolean searchByID(int id) {
+		boolean result = false;
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+
+		Artista a = manager.find(Artista.class, id);
+		if (a != null) {
+			result = true;
+		} else {
+			result = false;
+		}
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return result;
+	}
 }

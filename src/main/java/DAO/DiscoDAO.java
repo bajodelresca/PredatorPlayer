@@ -12,6 +12,9 @@ import java.sql.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.persistence.EntityManager;
+
 import model.Artista;
 import model.Cancion;
 import model.Disco;
@@ -22,285 +25,117 @@ import model.Disco;
  */
 public class DiscoDAO extends Disco implements DAO<Disco> {
 
-    enum queries {
-        INSERT("INSERT INTO disco (ID, Nombre, Foto, fechap, IDArtista) VALUES (NULL,?,?,?,?)"),
-        UPDATE("UPDATE disco SET Nombre=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
-        DELETE("DELETE FROM disco WHERE ID=?"),
-        GETBYID("SELECT * FROM Disco WHERE ID=?"),
-        GETALL("SELECT * FROM Disco"),
-        GETCANCLISTBYID("SELECT c.ID, c.Nombre, c.Duracion, c.IDGenero, c.IDDisco FROM cancion as c INNER JOIN disco as d on d.ID=c.IDDisco WHERE d.ID=?");
+	enum queries {
+		INSERT("INSERT INTO disco (ID, Nombre, Foto, fechap, IDArtista) VALUES (NULL,?,?,?,?)"),
+		UPDATE("UPDATE disco SET Nombre=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
+		DELETE("DELETE FROM disco WHERE ID=?"), GETBYID("SELECT * FROM Disco WHERE ID=?"),
+		GETALL("SELECT * FROM Disco"), GETCANCLISTBYID(
+				"SELECT c.ID, c.Nombre, c.Duracion, c.IDGenero, c.IDDisco FROM cancion as c INNER JOIN disco as d on d.ID=c.IDDisco WHERE d.ID=?");
 
-        private String q;
+		private String q;
 
-        queries(String q) {
-            this.q = q;
-        }
+		queries(String q) {
+			this.q = q;
+		}
 
-        public String getQ() {
-            return this.q;
-        }
-    }
-    Connection conn;
+		public String getQ() {
+			return this.q;
+		}
+	}
 
-    public DiscoDAO(int ID, String Nombre, String foto, Date fecha, Artista creador) {
-        super(ID, Nombre, foto, fecha, creador);
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	Connection conn;
 
-    public DiscoDAO() {
-        super();
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public DiscoDAO(int ID, String Nombre, String foto, Date fecha, Artista creador) {
+		super(ID, Nombre, foto, fecha, creador);
+	}
 
-    public DiscoDAO(Disco d) {
-        super(d.getID(), d.getNombre(), d.getFoto(), d.getFecha(), d.getCreador());
-        try {
-            conn = ConnectionUtils.connect(AppController.currentConnection);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	public DiscoDAO() {
+		super();
+	}
+
+	public DiscoDAO(Disco d) {
+		super(d.getID(), d.getNombre(), d.getFoto(), d.getFecha(), d.getCreador());
+	}
 
 //______________________________________________________________________________CRUD
-    @Override
-    public void insert(Disco a) {
-        int result = -1;
-        try {
-            conn = ConnectionUtils.getConnection();
-            if (this.ID > 0) {
-                edit(a);
-            } else {
-                PreparedStatement stat = conn.prepareStatement(queries.INSERT.getQ(), Statement.RETURN_GENERATED_KEYS);
-                stat.setString(1, a.getNombre());
-                stat.setString(2, a.getFoto());
-                stat.setDate(3,  a.getFecha());
-                stat.setInt(4, a.getCreador().getID());
+	@Override
+	public void insert(Disco a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.persist(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-                stat.executeUpdate();
-                try ( ResultSet generatedKeys = stat.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        result = generatedKeys.getInt(1);
-                    }
-                }
-                this.ID = result;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	@Override
+	public void edit(Disco a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.merge(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-    @Override
-    public void edit(Disco a) {
-        try {
-            conn = ConnectionUtils.getConnection();
-            PreparedStatement stat = conn.prepareStatement(queries.UPDATE.getQ());
-            stat.setString(1, a.getNombre());
-            stat.setString(2, a.getFoto());
-            stat.setDate(3, (java.sql.Date) a.getFecha());
-            stat.setInt(4, a.getCreador().getID());
-            stat.setInt(5, a.getID());
-            stat.executeUpdate();
+	@Override
+	public void remove(Disco a) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.remove(a);
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+	}
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+	@Override
+	public List<Disco> getAll() {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		List<Disco> discos = manager.createQuery("FROM DISCO").getResultList();
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return discos;
+	}
 
-    @Override
-    public void remove(Disco a) {
-        PreparedStatement ps = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            ps = conn.prepareStatement(queries.DELETE.getQ());
-            ps.setInt(1, a.getID());
+	public Disco getByID(int id) {
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
 
-            if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se ha borrado correctametne");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
+		Disco d = manager.find(Disco.class, id);
 
-    protected Disco convert(ResultSet rs) throws SQLException {
-        ArtistaDAO ADAO = new ArtistaDAO();
-        int id = rs.getInt("ID");
-        String nombre = rs.getString("Nombre");
-        String foto = rs.getString("Foto");
-        Date fecha = rs.getDate("fechap");
-        int idArtista = rs.getInt("IDArtista");
-        Artista crea = ADAO.getByID(idArtista);
-        Disco a = new Disco(id, nombre, foto, fecha, crea);
-        return a;
-    }
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return d;
+	}
 
-    @Override
-    public List<Disco> getAll() {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        List<Disco> listD = new ArrayList<>();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETALL.getQ());
-            rs = stat.executeQuery();
-            while (rs.next()) {
-                listD.add(convert(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return listD;
-    }
+	/**
+	 * Recibe el id de un disco y devuelve todas sus canciones
+	 *
+	 * @param id
+	 * @return canciones
+	 */
+	public List<Cancion> getListCanciones(int id) {
+		// PREGUNTAR
+		return canciones;
+	}
 
-    public Disco getByID(int id) {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        Disco d = new Disco();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                d = convert(rs);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return d;
-    }
+	/**
+	 * Metodo que comprueba si existe el ID en la tabla
+	 * 
+	 * @param id recibe un entero
+	 * @return devuelve un boolean, si existe devuelve true y false si no
+	 */
+	public boolean searchByID(int id) {
+		boolean result = false;
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
 
-    /**
-     * Recibe el id de un disco y devuelve todas sus canciones
-     *
-     * @param id
-     * @return canciones
-     */
-    public List<Cancion> getListCanciones(int id) {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        CancionDAO CaDAO = new CancionDAO();
-        List<Cancion> canciones = new ArrayList<>();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETCANCLISTBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            while (rs.next()) {
-                canciones.add(CaDAO.convert(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return canciones;
-    }
-    /**
-     * Metodo que comprueba si existe el ID en la tabla
-     * @param id recibe un entero
-     * @return devuelve un boolean, si existe devuelve true y false si no
-     */
-    public boolean searchByID(int id) {
-        boolean result = false;
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            if (rs.next()) {
-                Disco c = convert(rs);
-                if (c.getID() != -1) {
-                    result = true;
-                } else {
-                    result = false;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(DiscoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return result;
-    }
+		Disco d = manager.find(Disco.class, id);
+		if (d != null) {
+			result = true;
+		} else {
+			result = false;
+		}
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return result;
+	}
 }
