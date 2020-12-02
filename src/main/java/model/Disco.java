@@ -72,6 +72,14 @@ public class Disco implements Serializable {
         this.fecha = fecha;
         this.creador = creador;
     }
+    
+    public Disco(Disco d) {
+        this.ID = d.getID();
+        this.Nombre = d.getNombre();
+        this.foto = d.getFoto();
+        this.fecha = d.getFecha();
+        this.creador = d.getCreador();
+    }
 
     public Disco() {
         this(-1, "", null, null, null, null);
