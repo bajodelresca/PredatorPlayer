@@ -17,12 +17,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 import model.Usuario;
 
 /**
  *
  * @author Alberto343
  */
+@NamedQueries({
+    @NamedQuery(name="UsuarioDAO.findAll",
+                query="SELECT * FROM usuario"),
+    @NamedQuery(name="UsuarioDAO.findByID",
+                query="SELECT * FROM usuario Where ID= :ID")
+}) 
 public class UsuarioDAO extends Usuario implements DAO<Usuario> {
 
     enum queries {
@@ -43,9 +52,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
         }
     }
 
-    public UsuarioDAO(int ID, String Nombre, String Correo, String Foto) {
-        super(ID, Nombre, Correo, Foto);
-    }
+    
 
     public UsuarioDAO() {
         super();
@@ -54,6 +61,9 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
     public UsuarioDAO(Usuario c) {
         super(c.getID(), c.getNombre(), c.getCorreo(), c.getFoto());
     }
+    public UsuarioDAO(int id) {
+	super(getByID(id));
+	}
     
 
     @Override
@@ -89,6 +99,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
     public List<Usuario> getAll() {
        EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
+                Query q = manager.createNamedQuery(findAll);
 		List<Usuario> usuarios = manager.createQuery("FROM USUARIO").getResultList();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
@@ -101,9 +112,11 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
      * @param id identificador de cada usuario
      * @return Devuelve un usuario
      */
-    public Usuario getByID(int id) {
+    public static Usuario getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
+                Query q = manager.createNamedQuery(findByID);
+		q.setParameter(1, id);
 
 		Usuario u = manager.find(Usuario.class, id);
 

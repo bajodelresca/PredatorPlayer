@@ -59,6 +59,12 @@ public class Usuario implements Serializable {
         this.Correo = Correo;
         this.Foto = Foto;
     }
+    public Usuario(Usuario u) {
+        this.ID = u.getID();
+        this.Nombre = u.getNombre();
+        this.Correo = u.getCorreo();
+        this.Foto = u.getFoto();
+    }
 
     public Usuario() {
         this(-1, "", "", null, null);
