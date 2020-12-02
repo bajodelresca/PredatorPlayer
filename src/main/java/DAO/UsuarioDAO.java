@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
@@ -26,13 +27,17 @@ import model.Usuario;
  *
  * @author Alberto343
  */
+@MappedSuperclass
 @NamedQueries({
-    @NamedQuery(name="UsuarioDAO.findAll",
-                query="SELECT * FROM usuario"),
-    @NamedQuery(name="UsuarioDAO.findByID",
-                query="SELECT * FROM usuario Where ID= :ID")
-}) 
+    @NamedQuery(name = "UsuarioDAO.findAll",
+            query = "SELECT * FROM usuario"),
+    @NamedQuery(name = "UsuarioDAO.findByID",
+            query = "SELECT * FROM usuario Where ID= :ID")
+})
 public class UsuarioDAO extends Usuario implements DAO<Usuario> {
+
+    private final static String findAll = "UsuarioDAO.findAll";
+    private final static String findByID = "UsuarioDAO.findByID";
 
     enum queries {
         INSERT("INSERT INTO Usuario (ID, Correo, Nombre, Foto) VALUES (NULL,?,?,?)"),
@@ -52,8 +57,6 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
         }
     }
 
-    
-
     public UsuarioDAO() {
         super();
     }
@@ -61,10 +64,10 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
     public UsuarioDAO(Usuario c) {
         super(c.getID(), c.getNombre(), c.getCorreo(), c.getFoto());
     }
+
     public UsuarioDAO(int id) {
-	super(getByID(id));
-	}
-    
+        super(getByID(id));
+    }
 
     @Override
     public void insert(Usuario a) {
@@ -86,24 +89,22 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
 
     @Override
     public void remove(Usuario a) {
-      EntityManager manager = ConnectionUtils.getManager();
-		manager.getTransaction().begin();
-		manager.remove(a);
-		manager.getTransaction().commit();
-		ConnectionUtils.closeManager(manager);
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+        manager.remove(a);
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
     }
-
-  
 
     @Override
     public List<Usuario> getAll() {
-       EntityManager manager = ConnectionUtils.getManager();
-		manager.getTransaction().begin();
-                Query q = manager.createNamedQuery(findAll);
-		List<Usuario> usuarios = manager.createQuery("FROM USUARIO").getResultList();
-		manager.getTransaction().commit();
-		ConnectionUtils.closeManager(manager);
-		return usuarios;
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+        Query q = manager.createNamedQuery(findAll);
+        List<Usuario> usuarios =  q.getResultList();
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
+        return usuarios;
     }
 
     /**
@@ -114,15 +115,15 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
      */
     public static Usuario getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
-		manager.getTransaction().begin();
-                Query q = manager.createNamedQuery(findByID);
-		q.setParameter(1, id);
+        manager.getTransaction().begin();
+        Query q = manager.createNamedQuery(findByID);
+        q.setParameter(1, id);
 
-		Usuario u = manager.find(Usuario.class, id);
+        Usuario u = (Usuario) q.getSingleResult();
 
-		manager.getTransaction().commit();
-		ConnectionUtils.closeManager(manager);
-		return u;
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
+        return u;
     }
 
     /**
@@ -132,18 +133,18 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
      * @return devuelve un boolean, si existe devuelve true y false si no
      */
     public boolean searchByID(int id) {
-       boolean result = false;
-		EntityManager manager = ConnectionUtils.getManager();
-		manager.getTransaction().begin();
+        boolean result = false;
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
 
-		Usuario u = manager.find(Usuario.class, id);
-		if (u != null) {
-			result = true;
-		} else {
-			result = false;
-		}
-		manager.getTransaction().commit();
-		ConnectionUtils.closeManager(manager);
-		return result;
-	}
+        Usuario u = getByID(id);
+        if (u != null) {
+            result = true;
+        } else {
+            result = false;
+        }
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
+        return result;
+    }
 }
