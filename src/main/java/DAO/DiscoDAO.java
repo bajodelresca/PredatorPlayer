@@ -93,7 +93,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 		return discos;
 	}
 
-	public Disco getByID(int id) {
+	public static Disco getByID(int id) {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 
