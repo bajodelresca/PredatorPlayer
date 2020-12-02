@@ -7,7 +7,7 @@
   <persistence-unit name="aplicacionH2">
     <properties>
         <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-        <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" /> <!-- ~/Desktop/Autores -->
+        <property name="javax.persistence.jdbc.url" value="jdbc:h2:~/Desktop/Artista" /> <!-- ~/Desktop/Autores || mem:test-->
         <property name="javax.persistence.jdbc.user" value="sa" />
         <property name="javax.persistence.jdbc.password" value="" />
         
@@ -25,7 +25,8 @@
        <property name="dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
  
         <!-- Validate the database schema on startup -->
-         <property name="hbm2ddl.auto" value="validate"/>
+         <property name="hibernate.hbm2ddl.auto" value="validate"/>
+        <!-- <property name="hbm2ddl.auto" value="validate"/> --> 
     </properties>
   </persistence-unit>
 </persistence>
