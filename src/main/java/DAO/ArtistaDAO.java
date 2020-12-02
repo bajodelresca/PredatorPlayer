@@ -92,7 +92,7 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 		return artistas;
 	}
 
-	public Artista getByID(int id) {
+	public static Artista getByID(int id) {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 
