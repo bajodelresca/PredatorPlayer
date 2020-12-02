@@ -66,6 +66,13 @@ public class Artista implements Serializable {
         this.nacionalidad = nacionalidad;
         this.foto = foto;
     }
+    
+    public Artista(Artista a) {
+        this.ID = a.getID();
+        this.nombre = a.getNombre();
+        this.nacionalidad = a.getNacionalidad();
+        this.foto = a.getFoto();
+    }
 
     public Artista() {
         this(-1, "", "", null, null);
