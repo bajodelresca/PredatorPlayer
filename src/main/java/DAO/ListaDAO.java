@@ -60,9 +60,9 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     }
     Connection conn;
 
-    public ListaDAO(int ID, String Nombre, String Descripcion, Usuario creador) {
-        super(ID, Nombre, Descripcion, creador);
-    }
+    public ListaDAO(int id) {
+	super(getByID(id));
+	}
 
     public ListaDAO() {
         super();
@@ -117,7 +117,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
      * @param id identificador de cada Lista
      * @return Devuelve una Lista
      */
-    public Lista getByID(int id) {
+    public static Lista getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
         Query q = manager.createNamedQuery(findByID);

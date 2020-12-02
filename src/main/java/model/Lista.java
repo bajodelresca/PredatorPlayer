@@ -77,6 +77,14 @@ public class Lista implements Serializable {
         this.subscriptores = new ArrayList<>();
         this.listareproduccion = new ArrayList<>();
     }
+    public Lista(Lista l) {
+        this.ID = l.getID();
+        this.Nombre = l.getNombre();
+        this.Descripcion = l.getDescripcion();
+        this.creador = l.getCreador();
+        this.subscriptores = l.getSubscriptores();
+        this.listareproduccion = l.getListareproduccion();
+    }
 
     public Lista(String Nombre, String Descripcion, Usuario creador) {
         this.ID = -1;

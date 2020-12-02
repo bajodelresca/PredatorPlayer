@@ -52,9 +52,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
         }
     }
 
-    public UsuarioDAO(int ID, String Nombre, String Correo, String Foto) {
-        super(ID, Nombre, Correo, Foto);
-    }
+    
 
     public UsuarioDAO() {
         super();
@@ -63,6 +61,9 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
     public UsuarioDAO(Usuario c) {
         super(c.getID(), c.getNombre(), c.getCorreo(), c.getFoto());
     }
+    public UsuarioDAO(int id) {
+	super(getByID(id));
+	}
     
 
     @Override
@@ -111,7 +112,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
      * @param id identificador de cada usuario
      * @return Devuelve un usuario
      */
-    public Usuario getByID(int id) {
+    public static Usuario getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
                 Query q = manager.createNamedQuery(findByID);
