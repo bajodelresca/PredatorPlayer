@@ -863,7 +863,7 @@ public class GUI {
 			break;
 
 		case 6:
-			Utilities.P("Introduzca el ID de la Lista: ");
+			/*Utilities.P("Introduzca el ID de la Lista: ");
 			int idList = 0;
 			boolean valid6 = false;
 			do {
@@ -915,7 +915,7 @@ public class GUI {
 				}
 			} else {
 				Utilities.P("EL ID DE LA LISTA NO EXISTE ");
-			}
+			}*/
 			break;
 
 		case 7:
@@ -1649,7 +1649,7 @@ public class GUI {
 
 			break;
 		case 6:
-			Utilities.P("Introduzca el ID de la lista: ");
+			/*Utilities.P("Introduzca el ID de la lista: ");
 			int idli = 0;
 			boolean valid6 = false;
 			do {
@@ -1710,7 +1710,7 @@ public class GUI {
 
 			} else {
 				System.out.println("EL ID DE LA LISTA NO EXISTE");
-			}
+			}*/
 			break;
 
 		case 7:
