@@ -161,7 +161,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
             return this.q;
         }
     }
-    Connection conn;
+    
 
     public SubscripcionDAO(model.Lista Lista, model.Usuario Usuario) {
         super(Lista, Usuario);
