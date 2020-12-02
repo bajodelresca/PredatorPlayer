@@ -17,37 +17,27 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import model.Cancion;
 import model.Disco;
 
-/**
- *
- * @author Alberto343
- */
+@NamedQueries({
+    @NamedQuery(name="CancionDAO.findAll",
+                query="SELECT  ID,Nombre,Duracion,IDDisco FROM cancion"),
+    @NamedQuery(name="CancionDAO.findByID",
+                query="SELECT ID,Nombre,Duracion,IDDisco FROM cancion Where ID= :ID")
+}) 
 public class CancionDAO extends Cancion implements DAO<Cancion> {
-
-	enum queries {
-		INSERT("INSERT INTO cancion (ID, Nombre, Duracion, IDDisco) VALUES (NULL,?,?,?)"),
-		UPDATE("UPDATE cancion SET Nombre=?,Duracion=?,IDDisco=? WHERE ID=?"), DELETE("DELETE FROM cancion WHERE ID=?"),
-		DELETEALL("DELETE FROM cancion INNER JOIN WHERE ID=?"),
-		GETBYID("SELECT ID,Nombre,Duracion,IDDisco FROM cancion Where ID=?"),
-		GETALL("SELECT  ID,Nombre,Duracion,IDDisco FROM cancion");
-
-		private String q;
-
-		queries(String q) {
-			this.q = q;
-		}
-
-		public String getQ() {
-			return this.q;
-		}
-	}
-
+	
+	private final static String findAll = "CancionDAO.findAll";
+	private final static String findByID = "CancionDAO.findByID";
 	public CancionDAO(int ID, String Nombre, int Duracion, Disco Album) {
 		super(ID, Nombre, Duracion, Album);
 
@@ -63,6 +53,9 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 
 	}
 
+	public CancionDAO(int id) {
+		super(getByID(id));
+	}
 	@Override
 	public void insert(Cancion a) {
 		EntityManager manager = ConnectionUtils.getManager();
@@ -96,7 +89,8 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 	public List<Cancion> getAll() {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-		List<Cancion> canciones = manager.createQuery("FROM CANCION").getResultList();
+		Query q = manager.createNamedQuery(findAll);
+		List<Cancion> canciones =  q.getResultList();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
 		return canciones;
@@ -108,12 +102,13 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 	 * @param id identificador de cada Cancion
 	 * @return Devuelve una Cancion
 	 */
-	public Cancion getByID(int id) {
+	private static Cancion getByID(int id) {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 
-		Cancion c = manager.find(Cancion.class, id);
-
+		Query q = manager.createNamedQuery(findByID);
+		q.setParameter(1, id);
+		Cancion c = (Cancion) q.getSingleResult();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
 		return c;
@@ -130,8 +125,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 		boolean result = false;
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-
-		Cancion c = manager.find(Cancion.class, id);
+		Cancion c = getByID(id);
 		if (c != null) {
 			result = true;
 		} else {

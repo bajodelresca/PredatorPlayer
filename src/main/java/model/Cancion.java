@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import java.io.Serializable;
@@ -54,6 +56,13 @@ public class Cancion implements Serializable {
         this.Duracion = Duracion;
         this.Genero = 0;
         this.Album = Album;
+    }
+    public Cancion(Cancion c) {
+        this.ID = c.getDuracion();
+        this.Nombre = c.getNombre();
+        this.Duracion = c.getDuracion();
+        this.Genero = 0;
+        this.Album = c.getAlbum();
     }
 
     public Cancion() {
