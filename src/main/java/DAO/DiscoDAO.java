@@ -14,6 +14,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 
 import model.Artista;
 import model.Cancion;
@@ -23,27 +26,17 @@ import model.Disco;
  *
  * @author Jorge SB
  */
+
+@NamedQueries({
+    @NamedQuery(name="DiscoDAO.findAll",
+                query="SELECT * FROM Disco"),
+    @NamedQuery(name="DiscoDAO.findByID",
+                query="SELECT * FROM Disco Where ID= :ID")
+}) 
 public class DiscoDAO extends Disco implements DAO<Disco> {
-
-	enum queries {
-		INSERT("INSERT INTO disco (ID, Nombre, Foto, fechap, IDArtista) VALUES (NULL,?,?,?,?)"),
-		UPDATE("UPDATE disco SET Nombre=?,Foto=?,fechap=?,IDArtista=? WHERE ID=?"),
-		DELETE("DELETE FROM disco WHERE ID=?"), GETBYID("SELECT * FROM Disco WHERE ID=?"),
-		GETALL("SELECT * FROM Disco"), GETCANCLISTBYID(
-				"SELECT c.ID, c.Nombre, c.Duracion, c.IDGenero, c.IDDisco FROM cancion as c INNER JOIN disco as d on d.ID=c.IDDisco WHERE d.ID=?");
-
-		private String q;
-
-		queries(String q) {
-			this.q = q;
-		}
-
-		public String getQ() {
-			return this.q;
-		}
-	}
-
-	Connection conn;
+	
+	private final static String findAll = "DiscoDAO.findAll";
+	private final static String findByID = "DiscoDAO.findByID";
 
 	public DiscoDAO(int ID, String Nombre, String foto, Date fecha, Artista creador) {
 		super(ID, Nombre, foto, fecha, creador);
@@ -55,6 +48,10 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 
 	public DiscoDAO(Disco d) {
 		super(d.getID(), d.getNombre(), d.getFoto(), d.getFecha(), d.getCreador());
+	}
+	
+	public DiscoDAO(int id) {
+		super(getByID(id));
 	}
 
 //______________________________________________________________________________CRUD
@@ -89,7 +86,8 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 	public List<Disco> getAll() {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-		List<Disco> discos = manager.createQuery("FROM DISCO").getResultList();
+		Query q = manager.createNamedQuery(findAll);
+		List<Disco> discos =  q.getResultList();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
 		return discos;
@@ -99,8 +97,9 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 
-		Disco d = manager.find(Disco.class, id);
-
+		Query q = manager.createNamedQuery(findByID);
+		q.setParameter(1, id);
+		Disco d = (Disco) q.getSingleResult();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
 		return d;

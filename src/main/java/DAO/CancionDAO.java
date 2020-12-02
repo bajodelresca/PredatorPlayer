@@ -56,6 +56,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 	public CancionDAO(int id) {
 		super(getByID(id));
 	}
+	
 	@Override
 	public void insert(Cancion a) {
 		EntityManager manager = ConnectionUtils.getManager();

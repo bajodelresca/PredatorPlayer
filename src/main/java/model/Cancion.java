@@ -57,8 +57,9 @@ public class Cancion implements Serializable {
         this.Genero = 0;
         this.Album = Album;
     }
+    
     public Cancion(Cancion c) {
-        this.ID = c.getDuracion();
+        this.ID = c.getID();
         this.Nombre = c.getNombre();
         this.Duracion = c.getDuracion();
         this.Genero = 0;

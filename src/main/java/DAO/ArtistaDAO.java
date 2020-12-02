@@ -13,6 +13,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 
 import model.Artista;
 import model.Cancion;
@@ -22,27 +25,17 @@ import model.Disco;
  *
  * @author Jorge SB
  */
+
+@NamedQueries({
+    @NamedQuery(name="ArtistaDAO.findAll",
+                query="SELECT ID,Nombre,Nacionalidad,Foto FROM artista"),
+    @NamedQuery(name="ArtistaDAO.findByID",
+                query="SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID= :ID")
+}) 
 public class ArtistaDAO extends Artista implements DAO<Artista> {
 
-	enum queries {
-		INSERT("INSERT INTO artista (ID, Nombre, Nacionalidad, Foto) VALUES (NULL,?,?,?)"),
-		UPDATE("UPDATE artista SET Nombre=?,Nacionalidad=?,Foto=? WHERE ID=?"),
-		DELETE("DELETE FROM artista WHERE ID=?"), GETBYID("SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID=?"),
-		GETALL("SELECT ID,Nombre,Nacionalidad,Foto FROM artista"), GETDISCOLISTBYID(
-				"SELECT d.ID, d.Nombre, d.Foto, d.fechap, d.IDArtista FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?");
-
-		private String q;
-
-		queries(String q) {
-			this.q = q;
-		}
-
-		public String getQ() {
-			return this.q;
-		}
-	}
-
-	Connection conn;
+	private final static String findAll = "ArtistaDAO.findAll";
+	private final static String findByID = "ArtistaDAO.findByID";
 
 	public ArtistaDAO(int ID, String Nombre, String Nacionalidad, String Foto) {
 		super(ID, Nombre, Nacionalidad, Foto);
@@ -54,6 +47,10 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 
 	public ArtistaDAO(Artista a) {
 		super(a.getID(), a.getNombre(), a.getNacionalidad(), a.getFoto());
+	}
+	
+	public ArtistaDAO(int id) {
+		super(getByID(id));
 	}
 
 //______________________________________________________________________________CRUD
@@ -88,18 +85,20 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 	public List<Artista> getAll() {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-		List<Artista> canciones = manager.createQuery("FROM ARTISTA").getResultList();
+		Query q = manager.createNamedQuery(findAll);
+		List<Artista> artistas =  q.getResultList();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
-		return canciones;
+		return artistas;
 	}
 
 	public Artista getByID(int id) {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 
-		Artista a = manager.find(Artista.class, id);
-
+		Query q = manager.createNamedQuery(findByID);
+		q.setParameter(1, id);
+		Artista a = (Artista) q.getSingleResult();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
 		return a;
@@ -111,28 +110,20 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 	 * @param id
 	 * @return canciones
 	 */
-	
+
 	/*
-	public List<Disco> getListRepertorio(int id) {
-		EntityManager manager = ConnectionUtils.getManager();
-		manager.getTransaction().begin();
-
-		// PREGUNTAR
-		List<Disco> repertorio = manager
-				.createQuery("FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?")
-				.getResultList();
-		if (d != null) {
-			result = true;
-		} else {
-			result = false;
-		}
-
-		manager.getTransaction().commit();
-		ConnectionUtils.closeManager(manager);
-
-		return repertorio;
-	}
-	*/
+	 * public List<Disco> getListRepertorio(int id) { EntityManager manager =
+	 * ConnectionUtils.getManager(); manager.getTransaction().begin();
+	 * 
+	 * // PREGUNTAR List<Disco> repertorio = manager
+	 * .createQuery("FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?"
+	 * ) .getResultList(); if (d != null) { result = true; } else { result = false;
+	 * }
+	 * 
+	 * manager.getTransaction().commit(); ConnectionUtils.closeManager(manager);
+	 * 
+	 * return repertorio; }
+	 */
 
 	/**
 	 * Metodo que comprueba si existe el ID en la tabla
