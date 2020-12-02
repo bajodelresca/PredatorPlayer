@@ -24,6 +24,7 @@ import model.Usuario;
  *
  * @author Alberto343
  */
+@MappedSuperclass
 @NamedQueries({
     @NamedQuery(name = "ListaDAO.findAll",
             query = "SELECT * FROM lista"),
@@ -105,7 +106,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
         Query q = manager.createNamedQuery(findAll);
-        List<Lista> listas = manager.createQuery("FROM LISTA").getResultList();
+        List<Lista> listas =  q.getResultList();
         manager.getTransaction().commit();
         ConnectionUtils.closeManager(manager);
         return listas;
@@ -123,7 +124,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         Query q = manager.createNamedQuery(findByID);
 		q.setParameter(1, id);
 
-        Lista l = manager.find(Lista.class, id);
+        Lista l = (Lista) q.getSingleResult();
 
         manager.getTransaction().commit();
         ConnectionUtils.closeManager(manager);
