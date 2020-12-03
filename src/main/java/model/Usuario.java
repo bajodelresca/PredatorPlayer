@@ -19,6 +19,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,6 +30,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "USUARIO")
+@NamedQueries({
+    @NamedQuery(name = "Usuario.findAll",
+            query = "SELECT  ID, Nombre,Correo, Foto  FROM Usuario"),
+    @NamedQuery(name = "Usuario.findByID",
+            query = "SELECT ID, Nombre,Correo, Foto  FROM Usuario Where ID= :ID")
+})
 public class Usuario implements Serializable {
 
     private static AppController controlador = AppController.getInstance();

@@ -21,6 +21,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -30,6 +32,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "LISTA")
+@NamedQueries({
+    @NamedQuery(name = "ListaDAO.findAll",
+            query = "SELECT ID,Nombre,Descripcion,creador FROM Lista"),
+    @NamedQuery(name = "ListaDAO.findByID",
+            query = "SELECT ID,Nombre,Descripcion,creador FROM Lista Where ID= :ID")
+})
 public class Lista implements Serializable {
 
     private static AppController controlador = AppController.getInstance();

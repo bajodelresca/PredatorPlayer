@@ -28,13 +28,8 @@ import javax.persistence.Query;
 
 import model.Cancion;
 import model.Disco;
-@MappedSuperclass
-@NamedQueries({
-    @NamedQuery(name="CancionDAO.findAll",
-                query="SELECT  ID,Nombre,Duracion,IDDisco FROM cancion"),
-    @NamedQuery(name="CancionDAO.findByID",
-                query="SELECT ID,Nombre,Duracion,IDDisco FROM cancion Where ID= :ID")
-}) 
+//@MappedSuperclass
+
 public class CancionDAO extends Cancion implements DAO<Cancion> {
 	
 	private final static String findAll = "CancionDAO.findAll";

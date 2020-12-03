@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,6 +26,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ARTISTA")
+@NamedQueries({
+    @NamedQuery(name="Artista.findAll",
+                query="SELECT ID,nombre,nacionalidad,foto FROM Artista"),
+    @NamedQuery(name="Artista.findByID",
+                query="SELECT ID,nombre,nacionalidad,foto FROM Artista Where ID= :ID")
+}) 
 public class Artista implements Serializable {
 
     private static AppController controlador = AppController.getInstance();

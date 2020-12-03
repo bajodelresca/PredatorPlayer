@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
@@ -24,13 +25,8 @@ import model.Usuario;
  *
  * @author Alberto343
  */
-@MappedSuperclass
-@NamedQueries({
-    @NamedQuery(name = "ListaDAO.findAll",
-            query = "SELECT * FROM lista"),
-    @NamedQuery(name = "ListaDAO.findByID",
-            query = "SELECT * FROM lista Where ID= :ID")
-})
+//@MappedSuperclass
+
 public class ListaDAO extends Lista implements DAO<Lista> {
 
     private final static String findAll = "ListaDAO.findAll";
@@ -130,7 +126,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         ConnectionUtils.closeManager(manager);
         return l;
     }
-/*
+   /*
     public List<Cancion> getCancionFromList(int id) {
         PreparedStatement stat = null;
         ResultSet rs = null;
@@ -195,8 +191,8 @@ public class ListaDAO extends Lista implements DAO<Lista> {
      *
      * @param id recibe un entero
      * @return devuelve un boolean, si existe devuelve true y false si no
-     
-    public boolean searchByID(int id) {
+     */
+   /* public boolean searchByID(int id) {
         boolean result = false;
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
@@ -259,7 +255,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
      *
      * @param id
      * @return listUser
-     
+     *//*
     public List<Lista> getListFromUser(int id) {
         PreparedStatement stat = null;
         ResultSet rs = null;
@@ -292,4 +288,5 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         }
 
         return listUser;
-    }
+    }*/
+}

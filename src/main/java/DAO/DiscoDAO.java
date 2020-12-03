@@ -27,12 +27,7 @@ import model.Disco;
  * @author Jorge SB
  */
 
-@NamedQueries({
-    @NamedQuery(name="DiscoDAO.findAll",
-                query="SELECT * FROM Disco"),
-    @NamedQuery(name="DiscoDAO.findByID",
-                query="SELECT * FROM Disco Where ID= :ID")
-}) 
+
 public class DiscoDAO extends Disco implements DAO<Disco> {
 	
 	private final static String findAll = "DiscoDAO.findAll";

@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,6 +26,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "DISCO")
+@NamedQueries({
+    @NamedQuery(name="DiscoDAO.findAll",
+                query="SELECT ID,Nombre,foto,fecha,creador FROM Disco"),
+    @NamedQuery(name="DiscoDAO.findByID",
+                query="SELECT ID,Nombre,foto,fecha,creador FROM Disco Where ID= :ID")
+}) 
 public class Disco implements Serializable {
 
     private static AppController controlador = AppController.getInstance();

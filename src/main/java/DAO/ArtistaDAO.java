@@ -26,16 +26,10 @@ import model.Disco;
  * @author Jorge SB
  */
 
-@NamedQueries({
-    @NamedQuery(name="ArtistaDAO.findAll",
-                query="SELECT ID,Nombre,Nacionalidad,Foto FROM artista"),
-    @NamedQuery(name="ArtistaDAO.findByID",
-                query="SELECT ID,Nombre,Nacionalidad,Foto FROM artista Where ID= :ID")
-}) 
 public class ArtistaDAO extends Artista implements DAO<Artista> {
 
-	private final static String findAll = "ArtistaDAO.findAll";
-	private final static String findByID = "ArtistaDAO.findByID";
+	private final static String findAll = "Artista.findAll";
+	private final static String findByID = "Artista.findByID";
 
 	public ArtistaDAO(int ID, String Nombre, String Nacionalidad, String Foto) {
 		super(ID, Nombre, Nacionalidad, Foto);
@@ -86,10 +80,14 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 		Query q = manager.createNamedQuery(findAll);
-		List<Artista> artistas =  q.getResultList();
+		List<Object> artistas =  q.getResultList();
+		for (Object object : artistas) {
+			object=(ArtistaDAO) object;
+			System.out.println(object);
+		}
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
-		return artistas;
+		return null;
 	}
 
 	public static Artista getByID(int id) {

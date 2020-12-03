@@ -27,13 +27,8 @@ import model.Usuario;
  *
  * @author Alberto343
  */
-@MappedSuperclass
-@NamedQueries({
-    @NamedQuery(name = "UsuarioDAO.findAll",
-            query = "SELECT * FROM usuario"),
-    @NamedQuery(name = "UsuarioDAO.findByID",
-            query = "SELECT * FROM usuario Where ID= :ID")
-})
+//@MappedSuperclass
+
 public class UsuarioDAO extends Usuario implements DAO<Usuario> {
 
     private final static String findAll = "UsuarioDAO.findAll";

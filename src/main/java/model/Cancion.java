@@ -23,6 +23,12 @@ import javax.persistence.ManyToMany;
 
 @Entity
 @Table(name = "CANCION")
+@NamedQueries({
+    @NamedQuery(name="CancionDAO.findAll",
+                query="SELECT  ID,Nombre,Duracion,Album FROM Cancion"),
+    @NamedQuery(name="CancionDAO.findByID",
+                query="SELECT ID,Nombre,Duracion,Album FROM Cancion Where ID= :ID")
+}) 
 public class Cancion implements Serializable {
 
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
