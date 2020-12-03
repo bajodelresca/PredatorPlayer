@@ -198,8 +198,9 @@ public class Utilities {
 		P("3) Insertar Canción");
 		P("4) Crear una lista de reproducción");
 		P("5) Insertar una canción a una lista");
-		P("6) Subscribirte una lista de reproducción");
-		P("7) Salir");
+		P("6) Insertar un usuario");
+		P("7) Subscribirte una lista de reproducción");
+		P("8) Salir");
 		P("-------------------------------------");
 		p("> ");
 

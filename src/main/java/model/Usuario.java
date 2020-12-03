@@ -32,9 +32,9 @@ import javax.persistence.Table;
 @Table(name = "USUARIO")
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll",
-            query = "SELECT  ID, Nombre,Correo, Foto  FROM Usuario"),
+            query = "SELECT  u  FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByID",
-            query = "SELECT ID, Nombre,Correo, Foto  FROM Usuario Where ID= :ID")
+            query = "SELECT u  FROM Usuario u Where u.ID= :ID")
 })
 public class Usuario implements Serializable {
 
@@ -63,6 +63,12 @@ public class Usuario implements Serializable {
 
     public Usuario(int ID, String Nombre, String Correo, String Foto) {
         this.ID = ID;
+        this.Nombre = Nombre;
+        this.Correo = Correo;
+        this.Foto = Foto;
+    }
+    public Usuario( String Nombre, String Correo, String Foto) {
+        this.ID = -1;;
         this.Nombre = Nombre;
         this.Correo = Correo;
         this.Foto = Foto;

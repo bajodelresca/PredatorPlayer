@@ -21,6 +21,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
 import model.Usuario;
 
 /**
@@ -31,8 +33,8 @@ import model.Usuario;
 
 public class UsuarioDAO extends Usuario implements DAO<Usuario> {
 
-    private final static String findAll = "UsuarioDAO.findAll";
-    private final static String findByID = "UsuarioDAO.findByID";
+    private final static String findAll = "Usuario.findAll";
+    private final static String findByID = "Usuario.findByID";
 
     enum queries {
         INSERT("INSERT INTO Usuario (ID, Correo, Nombre, Foto) VALUES (NULL,?,?,?)"),
@@ -95,7 +97,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
     public List<Usuario> getAll() {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
-        Query q = manager.createNamedQuery(findAll);
+        TypedQuery q = manager.createNamedQuery(findAll,Usuario.class);
         List<Usuario> usuarios =  q.getResultList();
         manager.getTransaction().commit();
         ConnectionUtils.closeManager(manager);
@@ -111,8 +113,8 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
     public static Usuario getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
-        Query q = manager.createNamedQuery(findByID);
-        q.setParameter(1, id);
+        TypedQuery q = manager.createNamedQuery(findByID,Usuario.class);
+        q.setParameter("ID", id);
 
         Usuario u = (Usuario) q.getSingleResult();
 

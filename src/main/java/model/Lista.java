@@ -33,10 +33,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "LISTA")
 @NamedQueries({
-    @NamedQuery(name = "ListaDAO.findAll",
-            query = "SELECT ID,Nombre,Descripcion,creador FROM Lista"),
-    @NamedQuery(name = "ListaDAO.findByID",
-            query = "SELECT ID,Nombre,Descripcion,creador FROM Lista Where ID= :ID")
+    @NamedQuery(name = "Lista.findAll",
+            query = "SELECT l FROM Lista l"),
+    @NamedQuery(name = "Lista.findByID",
+            query = "SELECT l FROM Lista l Where l.ID= :ID")
 })
 public class Lista implements Serializable {
 

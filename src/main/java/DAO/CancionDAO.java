@@ -25,6 +25,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import model.Cancion;
 import model.Disco;
@@ -32,8 +33,8 @@ import model.Disco;
 
 public class CancionDAO extends Cancion implements DAO<Cancion> {
 	
-	private final static String findAll = "CancionDAO.findAll";
-	private final static String findByID = "CancionDAO.findByID";
+	private final static String findAll = "Cancion.findAll";
+	private final static String findByID = "Cancion.findByID";
 	public CancionDAO(int ID, String Nombre, int Duracion, Disco Album) {
 		super(ID, Nombre, Duracion, Album);
 
@@ -86,7 +87,7 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 	public List<Cancion> getAll() {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-		Query q = manager.createNamedQuery(findAll);
+		TypedQuery q = manager.createNamedQuery(findAll,Cancion.class);
 		List<Cancion> canciones =  q.getResultList();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
@@ -103,8 +104,8 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 
-		Query q = manager.createNamedQuery(findByID);
-		q.setParameter(1, id);
+		TypedQuery q = manager.createNamedQuery(findByID,Cancion.class);
+		q.setParameter("ID", id);
 		Cancion c = (Cancion) q.getSingleResult();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);

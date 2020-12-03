@@ -24,10 +24,10 @@ import javax.persistence.ManyToMany;
 @Entity
 @Table(name = "CANCION")
 @NamedQueries({
-    @NamedQuery(name="CancionDAO.findAll",
-                query="SELECT  ID,Nombre,Duracion,Album FROM Cancion"),
-    @NamedQuery(name="CancionDAO.findByID",
-                query="SELECT ID,Nombre,Duracion,Album FROM Cancion Where ID= :ID")
+    @NamedQuery(name="Cancion.findAll",
+                query="SELECT  c FROM Cancion c"),
+    @NamedQuery(name="Cancion.findByID",
+                query="SELECT c FROM Cancion c Where c.ID= :ID")
 }) 
 public class Cancion implements Serializable {
 

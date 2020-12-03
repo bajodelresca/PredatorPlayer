@@ -16,6 +16,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import model.Cancion;
 import model.Lista;
@@ -29,8 +30,8 @@ import model.Usuario;
 
 public class ListaDAO extends Lista implements DAO<Lista> {
 
-    private final static String findAll = "ListaDAO.findAll";
-    private final static String findByID = "ListaDAO.findByID";
+    private final static String findAll = "Lista.findAll";
+    private final static String findByID = "Lista.findByID";
 
    
     enum queries {
@@ -101,7 +102,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     public List<Lista> getAll() {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
-        Query q = manager.createNamedQuery(findAll);
+        TypedQuery q = manager.createNamedQuery(findAll,Lista.class);
         List<Lista> listas =  q.getResultList();
         manager.getTransaction().commit();
         ConnectionUtils.closeManager(manager);
@@ -117,8 +118,8 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     public static Lista getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
-        Query q = manager.createNamedQuery(findByID);
-		q.setParameter(1, id);
+        TypedQuery q = manager.createNamedQuery(findByID,Lista.class);
+		q.setParameter("ID", id);
 
         Lista l = (Lista) q.getSingleResult();
 

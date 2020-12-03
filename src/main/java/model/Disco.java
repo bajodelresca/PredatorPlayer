@@ -27,10 +27,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "DISCO")
 @NamedQueries({
-    @NamedQuery(name="DiscoDAO.findAll",
-                query="SELECT ID,Nombre,foto,fecha,creador FROM Disco"),
-    @NamedQuery(name="DiscoDAO.findByID",
-                query="SELECT ID,Nombre,foto,fecha,creador FROM Disco Where ID= :ID")
+    @NamedQuery(name="Disco.findAll",
+                query="SELECT d FROM Disco d"),
+    @NamedQuery(name="Disco.findByID",
+                query="SELECT d FROM Disco d Where d.ID= :ID")
 }) 
 public class Disco implements Serializable {
 

@@ -28,9 +28,9 @@ import javax.persistence.Table;
 @Table(name = "ARTISTA")
 @NamedQueries({
     @NamedQuery(name="Artista.findAll",
-                query="SELECT ID,nombre,nacionalidad,foto FROM Artista"),
+                query="SELECT a FROM Artista a"),
     @NamedQuery(name="Artista.findByID",
-                query="SELECT ID,nombre,nacionalidad,foto FROM Artista Where ID= :ID")
+                query="SELECT a FROM Artista a Where a.ID= :ID")
 }) 
 public class Artista implements Serializable {
 

@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import model.Artista;
 import model.Cancion;
@@ -79,23 +80,24 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 	public List<Artista> getAll() {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-		Query q = manager.createNamedQuery(findAll);
-		List<Object> artistas =  q.getResultList();
-		for (Object object : artistas) {
+		TypedQuery<Artista> q = manager.createNamedQuery(findAll,Artista.class);
+		
+		List<Artista> artistas = q.getResultList();
+		/*for (Object object : artistas) {
 			object=(ArtistaDAO) object;
 			System.out.println(object);
-		}
+		}*/
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
-		return null;
+		return artistas;
 	}
 
 	public static Artista getByID(int id) {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 
-		Query q = manager.createNamedQuery(findByID);
-		q.setParameter(1, id);
+		TypedQuery q = manager.createNamedQuery(findByID,Artista.class);
+		q.setParameter("ID", id);
 		Artista a = (Artista) q.getSingleResult();
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);

@@ -66,7 +66,7 @@ public class GUI {
 
 				ControladorMenuInsertar(op2);
 
-			} while (op2 != 7);
+			} while (op2 != 8);
 			break;
 
 		case 3:
@@ -863,6 +863,22 @@ public class GUI {
 			break;
 
 		case 6:
+			Utilities.P("Introduzca el nombre del Usuario: ");
+			nombre = keyboard.next();
+			Utilities.P("Introduzca su correo: ");
+			String correo = keyboard.next();
+			Utilities.P("Introduzca su foto: ");
+			foto = keyboard.next();
+				
+			Usuario u=new Usuario(nombre,correo,foto);
+				if (controlador.insertUser(u)) {
+					Utilities.P("El USUARIO HA SIDO CREADA CON EXITO");
+				} else {
+					Utilities.P("HA OCURRIDO UN PROBLEMA EN LA CREACION DEL USUARIO");
+				}
+
+			break;
+		case 7:
 			/*Utilities.P("Introduzca el ID de la Lista: ");
 			int idList = 0;
 			boolean valid6 = false;
@@ -918,7 +934,7 @@ public class GUI {
 			}*/
 			break;
 
-		case 7:
+		case 8:
 			Utilities.P("Saliendo del Menú de Creación.");
 			break;
 
