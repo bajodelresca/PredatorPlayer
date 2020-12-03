@@ -28,8 +28,8 @@ public class CancionController {
     }
 
     public Cancion getSongsById(int id) {
-        CancionDAO cDAO = new CancionDAO();
-        return cDAO.getByID(id);
+        CancionDAO cDAO = new CancionDAO(id);
+        return (Cancion)cDAO;
     }
 
     public boolean insertSongs(Cancion a) {

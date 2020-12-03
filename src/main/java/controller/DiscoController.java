@@ -24,8 +24,8 @@ public class DiscoController {
     }
 
     public Disco getDiscsById(int id) {
-        DiscoDAO dDAO = new DiscoDAO();
-        return dDAO.getByID(id);
+        DiscoDAO dDAO = new DiscoDAO(id);
+        return (Disco) dDAO;
     }
 
     public boolean insertDiscs(Disco a) {

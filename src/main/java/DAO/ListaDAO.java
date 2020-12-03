@@ -56,8 +56,6 @@ public class ListaDAO extends Lista implements DAO<Lista> {
             return this.q;
         }
     }
-    Connection conn;
-
     public ListaDAO(int id) {
 	super(getByID(id));
 	}
@@ -115,7 +113,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
      * @param id identificador de cada Lista
      * @return Devuelve una Lista
      */
-    public static Lista getByID(int id) {
+    private static Lista getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
         TypedQuery q = manager.createNamedQuery(findByID,Lista.class);

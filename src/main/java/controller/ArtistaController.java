@@ -24,8 +24,8 @@ public class ArtistaController {
     }
 
     public Artista getArtistsById(int id) {
-        ArtistaDAO aDAO = new ArtistaDAO();
-        return aDAO.getByID(id);
+        ArtistaDAO aDAO = new ArtistaDAO(id);
+        return (Artista)aDAO;
     }
 
     public boolean insertArtists(Artista a) {
@@ -62,7 +62,8 @@ public class ArtistaController {
         }
         return result;
     }
-
+    
+    
     public List<Disco> getRepertorio(int ID) {
         ArtistaDAO aDAO = new ArtistaDAO();
         return aDAO.getListRepertorio(ID);

@@ -29,8 +29,8 @@ public class ListaController {
     }
 
     public Lista getListById(int id) {
-        ListaDAO lDAO = new ListaDAO();
-        return lDAO.getByID(id);
+        ListaDAO lDAO = new ListaDAO(id);
+        return (Lista)lDAO;
     }
 
     public boolean insertList(Lista a) {

@@ -6,7 +6,6 @@ import model.Cancion;
 import model.Connection;
 import model.Disco;
 import model.Lista;
-import model.Subscripcion;
 import model.Usuario;
 
 /**
@@ -116,7 +115,7 @@ public class AppController {
      }
 
     //___________________________________________________________________________Funciones de SUBSCRIPCION
-    public List<Subscripcion> getAllSubs() {
+ /*   public List<Subscripcion> getAllSubs() {
         return subsControl.getAllSubs();
     }
 
@@ -130,7 +129,7 @@ public class AppController {
 
     public boolean removeSubs(Subscripcion a) {
         return subsControl.removeSubs(a);
-    }
+    }*/
 
     public List<Usuario> getSubscriberFromList(int id) {
         return subsControl.getSubscriberFromList(id);
