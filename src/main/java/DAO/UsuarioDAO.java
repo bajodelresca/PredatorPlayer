@@ -110,7 +110,7 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
      * @param id identificador de cada usuario
      * @return Devuelve un usuario
      */
-    public static Usuario getByID(int id) {
+    private static Usuario getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
         TypedQuery q = manager.createNamedQuery(findByID,Usuario.class);
