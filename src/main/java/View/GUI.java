@@ -202,7 +202,7 @@ public class GUI {
 				System.out.println("ID: " + cancion.getID());
 				System.out.println("Nombre: " + cancion.getNombre());
 				System.out.println("Duracion: " + cancion.getDuracion());
-				System.out.println("Disco: " + cancion.getAlbum());
+				System.out.println("Disco: " + controlador.getDiscsById(cancion.getAlbum().getID()));
 				System.out.println("----------------------------------");
 			}
 			break;
@@ -231,7 +231,7 @@ public class GUI {
 				System.out.println("ID: " + c.getID());
 				System.out.println("Nombre: " + c.getNombre());
 				System.out.println("Duracion: " + c.getDuracion());
-				System.out.println("Disco: " + c.getAlbum());
+				System.out.println("Disco: " + controlador.getDiscsById(c.getAlbum().getID()));
 				System.out.println("----------------------------------");
 			} else {
 				System.out.println("EL ID DE LA CANCION NO EXISTE");

@@ -22,6 +22,7 @@ import javax.persistence.TypedQuery;
 import model.Artista;
 import model.Cancion;
 import model.Disco;
+import model.Libro;
 
 /**
  *
@@ -50,6 +51,12 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 		super(getByID(id));
 	}
 
+	public void setCanciones(List<Cancion> canciones) {
+        this.canciones = canciones;
+        for (Cancion cancion : canciones) {
+			cancion.setAlbum(this);
+		}
+    }
 //______________________________________________________________________________CRUD
 	@Override
 	public void insert(Disco a) {

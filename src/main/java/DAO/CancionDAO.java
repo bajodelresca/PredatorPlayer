@@ -49,16 +49,32 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 		super(c.getID(), c.getNombre(), c.getDuracion(), c.getAlbum());
 
 	}
+	public CancionDAO(String Nombre, int Duracion) {
+		super(-1, Nombre, Duracion,null);
 
+	}
 	public CancionDAO(int id) {
 		super(getByID(id));
 	}
 	
+
+    public void setAlbum(Disco Album) {
+        this.Album = Album;
+        java.util.List<Cancion> canciones=this.Album.getCanciones();
+        if(canciones==null) {
+        	canciones=new ArrayList<Cancion>();
+		}
+		if(!canciones.contains(this)) {
+			canciones.add(this);
+		}
+    }
+
 	@Override
 	public void insert(Cancion a) {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
 		manager.persist(a);
+		CancionDAO cDao=new CancionDAO(a);
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
 	}

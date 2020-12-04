@@ -29,7 +29,8 @@ public class CancionController {
 
     public Cancion getSongsById(int id) {
         CancionDAO cDAO = new CancionDAO(id);
-        return (Cancion)cDAO;
+        Cancion c=(Cancion)cDAO;
+        return c;
     }
 
     public boolean insertSongs(Cancion a) {

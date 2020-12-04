@@ -134,13 +134,6 @@ public class Disco implements Serializable {
     }
 
     public List<Cancion> getCanciones() {
-        List<Cancion> canciones = controlador.getCanciones(this.ID);
-        if (!canciones.isEmpty()) {
-            this.setCanciones(canciones);
-        } else {
-            canciones = new ArrayList<>();
-            this.setCanciones(canciones);
-        }
         return this.canciones;
     }
 
@@ -174,7 +167,7 @@ public class Disco implements Serializable {
 
     @Override
     public String toString() {
-        return "Disco{" + "ID=" + ID + ", Nombre=" + Nombre + ", foto=" + foto + ", fecha=" + fecha + ", creador=" + creador + '}';
+        return "Disco{" + "ID=" + ID + ", Nombre=" + Nombre + ", foto=" + foto + ", fecha=" + fecha +  '}';
     }
-
+   // ", creador=" + creador +
 }
