@@ -36,9 +36,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Lista.findAll",
             query = "SELECT l FROM Lista l"),
     @NamedQuery(name = "Lista.findByID",
-            query = "SELECT l FROM Lista l Where l.ID= :ID"),
+            query = "SELECT l FROM Lista l Where l.ID= :ID")/*,
     @NamedQuery(name="Lista.findCancByIDList",
-    query="SELECT c FROM Cancion as c INNER JOIN Lista as l on l.ID=c.Listas WHERE l.ID= :ID")    
+    query="SELECT c FROM Cancion as c INNER JOIN Lista as l on l.ID=c.listas WHERE l.ID= :ID")   */
 })
 public class Lista implements Serializable {
 

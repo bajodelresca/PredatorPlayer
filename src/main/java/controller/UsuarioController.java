@@ -28,8 +28,8 @@ public class UsuarioController {
     }
 
     public Usuario getUserById(int id) {
-        UsuarioDAO UDAO = new UsuarioDAO();
-        return UDAO.getByID(id);
+        UsuarioDAO UDAO = new UsuarioDAO(id);
+        return (Usuario)UDAO;
     }
 
     public boolean insertUser(Usuario a) {

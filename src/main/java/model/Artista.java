@@ -32,7 +32,7 @@ import javax.persistence.Table;
     @NamedQuery(name="Artista.findByID",
                 query="SELECT a FROM Artista a Where a.ID= :ID"),
     @NamedQuery(name="Artista.findDiscByIDArtist",
-    query="SELECT d FROM Disco as d INNER JOIN Artista as a on a.ID=d.Repertorio WHERE a.ID= :ID")
+    query="SELECT d FROM Disco as d INNER JOIN Artista as a on a.ID=d.creador WHERE a.ID= :ID")
 }) 
 public class Artista implements Serializable {
 

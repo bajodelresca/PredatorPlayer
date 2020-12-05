@@ -836,7 +836,7 @@ public class GUI {
 				}
 			} while (!valid5);
 			if (controlador.searchListByID(idLista)) {
-				Lista listR = controlador.getListById(idLista);
+				ListaDAO listR = (ListaDAO) controlador.getListById(idLista);
 				Utilities.P("Introduzca el ID de la Cancion: ");
 				int idCancion = 0;
 				boolean valid6 = false;
