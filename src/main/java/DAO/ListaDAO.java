@@ -21,7 +21,6 @@ import javax.persistence.TypedQuery;
 import model.Artista;
 import model.Cancion;
 import model.Disco;
-import model.Libro;
 import model.Lista;
 import model.Usuario;
 
