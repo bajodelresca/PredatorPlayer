@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import model.Artista;
 import model.Cancion;
 import model.Disco;
 import model.Lista;
@@ -186,6 +187,29 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 		*/
         return true;
     }
+    
+     /* Metodo que comprueba si existe el ID en la tabla
+     *
+     * @param id recibe un entero
+     * @return devuelve un boolean, si existe devuelve true y false si no
+     */
+    public boolean searchByID(int id) {
+    	boolean result = false;
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		Lista c = getByID(id);
+		if (c != null) {
+			result = true;
+		} else {
+			result = false;
+		}
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
+		return result;
+	}
+	
+
+    }
 
     /**
      * Metodo que comprueba si existe el ID en la tabla
@@ -290,4 +314,4 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 
         return listUser;
     }*/
-}
+

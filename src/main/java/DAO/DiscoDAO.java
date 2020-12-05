@@ -147,9 +147,8 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 		boolean result = false;
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-
-		Disco d = manager.find(Disco.class, id);
-		if (d != null) {
+		Disco c = getByID(id);
+		if (c != null) {
 			result = true;
 		} else {
 			result = false;

@@ -21,6 +21,7 @@ import javax.persistence.TypedQuery;
 import model.Artista;
 import model.Cancion;
 import model.Disco;
+import model.Lista;
 
 /**
  *
@@ -144,9 +145,8 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 		boolean result = false;
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-
-		Artista a = manager.find(Artista.class, id);
-		if (a != null) {
+		Artista c = getByID(id);
+		if (c != null) {
 			result = true;
 		} else {
 			result = false;
