@@ -402,9 +402,9 @@ public class GUI {
 			if (controlador.searchArtistaByID(id2)) {
 				Artista a = controlador.getArtistsById(id2);
 				ArtistaDAO aDAO = new ArtistaDAO(a);
-				aDAO.setDiscos(controlador.getRepertorio(a.getID()));
-				List<Disco> album = aDAO.getRepertorio();
-				for (Disco disco : album) {
+				aDAO.setRepertorio(controlador.getRepertorio(a.getID()));
+				List<Disco> listD = aDAO.getRepertorio();
+				for (Disco disco : listD) {
 					System.out.println("----------------------------------");
 					System.out.println("ID: " + disco.getID());
 					System.out.println("Nombre: " + disco.getNombre());
