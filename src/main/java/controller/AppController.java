@@ -129,15 +129,15 @@ public class AppController {
 
     public boolean removeSubs(Subscripcion a) {
         return subsControl.removeSubs(a);
-    }*/
-
+    }
     public List<Usuario> getSubscriberFromList(int id) {
         return subsControl.getSubscriberFromList(id);
     }
 
     public List<Lista> getListFromSubscriber(int id) {
         return subsControl.getListFromSubscriber(id);
-    }
+    }*/
+
     //___________________________________________________________________________Funciones de LISTA
 
     public List<Lista> getAllList() {

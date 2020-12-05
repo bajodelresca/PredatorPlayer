@@ -5,10 +5,8 @@
  */
 package controller;
 
-import DAO.SubscripcionDAO;
 import java.util.List;
 import model.Lista;
-import model.Subscripcion;
 import model.Usuario;
 
 /**
@@ -23,7 +21,7 @@ public class SubscripcionController {
         instancia = new SubscripcionController();
         return instancia;
     }
-
+/*
     public List<Subscripcion> getAllSubs() {
         SubscripcionDAO cDAO = new SubscripcionDAO();
         return cDAO.getAll();
@@ -73,5 +71,5 @@ public class SubscripcionController {
     public List<Lista> getListFromSubscriber(int id) {
         SubscripcionDAO cDAO = new SubscripcionDAO();
         return cDAO.getListFromSubscriber(id);
-    }
+    }*/
 }

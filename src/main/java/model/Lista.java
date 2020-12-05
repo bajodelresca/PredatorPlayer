@@ -36,9 +36,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Lista.findAll",
             query = "SELECT l FROM Lista l"),
     @NamedQuery(name = "Lista.findByID",
-            query = "SELECT l FROM Lista l Where l.ID= :ID")/*,
-    @NamedQuery(name="Lista.findCancByIDList",
-    query="SELECT c FROM Cancion as c INNER JOIN Lista as l on l.ID=c.listas WHERE l.ID= :ID")   */
+            query = "SELECT l FROM Lista l Where l.ID= :ID") 
 })
 public class Lista implements Serializable {
 
@@ -110,13 +108,6 @@ public class Lista implements Serializable {
     }
 
     public List<Usuario> getSubscriptores() {
-        List<Usuario> subscriptores = controlador.getSubscriberFromList(this.ID);
-        if (!subscriptores.isEmpty()) {
-            this.setSubscriptores(subscriptores);
-        } else {
-            subscriptores = new ArrayList<>();
-            this.setSubscriptores(subscriptores);
-        }
         return subscriptores;
     }
 
