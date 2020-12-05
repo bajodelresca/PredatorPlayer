@@ -28,13 +28,12 @@ import model.Usuario;
  * @author Alberto343
  */
 //@MappedSuperclass
-
 public class ListaDAO extends Lista implements DAO<Lista> {
 
     private final static String findAll = "Lista.findAll";
     private final static String findByID = "Lista.findByID";
+    private final static String findCancByIDList = "Lista.findCancByIDList";
 
-   
     enum queries {
         INSERT("INSERT INTO Lista (ID,Nombre,Descripcion,IDUsuario) VALUES(NULL,?,?,?)"),
         INSERTLISTACANCION("INSERT INTO listacancion (IDLista,IDCancion) VALUES(?,?)"),
@@ -57,9 +56,10 @@ public class ListaDAO extends Lista implements DAO<Lista> {
             return this.q;
         }
     }
+
     public ListaDAO(int id) {
-	super(getByID(id));
-	}
+        super(getByID(id));
+    }
 
     public ListaDAO() {
         super();
@@ -68,11 +68,12 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     public ListaDAO(Lista c) {
         super(c.getID(), c.getNombre(), c.getDescripcion(), c.getCreador());
     }
+
     public void setSubscriptores(List<Usuario> subscriptores) {
         this.subscriptores = subscriptores;
         for (Usuario subscrito : subscriptores) {
-			subscrito.getListasubscrito().add((Lista)this);
-		}
+            subscrito.getListasubscrito().add((Lista) this);
+        }
     }
     
     public void setListareproduccion(List<Cancion> listareproduccion) {
@@ -121,8 +122,8 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     public List<Lista> getAll() {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
-        TypedQuery q = manager.createNamedQuery(findAll,Lista.class);
-        List<Lista> listas =  q.getResultList();
+        TypedQuery q = manager.createNamedQuery(findAll, Lista.class);
+        List<Lista> listas = q.getResultList();
         manager.getTransaction().commit();
         ConnectionUtils.closeManager(manager);
         return listas;
@@ -137,8 +138,8 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     private static Lista getByID(int id) {
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
-        TypedQuery q = manager.createNamedQuery(findByID,Lista.class);
-		q.setParameter("ID", id);
+        TypedQuery q = manager.createNamedQuery(findByID, Lista.class);
+        q.setParameter("ID", id);
 
         Lista l = (Lista) q.getSingleResult();
 
@@ -146,43 +147,23 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         ConnectionUtils.closeManager(manager);
         return l;
     }
-   /*
+
     public List<Cancion> getCancionFromList(int id) {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        CancionDAO lDAO = new CancionDAO();
-        List<Cancion> listS = new ArrayList<>();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETCANCLISTBYID.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            while (rs.next()) {
-                listS.add(lDAO.convert(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
 
-        return listS;
+        TypedQuery q = manager.createNamedQuery(findCancByIDList, Cancion.class);
+        q.setParameter("ID", id);
+        List<Cancion> canciones = q.getResultList();
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
+        return canciones;
+
     }
-
+    
+    
     public boolean insertListCanc(int a, int c) {
+    /*
         boolean result = false;
         CancionDAO cDAO = new CancionDAO();
         try {
@@ -202,8 +183,8 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         } catch (SQLException ex) {
             Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return result;
+		*/
+        return true;
     }
 
     /**
@@ -212,7 +193,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
      * @param id recibe un entero
      * @return devuelve un boolean, si existe devuelve true y false si no
      */
-   /* public boolean searchByID(int id) {
+    /* public boolean searchByID(int id) {
         boolean result = false;
         EntityManager manager = ConnectionUtils.getManager();
         manager.getTransaction().begin();
