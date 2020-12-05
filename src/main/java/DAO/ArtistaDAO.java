@@ -31,6 +31,7 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 
 	private final static String findAll = "Artista.findAll";
 	private final static String findByID = "Artista.findByID";
+	private final static String findDiscByIDArtist = "Artista.findDiscByIDArtist";
 
 	public ArtistaDAO(int ID, String Nombre, String Nacionalidad, String Foto) {
 		super(ID, Nombre, Nacionalidad, Foto);
@@ -121,6 +122,15 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 	 */
 	
 	public List<Disco> getListRepertorio(int id) {
+		
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+
+		TypedQuery q = manager.createNamedQuery(findDiscByIDArtist,Disco.class);
+		q.setParameter("ID", id);
+		List<Disco> repertorio =  q.getResultList();
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
 		return repertorio;
 	}
 
