@@ -22,6 +22,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import model.Lista;
 
 import model.Usuario;
 
@@ -64,6 +65,21 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
 
     public UsuarioDAO(int id) {
         super(getByID(id));
+    }
+    
+    public void setListacreada(List<Lista> listacreada) {
+        this.listacreada = listacreada;
+        for (Lista creada : listacreada) {
+			creada.setCreador(this);
+		}
+    }
+    
+
+    public void setListasubscrito(List<Lista> listasubscrito) {
+        this.listasubscrito = listasubscrito;
+        for (Lista subscrito : listasubscrito) {
+			subscrito.setSubscriptores(this);
+		}
     }
 
     @Override
