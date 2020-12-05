@@ -22,7 +22,6 @@ import javax.persistence.TypedQuery;
 import model.Artista;
 import model.Cancion;
 import model.Disco;
-import model.Libro;
 
 /**
  *
@@ -55,6 +54,18 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
         this.canciones = canciones;
         for (Cancion cancion : canciones) {
 			cancion.setAlbum(this);
+		}
+    }
+	
+//________________________________________________________________________NUEVO
+	public void setCreador(Artista Creador) {
+        this.creador = Creador;
+        java.util.List<Disco> discos=this.creador.getRepertorio();
+        if(discos==null) {
+        	discos=new ArrayList<Disco>();
+		}
+		if(!discos.contains(this)) {
+			discos.add(this);
 		}
     }
 //______________________________________________________________________________CRUD

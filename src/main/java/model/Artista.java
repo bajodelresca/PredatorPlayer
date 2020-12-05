@@ -119,13 +119,6 @@ public class Artista implements Serializable {
     }
 
     public List<Disco> getRepertorio() {
-        List<Disco> discos = controlador.getRepertorio(this.ID);
-        if (!discos.isEmpty()) {
-            this.setRepertorio(discos);
-        } else {
-            discos = new ArrayList<>();
-            this.setRepertorio(discos);
-        }
         return repertorio;
     }
 

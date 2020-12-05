@@ -48,6 +48,15 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 		super(getByID(id));
 	}
 
+//______________________________________________________________________________NUEVO
+	
+	public void setDiscos(List<Disco> discos) {
+        this.repertorio = discos;
+        for (Disco disco : discos) {
+			disco.setCreador(this);
+		}
+    }
+
 //______________________________________________________________________________CRUD
 	@Override
 	public void insert(Artista a) {
