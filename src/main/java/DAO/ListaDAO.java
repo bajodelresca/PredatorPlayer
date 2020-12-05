@@ -70,15 +70,10 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     public void setSubscriptores(List<Usuario> subscriptores) {
         this.subscriptores = subscriptores;
         for (Usuario subscrito : subscriptores) {
-			subscrito.setListasubscrito(this);
+			subscrito.getListasubscrito().add((Lista)this);
 		}
     }
-    public void setListareproduccion(List<Cancion> listareproduccion) {
-         this.listareproduccion = listareproduccion;
-        for (Cancion listreproduccion : listareproduccion) {
-			listreproduccion.set;
-		}
-    }
+    
 
     @Override
     public void insert(Lista a) {
