@@ -33,7 +33,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 	
 	private final static String findAll = "Disco.findAll";
 	private final static String findByID = "Disco.findByID";
-
+	private final static String findSongByIDDisc = "Disco.findSongByIDDisc";
 	public DiscoDAO(int ID, String Nombre, String foto, Date fecha, Artista creador) {
 		super(ID, Nombre, foto, fecha, creador);
 	}
@@ -53,7 +53,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 	public void setCanciones(List<Cancion> canciones) {
         this.canciones = canciones;
         for (Cancion cancion : canciones) {
-			cancion.setAlbum(this);
+			cancion.setAlbum((Disco)this);
 		}
     }
 	
@@ -64,8 +64,8 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
         if(discos==null) {
         	discos=new ArrayList<Disco>();
 		}
-		if(!discos.contains(this)) {
-			discos.add(this);
+		if(!discos.contains((Disco)this)) {
+			discos.add((Disco)this);
 		}
     }
 //______________________________________________________________________________CRUD
@@ -126,7 +126,14 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 	 * @return canciones
 	 */
 	public List<Cancion> getListCanciones(int id) {
-		// PREGUNTAR
+		EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+
+		TypedQuery q = manager.createNamedQuery(findSongByIDDisc,Cancion.class);
+		q.setParameter("ID", id);
+		List<Cancion> canciones =  q.getResultList();
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
 		return canciones;
 	}
 

@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import DAO.DiscoDAO;
 import model.Artista;
 import model.Cancion;
 import model.Disco;
@@ -255,7 +256,7 @@ public class GUI {
 				System.out.println("Nombre: " + disco.getNombre());
 				System.out.println("Foto: " + disco.getFoto());
 				System.out.println("Fecha: " + disco.getFecha());
-				System.out.println("Creador: " + disco.getCreador());
+				System.out.println("Creador: " +controlador.getArtistsById(disco.getCreador().getID()));
 				System.out.println("----------------------------------");
 			}
 			break;
@@ -312,7 +313,9 @@ public class GUI {
 			} while (!valid2);
 			if (controlador.searchDiscByID(id2)) {
 				Disco d = controlador.getDiscsById(id2);
-				List<Cancion> listC = d.getCanciones();
+				DiscoDAO dDAO=new DiscoDAO(d);
+				dDAO.setCanciones(controlador.getCanciones(d.getID()));
+				List<Cancion> listC = dDAO.getCanciones();
 				for (Cancion cancion : listC) {
 					System.out.println("----------------------------------");
 					System.out.println("ID: " + cancion.getID());

@@ -1,7 +1,10 @@
 package controller;
 
+import DAO.ArtistaDAO;
 import DAO.DiscoDAO;
 import java.util.List;
+
+import model.Artista;
 import model.Cancion;
 import model.Disco;
 
@@ -25,6 +28,8 @@ public class DiscoController {
 
     public Disco getDiscsById(int id) {
         DiscoDAO dDAO = new DiscoDAO(id);
+        ArtistaDAO aDAO=new ArtistaDAO(dDAO.getCreador().getID());
+        dDAO.setCreador((Artista)aDAO);
         return (Disco) dDAO;
     }
 

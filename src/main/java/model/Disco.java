@@ -30,7 +30,9 @@ import javax.persistence.Table;
     @NamedQuery(name="Disco.findAll",
                 query="SELECT d FROM Disco d"),
     @NamedQuery(name="Disco.findByID",
-                query="SELECT d FROM Disco d Where d.ID= :ID")
+                query="SELECT d FROM Disco d Where d.ID= :ID"),
+    @NamedQuery(name="Disco.findSongByIDDisc",
+    query="SELECT c FROM Cancion as c INNER JOIN Disco as d on d.ID=c.Album WHERE d.ID= :ID")
 }) 
 public class Disco implements Serializable {
 
@@ -167,7 +169,7 @@ public class Disco implements Serializable {
 
     @Override
     public String toString() {
-        return "Disco{" + "ID=" + ID + ", Nombre=" + Nombre + ", foto=" + foto + ", fecha=" + fecha +  '}';
+        return "Disco{" + "ID=" + ID + ", Nombre=" + Nombre + ", foto=" + foto + ", fecha=" + fecha + ", creador=" + creador + '}';
     }
    // ", creador=" + creador +
 }
