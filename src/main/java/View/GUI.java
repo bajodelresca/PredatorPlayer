@@ -60,7 +60,7 @@ public class GUI {
 			do {
 				op2 = Utilities.MenuListar();
 				ControladorMenuListar(op2);
-			} while (op2 != 9);
+			} while (op2 != 10);
 			break;
 
 		case 2:
@@ -186,8 +186,15 @@ public class GUI {
 				ControladorSubMenuListarLDU(op3);
 			} while (op3 != 2);
 			break;
-
+		
 		case 9:
+			do {
+				op3 = Utilities.subMenuListar();
+				ControladorSubMenuListarUsuarios(op3);
+			} while (op3 != 3);
+			break;
+
+		case 10:
 			Utilities.P("Saliendo del Menú de Información.");
 			break;
 
@@ -645,6 +652,58 @@ public class GUI {
 			break;
 		case 2:
 			Utilities.P("Saliendo del Menú listar las Listas de Reproducción creadas por un Usuario ");
+			break;
+		default:
+			Utilities.P("Opción no válida, vuelve a intentarlo.");
+		}
+	}
+	
+	private static void ControladorSubMenuListarUsuarios(int op2) {
+		switch (op2) {
+		case 1:
+			List<Usuario> listUser = controlador.getAllUsers();
+			for (Usuario usuario : listUser) {
+				System.out.println("----------------------------------");
+				System.out.println("ID: " + usuario.getID());
+				System.out.println("Nombre: " + usuario.getNombre());
+				System.out.println("Correo: " + usuario.getCorreo());
+				System.out.println("Foto: " + usuario.getFoto());
+				System.out.println("----------------------------------");
+			}
+			break;
+		case 2:
+			Utilities.P("Introduce el id del usuario: ");
+			int id = 0;
+			boolean valid = false;
+			do {
+				try {
+					id = Integer.parseInt(keyboard.nextLine());
+					valid = true;
+
+				} catch (IllegalStateException ex) {
+					keyboard = new Scanner(System.in);
+					Utilities.P("Error in keyboard. Please, try it again: ");
+				} catch (NumberFormatException ex) {
+					Utilities.P("Error reading integer type. Please, try it again: ");
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					Utilities.P("Error unknown. Please, try it again: ");
+				}
+			} while (!valid);
+			if (controlador.searchUserByID(id)) {
+				Usuario u = controlador.getUserById(id);
+				System.out.println("----------------------------------");
+				System.out.println("ID: " + u.getID());
+				System.out.println("Nombre: " + u.getNombre());
+				System.out.println("Correo: " + u.getCorreo());
+				System.out.println("Foto: " + u.getFoto());
+				System.out.println("----------------------------------");
+			} else {
+				System.out.println("EL ID DEL USUARIO NO EXISTE");
+			}
+			break;
+		case 3:
+			Utilities.P("Saliendo del Menú listar Usuarios ");
 			break;
 		default:
 			Utilities.P("Opción no válida, vuelve a intentarlo.");
