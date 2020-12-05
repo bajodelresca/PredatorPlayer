@@ -74,11 +74,10 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
 		}
     }
     
-
     public void setListasubscrito(List<Lista> listasubscrito) {
-        this.listasubscrito = listasubscrito;
+    	this.listasubscrito = listasubscrito;
         for (Lista subscrito : listasubscrito) {
-			subscrito.setSubscriptores(this);
+			subscrito.getSubscriptores().add((Usuario)this);
 		}
     }
 

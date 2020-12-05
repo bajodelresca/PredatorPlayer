@@ -126,7 +126,6 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 	 * @return canciones
 	 */
 	public List<Cancion> getListCanciones(int id) {
-		// PREGUNTAR
 		return canciones;
 	}
 
