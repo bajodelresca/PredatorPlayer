@@ -119,20 +119,10 @@ public class ArtistaDAO extends Artista implements DAO<Artista> {
 	 * @param id
 	 * @return canciones
 	 */
-
-	/*
-	 * public List<Disco> getListRepertorio(int id) { EntityManager manager =
-	 * ConnectionUtils.getManager(); manager.getTransaction().begin();
-	 * 
-	 * // PREGUNTAR List<Disco> repertorio = manager
-	 * .createQuery("FROM disco as d INNER JOIN artista as art on art.ID=d.IDArtista WHERE art.ID=?"
-	 * ) .getResultList(); if (d != null) { result = true; } else { result = false;
-	 * }
-	 * 
-	 * manager.getTransaction().commit(); ConnectionUtils.closeManager(manager);
-	 * 
-	 * return repertorio; }
-	 */
+	
+	public List<Disco> getListRepertorio(int id) {
+		return repertorio;
+	}
 
 	/**
 	 * Metodo que comprueba si existe el ID en la tabla
