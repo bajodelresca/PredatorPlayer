@@ -85,15 +85,18 @@ public class Usuario implements Serializable {
     }
 
     public List<Lista> getListasubscrito() {
-        List<Lista> listaSub = controlador.getListFromSubscriber(this.ID);
-        if (!listaSub.isEmpty()) {
-            this.setListasubscrito(listaSub);
-        } else {
-            listaSub = new ArrayList<>();
-            this.setListasubscrito(listaSub);
-        }
+        
         return listasubscrito;
     }
+
+    public List<Lista> getListacreada() {
+        return listacreada;
+    }
+
+    public void setListacreada(List<Lista> listacreada) {
+        this.listacreada = listacreada;
+    }
+    
 
     public void setListasubscrito(List<Lista> listasubscrito) {
         this.listasubscrito = listasubscrito;
