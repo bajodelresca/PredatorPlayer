@@ -123,27 +123,11 @@ public class Lista implements Serializable {
     }
 
     public List<Cancion> getListareproduccion() {
-        List<Cancion> canciones = controlador.getAllSongsList(this.ID);
-        if (!canciones.isEmpty()) {
-            this.setListareproduccion(canciones);
-        } else {
-            canciones = new ArrayList<>();
-            this.setListareproduccion(canciones);
-        }
         return listareproduccion;
     }
 
     public void setListareproduccion(List<Cancion> listareproduccion) {
         this.listareproduccion = listareproduccion;
-    }
-
-    /**
-     * Introduce una cancion al la lista
-     *
-     * @param c recibe una cancion
-     */
-    public void setCancionListareproduccion(Cancion c) {
-        this.listareproduccion.add(c);
     }
 
     public int getID() {

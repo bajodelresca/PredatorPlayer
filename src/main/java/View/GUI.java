@@ -18,6 +18,7 @@ import javax.persistence.Persistence;
 
 import DAO.ArtistaDAO;
 import DAO.DiscoDAO;
+import DAO.ListaDAO;
 import model.Artista;
 import model.Cancion;
 import model.Disco;
@@ -586,7 +587,9 @@ public class GUI {
 			} while (!valid);
 			if (controlador.searchListByID(id)) {
 				Lista l = controlador.getListById(id);
-				List<Cancion> listCanc = l.getListareproduccion();
+				ListaDAO lDAO = new ListaDAO(l);
+				lDAO.setListareproduccion(controlador.getAllSongsList(l.getID()));
+				List<Cancion> listCanc = lDAO.getListareproduccion();
 				for (Cancion c : listCanc) {
 					System.out.println("----------------------------------");
 					System.out.println("ID: " + c.getID());

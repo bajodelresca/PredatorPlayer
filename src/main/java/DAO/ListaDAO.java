@@ -19,6 +19,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import model.Cancion;
+import model.Disco;
 import model.Lista;
 import model.Usuario;
 
@@ -74,7 +75,20 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 		}
     }
     
+    public void setListareproduccion(List<Cancion> listareproduccion) {
+        this.listareproduccion = listareproduccion;
+        
+    }
 
+    /**
+     * Introduce una cancion a la lista
+     *
+     * @param c recibe una cancion
+     */
+    public void setCancionListareproduccion(Cancion c) {
+        this.listareproduccion.add(c);
+    }
+    
     @Override
     public void insert(Lista a) {
         EntityManager manager = ConnectionUtils.getManager();
