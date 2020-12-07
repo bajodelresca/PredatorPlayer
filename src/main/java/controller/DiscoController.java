@@ -30,7 +30,8 @@ public class DiscoController {
         DiscoDAO dDAO = new DiscoDAO(id);
         ArtistaDAO aDAO=new ArtistaDAO(dDAO.getCreador().getID());
         dDAO.setCreador((Artista)aDAO);
-        return (Disco) dDAO;
+        Disco d = new Disco(dDAO);
+        return d;
     }
 
     public boolean insertDiscs(Disco a) {

@@ -25,7 +25,8 @@ public class ArtistaController {
 
     public Artista getArtistsById(int id) {
         ArtistaDAO aDAO = new ArtistaDAO(id);
-        return (Artista)aDAO;
+        Artista a=new Artista(aDAO);
+        return a;
     }
 
     public boolean insertArtists(Artista a) {
