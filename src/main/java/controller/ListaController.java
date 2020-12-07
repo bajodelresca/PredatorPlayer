@@ -5,10 +5,13 @@
  */
 package controller;
 
+import DAO.ArtistaDAO;
 import DAO.ListaDAO;
 import DAO.UsuarioDAO;
 
 import java.util.List;
+
+import model.Artista;
 import model.Cancion;
 import model.Lista;
 import model.Usuario;
@@ -33,6 +36,8 @@ public class ListaController {
 
     public Lista getListById(int id) {        
         ListaDAO lDAO = new ListaDAO(id);
+        UsuarioDAO uDAO=new UsuarioDAO(lDAO.getCreador().getID());
+        lDAO.setCreador((Usuario)uDAO);
         Lista l=new Lista(lDAO);
         return l;        
     }
