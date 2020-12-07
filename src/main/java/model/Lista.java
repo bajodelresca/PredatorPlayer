@@ -38,8 +38,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Lista.findByID",
             query = "SELECT l FROM Lista l Where l.ID= :ID") ,
     @NamedQuery(name = "Lista.getListFromUser",
-    		query = "SELECT l FROM Lista l Where l.creador= :ID")
+    		query = "SELECT l FROM Lista as l INNER JOIN Usuario as u on u.ID=l.creador WHERE u.ID= :ID")
 })
+
 public class Lista implements Serializable {
 
     private static AppController controlador = AppController.getInstance();
