@@ -8,6 +8,7 @@ package controller;
 import DAO.CancionDAO;
 import java.util.List;
 import model.Cancion;
+import model.Lista;
 
 /**
  *
@@ -29,8 +30,8 @@ public class CancionController {
 
     public Cancion getSongsById(int id) {
         CancionDAO cDAO = new CancionDAO(id);
-        Cancion c=(Cancion)cDAO;
-        return c;
+        Cancion c=new Cancion(cDAO);
+        return c;      
     }
 
     public boolean insertSongs(Cancion a) {

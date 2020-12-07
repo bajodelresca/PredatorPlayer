@@ -6,9 +6,12 @@
 package controller;
 
 import DAO.ListaDAO;
+import DAO.UsuarioDAO;
+
 import java.util.List;
 import model.Cancion;
 import model.Lista;
+import model.Usuario;
 
 /**
  *
@@ -28,9 +31,10 @@ public class ListaController {
         return lDAO.getAll();
     }
 
-    public Lista getListById(int id) {
+    public Lista getListById(int id) {        
         ListaDAO lDAO = new ListaDAO(id);
-        return (Lista)lDAO;
+        Lista l=new Lista(lDAO);
+        return l;        
     }
 
     public boolean insertList(Lista a) {
