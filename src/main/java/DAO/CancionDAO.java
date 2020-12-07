@@ -92,13 +92,12 @@ public class CancionDAO extends Cancion implements DAO<Cancion> {
 	public void remove(Cancion a) {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-		manager.remove(a);
+		manager.remove(manager.contains(a) ? a:manager.merge(a));
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
 	}
 
 	
-
 	@Override
 	public List<Cancion> getAll() {
 		EntityManager manager = ConnectionUtils.getManager();

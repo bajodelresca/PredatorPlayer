@@ -91,7 +91,7 @@ public class DiscoDAO extends Disco implements DAO<Disco> {
 	public void remove(Disco a) {
 		EntityManager manager = ConnectionUtils.getManager();
 		manager.getTransaction().begin();
-		manager.remove(a);
+		manager.remove(manager.contains(a) ? a:manager.merge(a));
 		manager.getTransaction().commit();
 		ConnectionUtils.closeManager(manager);
 	}
