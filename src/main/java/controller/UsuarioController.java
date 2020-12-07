@@ -29,7 +29,8 @@ public class UsuarioController {
 
     public Usuario getUserById(int id) {
         UsuarioDAO UDAO = new UsuarioDAO(id);
-        return (Usuario)UDAO;
+        Usuario u=new Usuario(UDAO);
+        return u;
     }
 
     public boolean insertUser(Usuario a) {
