@@ -31,6 +31,8 @@ public class ListaController {
 
     public List<Lista> getAllList() {
         ListaDAO lDAO = new ListaDAO();
+        UsuarioDAO uDAO=new UsuarioDAO(lDAO.getCreador().getID());
+        lDAO.setCreador((Usuario)uDAO);
         return lDAO.getAll();
     }
 
@@ -106,7 +108,6 @@ public class ListaController {
     
     public List<Lista> getListFromUser(int id) {
        ListaDAO lDAO = new ListaDAO();
-       UsuarioDAO uDAO=new UsuarioDAO(lDAO.getCreador().getID());
        return lDAO.getListFromUser(id);
     }
 }
