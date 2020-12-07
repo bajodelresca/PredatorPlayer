@@ -34,6 +34,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
     private final static String findAll = "Lista.findAll";
     private final static String findByID = "Lista.findByID";
     private final static String findCancByIDList = "SELECT c.* FROM Cancion as c INNER JOIN listacancion as l on FK_CANCION=c.ID WHERE FK_LISTA= ?";
+    private final static String getListFromUser = "Lista.getListFromUser";
 
     enum queries {
         INSERT("INSERT INTO Lista (ID,Nombre,Descripcion,IDUsuario) VALUES(NULL,?,?,?)"),
@@ -214,8 +215,6 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 	}
 	
 
-    }
-
     /**
      * Metodo que comprueba si existe el ID en la tabla
      *
@@ -285,38 +284,17 @@ public class ListaDAO extends Lista implements DAO<Lista> {
      *
      * @param id
      * @return listUser
-     *//*
+     */
     public List<Lista> getListFromUser(int id) {
-        PreparedStatement stat = null;
-        ResultSet rs = null;
-        List<Lista> listUser = new ArrayList<>();
-        try {
-            conn = ConnectionUtils.getConnection();
-            stat = conn.prepareStatement(queries.GETLISTFROMUSER.getQ());
-            stat.setInt(1, id);
-            rs = stat.executeQuery();
-            while (rs.next()) {
-                listUser.add(convert(rs));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (stat != null) {
-                try {
-                    stat.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+    	EntityManager manager = ConnectionUtils.getManager();
+        manager.getTransaction().begin();
+        TypedQuery q = manager.createNamedQuery(getListFromUser, Lista.class);
+        q.setParameter("ID", id);
 
-        return listUser;
-    }*/
+        List<Lista> listas = q.getResultList();
+        manager.getTransaction().commit();
+        ConnectionUtils.closeManager(manager);
+        return listas;
+    }
+}
 

@@ -36,7 +36,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Lista.findAll",
             query = "SELECT l FROM Lista l"),
     @NamedQuery(name = "Lista.findByID",
-            query = "SELECT l FROM Lista l Where l.ID= :ID") 
+            query = "SELECT l FROM Lista l Where l.ID= :ID") ,
+    @NamedQuery(name = "Lista.getListFromUser",
+    		query = "SELECT l FROM Lista l Where l.creador= :ID")
 })
 public class Lista implements Serializable {
 

@@ -103,9 +103,9 @@ public class ListaController {
         return result;
     }
     
+    
     public List<Lista> getListFromUser(int id) {
-       /* ListaDAO lDAO = new ListaDAO();
-        return lDAO.getListFromUser(id);*/
-    	return null;
+       ListaDAO lDAO = new ListaDAO();
+       return lDAO.getListFromUser(id);
     }
 }
