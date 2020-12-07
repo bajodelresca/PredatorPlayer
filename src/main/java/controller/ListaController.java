@@ -93,18 +93,19 @@ public class ListaController {
     }
     public boolean removecanclist(Cancion a) {
         boolean result = false;
-        if (a != null) {
+        /*if (a != null) {
             ListaDAO lDAO = new ListaDAO();
             lDAO.removeSongList(a);
              result = true;
         } else {
             result = false;
-        }
+        }*/
         return result;
     }
     
     public List<Lista> getListFromUser(int id) {
-        ListaDAO lDAO = new ListaDAO();
-        return lDAO.getListFromUser(id);
+       /* ListaDAO lDAO = new ListaDAO();
+        return lDAO.getListFromUser(id);*/
+    	return null;
     }
 }

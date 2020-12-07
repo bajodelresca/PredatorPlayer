@@ -117,11 +117,11 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 
     @Override
     public void remove(Lista a) {
-        EntityManager manager = ConnectionUtils.getManager();
-        manager.getTransaction().begin();
-        manager.remove(a);
-        manager.getTransaction().commit();
-        ConnectionUtils.closeManager(manager);
+    	EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.remove(manager.contains(a) ? a:manager.merge(a));
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
     }
 
     @Override

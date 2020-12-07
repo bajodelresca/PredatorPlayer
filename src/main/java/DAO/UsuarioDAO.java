@@ -101,11 +101,11 @@ public class UsuarioDAO extends Usuario implements DAO<Usuario> {
 
     @Override
     public void remove(Usuario a) {
-        EntityManager manager = ConnectionUtils.getManager();
-        manager.getTransaction().begin();
-        manager.remove(a);
-        manager.getTransaction().commit();
-        ConnectionUtils.closeManager(manager);
+    	EntityManager manager = ConnectionUtils.getManager();
+		manager.getTransaction().begin();
+		manager.remove(manager.contains(a) ? a:manager.merge(a));
+		manager.getTransaction().commit();
+		ConnectionUtils.closeManager(manager);
     }
 
     @Override
