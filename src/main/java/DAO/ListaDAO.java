@@ -214,30 +214,7 @@ public class ListaDAO extends Lista implements DAO<Lista> {
 		return result;
 	}
 	
-
-    /**
-     * Metodo que comprueba si existe el ID en la tabla
-     *
-     * @param id recibe un entero
-     * @return devuelve un boolean, si existe devuelve true y false si no
-     */
-    /* public boolean searchByID(int id) {
-        boolean result = false;
-        EntityManager manager = ConnectionUtils.getManager();
-        manager.getTransaction().begin();
-
-        Lista l = manager.find(Lista.class, id);
-        if (l != null) {
-            result = true;
-        } else {
-            result = false;
-        }
-        manager.getTransaction().commit();
-        ConnectionUtils.closeManager(manager);
-        return result;
-
-    }
-
+	/*
     public boolean searchListaCanByID(int a, int c) {
         boolean result = false;
         EntityManager manager = ConnectionUtils.getManager();
@@ -255,28 +232,10 @@ public class ListaDAO extends Lista implements DAO<Lista> {
         return result;
 
     }
-
+    */
+	
     public void removeSongList(Cancion a) {
-        PreparedStatement ps = null;
-        try {
-            conn = ConnectionUtils.getConnection();
-            ps = conn.prepareStatement(queries.DELETESONGLIST.getQ());
-            ps.setInt(1, a.getID());
-
-            if (ps.executeUpdate() == 0) {
-                throw new SQLException("No se ha borrado correctamente");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(ListaDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
+        
     }
 
     /**
